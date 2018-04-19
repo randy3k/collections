@@ -73,6 +73,51 @@ microbenchmark(
 )
 ```
 
+## Stack
+
+
+```{r, echo = FALSE}
+test_dequer_stack_push_pop <- function(n) {
+    q <- dequer::queue()
+    pushback <- dequer::pushback
+    pop <- dequer::pop
+    for (i in 1:n) pushback(q, rnorm(1))
+    for (i in 1:n) pop(q)
+    q
+}
+test_datastructures_stack_push_pop <- function(n) {
+    q <- datastructures::stack("numeric")
+    insert <- datastructures::insert
+    pop <- datastructures::pop
+    for (i in 1:n) insert(q, rnorm(1))
+    for (i in 1:n) pop(q)
+    q
+}
+test_liqueueR_stack_push_pop <- function(n) {
+    q <- liqueueR::Stack$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
+test_collections_stack_push_pop <- function(n) {
+    q <- collections::Stack$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
+```
+
+```{r}
+microbenchmark(
+    dequer = test_dequer_stack_push_pop(2000),
+    datastructures = test_datastructures_stack_push_pop(2000),
+    liqueueR = test_liqueueR_stack_push_pop(2000),
+    collections = test_collections_stack_push_pop(2000),
+    times = 10,
+    unit = "relative"
+)
+```
+
 ## Deque
 
 ```{r, echo = FALSE}
