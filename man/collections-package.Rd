@@ -6,9 +6,19 @@
 \alias{collections-package}
 \title{collections: High Performance Container Datatypes for R}
 \description{
-More about what it does (maybe more than one line)
-Use four spaces when indenting paragraphs within the Description.
+Provides high performance container datatypes such as Queue, Stack, Deque, Dict and OrderedDict. Benchmarks <https://randy3k.github.io/collections/articles/benchmark.html> have shown that these containers are more computationally efficient than those offered by other packages.
 }
 \details{
 High Performance Container Datatypes for R
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://randy3k.github.io/arrangements}
+}
+
+}
+\author{
+\strong{Maintainer}: Randy Lai \email{randy.cs.lai@gmail.com}
+
 }

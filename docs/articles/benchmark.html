@@ -79,7 +79,8 @@
 
     
     
-<p>The goal of this document is to compare the performances of some of the existing packages.</p>
+<p>The goal of this document is to compare the performances of some of the existing packages. See <a href="https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd">benchmark.Rmd</a> for the details.</p>
+<p>We are comparing these packages with <code>collections</code>.</p>
 <ul>
 <li>
 <a href="https://CRAN.R-project.org/package=dequer">dequer</a> 2.0-1</li>
@@ -92,63 +93,37 @@
 <li>
 <a href="https://CRAN.R-project.org/package=hashmap">hashmap</a> 0.2.2</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(microbenchmark)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(microbenchmark)</a></code></pre></div>
 <div id="queue" class="section level2">
 <h2 class="hasAnchor">
 <a href="#queue" class="anchor"></a>Queue</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/autoplot">autoplot</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_queue_push_pop</span>(<span class="dv">2000</span>),</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_queue_push_pop</span>(<span class="dv">2000</span>),</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_queue_push_pop</span>(<span class="dv">2000</span>),</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">collections =</span> <span class="kw">test_collections_queue_push_pop</span>(<span class="dv">2000</span>),</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dt">times =</span> <span class="dv">10</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">)</a></code></pre></div>
-<pre><code>## Unit: milliseconds
-##            expr       min        lq      mean    median        uq
-##          dequer  43.01679  46.67623  50.50658  49.06273  54.52528
-##  datastructures 123.61592 126.62286 469.80624 132.01575 194.37339
-##        liqueueR 258.74162 272.76595 299.10762 280.69855 301.28523
-##     collections  28.75603  32.80052  39.74461  35.08216  44.54202
-##         max neval
-##    63.07655    10
-##  3392.02348    10
-##   444.22352    10
-##    73.10002    10</code></pre>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">collections =</span> <span class="kw">test_collections_queue_push_pop</span>(<span class="dv">2000</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">))</a></code></pre></div>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div id="deque" class="section level2">
 <h2 class="hasAnchor">
 <a href="#deque" class="anchor"></a>Deque</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_deque_push_pop</span>(<span class="dv">5000</span>),</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="dt">collections =</span> <span class="kw">test_collections_deque_push_pop</span>(<span class="dv">5000</span>),</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">times =</span> <span class="dv">10</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">)</a></code></pre></div>
-<pre><code>## Unit: milliseconds
-##         expr       min        lq      mean    median        uq      max
-##       dequer 175.30608 189.59538 200.90737 199.91865 213.57862 233.6621
-##  collections  89.69293  93.66518  99.65941  96.92548  99.88056 133.7412
-##  neval
-##     10
-##     10</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/autoplot">autoplot</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_deque_push_pop</span>(<span class="dv">5000</span>),</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">collections =</span> <span class="kw">test_collections_deque_push_pop</span>(<span class="dv">5000</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">))</a></code></pre></div>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div id="dict" class="section level1">
 <h1 class="hasAnchor">
 <a href="#dict" class="anchor"></a>Dict</h1>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">    <span class="dt">hash =</span> <span class="kw">test_hash_dict_set_get</span>(<span class="dv">5000</span>),</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">    <span class="dt">hashmap =</span> <span class="kw">test_hashmap_dict_set_get</span>(<span class="dv">5000</span>),</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="dt">collections =</span> <span class="kw">test_collections_dict_set_get</span>(<span class="dv">5000</span>),</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="dt">times =</span> <span class="dv">10</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">)</a></code></pre></div>
-<pre><code>## Unit: milliseconds
-##         expr       min        lq      mean    median        uq       max
-##         hash  81.64806  82.60194  89.55903  86.09182  91.70877 110.99770
-##      hashmap 217.77945 237.58746 267.89645 246.14520 247.49670 511.41699
-##  collections  61.12736  62.91081  68.10350  65.79949  75.64534  79.85844
-##  neval
-##     10
-##     10
-##     10</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/autoplot">autoplot</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">hash =</span> <span class="kw">test_hash_dict_set_get</span>(<span class="dv">5000</span>),</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="dt">hashmap =</span> <span class="kw">test_hashmap_dict_set_get</span>(<span class="dv">5000</span>),</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">collections =</span> <span class="kw">test_collections_dict_set_get</span>(<span class="dv">5000</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">))</a></code></pre></div>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
   </div>
 

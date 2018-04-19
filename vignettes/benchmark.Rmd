@@ -24,6 +24,7 @@ We are comparing these packages with `collections`.
     `r packageDescription("hashmap")$Version`
 
 ```{r, warning = FALSE, message = FALSE}
+library(ggplot2)
 library(microbenchmark)
 ```
 
@@ -61,13 +62,12 @@ test_collections_queue_push_pop <- function(n) {
 ```
 
 ```{r}
-microbenchmark(
+autoplot(microbenchmark(
     dequer = test_dequer_queue_push_pop(2000),
     datastructures = test_datastructures_queue_push_pop(2000),
     liqueueR = test_liqueueR_queue_push_pop(2000),
-    collections = test_collections_queue_push_pop(2000),
-    times = 10
-)
+    collections = test_collections_queue_push_pop(2000)
+))
 ```
 
 ## Deque
@@ -97,11 +97,10 @@ test_collections_deque_push_pop <- function(n) {
 ```
 
 ```{r}
-microbenchmark(
+autoplot(microbenchmark(
     dequer = test_dequer_deque_push_pop(5000),
-    collections = test_collections_deque_push_pop(5000),
-    times = 10
-)
+    collections = test_collections_deque_push_pop(5000)
+))
 ```
 
 # Dict
@@ -128,10 +127,9 @@ test_collections_dict_set_get <- function(n) {
 ```
 
 ```{r}
-microbenchmark(
+autoplot(microbenchmark(
     hash = test_hash_dict_set_get(5000),
     hashmap = test_hashmap_dict_set_get(5000),
-    collections = test_collections_dict_set_get(5000),
-    times = 10
-)
+    collections = test_collections_dict_set_get(5000)
+))
 ```
