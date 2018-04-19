@@ -1,18 +1,14 @@
-# an R implemention of queue
-# inspired by https://github.com/wch/qstack/blob/master/R/queue.R
-
 #' @export
-Queue <- R6::R6Class("Queue",
+Stack <- R6::R6Class("Stack",
     private = list(
-        q = NULL,
-        last = NULL
+        q = NULL
     ),
     public = list(
         push = function(item) {
             if (is.null(private$q)) {
-                private$q <- private$last <- as.pairlist(list(item))
+                private$q <- as.pairlist(list(item))
             } else {
-                private$last <- pairlist_append(private$last, item)
+                private$q <- pairlist_prepend(private$q, item)
             }
             invisible(item)
         },

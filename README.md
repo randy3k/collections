@@ -6,9 +6,9 @@
 
 [dequer](https://CRAN.R-project.org/package=dequer) implements double ended queues and it supports arbitary R objects. However, it uses `R_PreserveObject` and `R_ReleaseObject` heavily which could be an issue for long queues.
 
-[datastructures](https://CRAN.R-project.org/package=datastructures) uses 'Boost' and 'STL' data types to implement queues and hashmaps. It is very efficient but it only supports atomic vectors.
+[datastructures](https://CRAN.R-project.org/package=datastructures) uses 'Boost' and 'STL' data types to implement queues and hashmaps. It only supports atomic vectors.
 
-[liqueueR](https://CRAN.R-project.org/package=liqueueR) implements queues using R lists, so efficiency is a concern.
+[liqueueR](https://CRAN.R-project.org/package=liqueueR) implements queues using R lists.
 
 [hash](https://CRAN.R-project.org/package=hash) uses  `new.env( hash = TRUE)` to create hash tables.
 
