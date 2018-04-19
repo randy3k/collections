@@ -108,9 +108,17 @@ microbenchmark(
 )
 ```
 
-# Dict
+# Dict / hashmap
 
 ```{r, echo = FALSE}
+test_datastructures_dict_set_get <- function(n) {
+    h <- datastructures::hashmap("character", "numeric")
+    insert <- datastructures::insert
+    get <- datastructures::get
+    for (i in 1:n) insert(h, as.character(i), rnorm(1))
+    for (i in 1:n) get(h, as.character(i))
+    h
+}
 test_hash_dict_set_get <- function(n) {
     h <- hash::hash()
     for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
@@ -133,6 +141,7 @@ test_collections_dict_set_get <- function(n) {
 
 ```{r}
 microbenchmark(
+    datastructures = test_datastructures_dict_set_get(5000),
     hash = test_hash_dict_set_get(5000),
     hashmap = test_hashmap_dict_set_get(5000),
     collections = test_collections_dict_set_get(5000),
