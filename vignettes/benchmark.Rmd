@@ -23,9 +23,10 @@ We are comparing these packages with `collections`.
 - [hashmap](https://CRAN.R-project.org/package=hashmap)
     `r packageDescription("hashmap")$Version`
 
-```{r, warning = FALSE, message = FALSE}
-library(ggplot2)
+
+```{r, echo = FALSE}
 library(microbenchmark)
+options(digits = 3)
 ```
 
 ## Queue
@@ -62,12 +63,14 @@ test_collections_queue_push_pop <- function(n) {
 ```
 
 ```{r}
-autoplot(microbenchmark(
+microbenchmark(
     dequer = test_dequer_queue_push_pop(2000),
     datastructures = test_datastructures_queue_push_pop(2000),
     liqueueR = test_liqueueR_queue_push_pop(2000),
-    collections = test_collections_queue_push_pop(2000)
-))
+    collections = test_collections_queue_push_pop(2000),
+    times = 10,
+    unit = "relative"
+)
 ```
 
 ## Deque
@@ -97,10 +100,12 @@ test_collections_deque_push_pop <- function(n) {
 ```
 
 ```{r}
-autoplot(microbenchmark(
+microbenchmark(
     dequer = test_dequer_deque_push_pop(5000),
-    collections = test_collections_deque_push_pop(5000)
-))
+    collections = test_collections_deque_push_pop(5000),
+    times = 10,
+    unit = "relative"
+)
 ```
 
 # Dict
@@ -127,9 +132,11 @@ test_collections_dict_set_get <- function(n) {
 ```
 
 ```{r}
-autoplot(microbenchmark(
+microbenchmark(
     hash = test_hash_dict_set_get(5000),
     hashmap = test_hashmap_dict_set_get(5000),
-    collections = test_collections_dict_set_get(5000)
-))
+    collections = test_collections_dict_set_get(5000),
+    times = 10,
+    unit = "relative"
+)
 ```
