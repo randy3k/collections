@@ -27,6 +27,13 @@ OrderedDict <- R6::R6Class("OrderedDict",
                 ret[[i]] <- self$get(key)
             }
             ret
+        },
+        as_list = function() {
+            ret <- list()
+            for (key in self$keys()) {
+                ret[[key]] <- self$get(key)
+            }
+            ret
         }
     )
 )
