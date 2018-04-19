@@ -3,6 +3,7 @@
 
 #' @export
 Queue <- R6::R6Class("Queue",
+    cloneable = FALSE,
     private = list(
         q = NULL,
         last = NULL
@@ -17,6 +18,7 @@ Queue <- R6::R6Class("Queue",
             invisible(item)
         },
         pop = function() {
+            if (is.null(private$q)) stop("queue is empty")
             v <- pairlist_car(private$q)
             private$q <- pairlist_cdr(private$q)
             v

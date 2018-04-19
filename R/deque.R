@@ -1,5 +1,6 @@
 #' @export
 Deque <- R6::R6Class("Deque",
+    cloneable = FALSE,
     private = list(
         q = NULL,
         last = NULL
@@ -26,17 +27,69 @@ Deque <- R6::R6Class("Deque",
             invisible(item)
         },
         pop = function() {
+            if (is.null(private$last)) stop("deque is empty")
             v <- pairlist_car(private$last)
-            if (!is.null(v$prev)) {
-                private$last <- v$prev
+            private$last <- v$prev
+            if (is.null(private$last)) {
+                private$q <- NULL
+            } else {
                 pairlist_setcdr(private$last, NULL)
             }
             v$item
         },
         popleft = function() {
+            if (is.null(private$q)) stop("deque is empty")
             v <- pairlist_car(private$q)
             private$q <- pairlist_cdr(private$q)
+            if (is.null(private$q)) {
+                private$last <- NULL
+            }
             v$item
+        },
+        extend = function(deque) {
+            !inherits(deque, "Deque") && stop("expect Deque object")
+            q <- deque$.__enclos_env__$private$q
+            while (!is.null(q)) {
+                v <- pairlist_car(q)
+                self$push(v$item)
+                q <- pairlist_cdr(q)
+            }
+            invisible(self)
+        },
+        extendleft = function(deque) {
+            !inherits(deque, "Deque") && stop("expect Deque object")
+            q <- deque$.__enclos_env__$private$last
+            while (!is.null(q)) {
+                v <- pairlist_car(q)
+                self$pushleft(v$item)
+                q <- v$prev
+            }
+            invisible(self)
+        },
+        remove = function(value) {
+            q <- private$q
+            while (!is.null(q)) {
+                v <- pairlist_car(q)
+                nextq <- pairlist_cdr(q)
+                if (v$item == value) {
+                    if (is.null(nextq)) {
+                        # the end of deque
+                        private$last <- v$prev
+                        pairlist_setcdr(private$last, NULL)
+                    }
+                    if (is.null(v$prev)) {
+                        # the beginning of deque
+                        nextv <- pairlist_car(nextq)
+                        pairlist_setcar(nextq, list(prev = NULL, item = nextv$item))
+                        private$q <- nextq
+                    } else {
+                        pairlist_setcdr(v$prev, nextq)
+                    }
+                    return(invisible(value))
+                }
+                q <- nextq
+            }
+            stop("value not found")
         },
         size = function() length(private$q),
         as_list = function() {

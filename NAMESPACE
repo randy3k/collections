@@ -2,6 +2,7 @@
 
 export(Deque)
 export(Dict)
+export(OrderedDict)
 export(Queue)
 export(Stack)
 useDynLib(collections)

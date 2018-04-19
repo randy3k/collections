@@ -1,5 +1,6 @@
 #' @export
 Stack <- R6::R6Class("Stack",
+    cloneable = FALSE,
     private = list(
         q = NULL
     ),
@@ -13,6 +14,7 @@ Stack <- R6::R6Class("Stack",
             invisible(item)
         },
         pop = function() {
+            if (is.null(private$q)) stop("stack is empty")
             v <- pairlist_car(private$q)
             private$q <- pairlist_cdr(private$q)
             v
