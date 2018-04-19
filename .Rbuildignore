@@ -1,2 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^docs$
+^inst/jl$
+^_pkgdown\.yml$
+^man-roxygen$$
+README.Rmd
+Makefile
+vignettes
+^cran-comments\.md$

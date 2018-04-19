@@ -1,0 +1,134 @@
+---
+title: "Benchmarking 'collections'"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Benchmarking 'collections'}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The goal of this document is to compare the performances of some of the existing packages.
+
+- [dequer](https://CRAN.R-project.org/package=dequer) 
+    `r packageDescription("dequer")$Version`
+- [datastructures ](https://CRAN.R-project.org/package=datastructures ) 
+    `r packageDescription("datastructures")$Version`
+- [liqueueR](https://CRAN.R-project.org/package=liqueueR) 
+    `r packageDescription("liqueueR")$Version`
+- [hash](https://CRAN.R-project.org/package=hash)
+    `r packageDescription("hash")$Version`
+- [hashmap](https://CRAN.R-project.org/package=hashmap)
+    `r packageDescription("hashmap")$Version`
+
+```{r, warning = FALSE, message = FALSE}
+library(microbenchmark)
+```
+
+## Queue
+
+```{r, echo = FALSE}
+test_dequer_queue_push_pop <- function(n) {
+    q <- dequer::queue()
+    pushback <- dequer::pushback
+    pop <- dequer::pop
+    for (i in 1:n) pushback(q, rnorm(1))
+    for (i in 1:n) pop(q)
+    q
+}
+test_datastructures_queue_push_pop <- function(n) {
+    q <- datastructures::queue("numeric")
+    insert <- datastructures::insert
+    pop <- datastructures::pop
+    for (i in 1:n) insert(q, rnorm(1))
+    for (i in 1:n) pop(q)
+    q
+}
+test_liqueueR_queue_push_pop <- function(n) {
+    q <- liqueueR::Queue$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
+test_collections_queue_push_pop <- function(n) {
+    q <- collections::Queue$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
+```
+
+```{r}
+microbenchmark(
+    dequer = test_dequer_queue_push_pop(2000),
+    datastructures = test_datastructures_queue_push_pop(2000),
+    liqueueR = test_liqueueR_queue_push_pop(2000),
+    collections = test_collections_queue_push_pop(2000),
+    times = 10
+)
+```
+
+## Deque
+
+```{r, echo = FALSE}
+test_dequer_deque_push_pop <- function(n) {
+    q <- dequer::deque()
+    push <- dequer::push
+    pop <- dequer::pop
+    popback <- dequer::popback
+    for (i in 1:n) push(q, rnorm(1))
+    for (i in 1:floor(n / 2)) {
+        pop(q)
+        popback(q)
+    }
+    q
+}
+test_collections_deque_push_pop <- function(n) {
+    q <- collections::Deque$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:floor(n / 2)) {
+        q$pop()
+        q$popleft()
+    }
+    q
+}
+```
+
+```{r}
+microbenchmark(
+    dequer = test_dequer_deque_push_pop(5000),
+    collections = test_collections_deque_push_pop(5000),
+    times = 10
+)
+```
+
+# Dict
+
+```{r, echo = FALSE}
+test_hash_dict_set_get <- function(n) {
+    h <- hash::hash()
+    for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
+    for (i in 1:n) h[[as.character(i)]]
+    h
+}
+test_hashmap_dict_set_get <- function(n) {
+    h <- hashmap::hashmap(keys = character(0), values = numeric(0))
+    for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
+    for (i in 1:n) h[[as.character(i)]]
+    h
+}
+test_collections_dict_set_get <- function(n) {
+    h <- collections::Dict$new()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in 1:n) h$get(as.character(i))
+    h
+}
+```
+
+```{r}
+microbenchmark(
+    hash = test_hash_dict_set_get(5000),
+    hashmap = test_hashmap_dict_set_get(5000),
+    collections = test_collections_dict_set_get(5000),
+    times = 10
+)
+```
