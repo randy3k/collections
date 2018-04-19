@@ -8,6 +8,9 @@ vignette: >
 ---
 
 The goal of this document is to compare the performances of some of the existing packages.
+See [benchmark.Rmd](https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd) for the details.
+
+We are comparing these packages with `collections`.
 
 - [dequer](https://CRAN.R-project.org/package=dequer) 
     `r packageDescription("dequer")$Version`
