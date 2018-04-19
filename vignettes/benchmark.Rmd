@@ -108,7 +108,7 @@ microbenchmark(
 )
 ```
 
-# Dict / hashmap
+## Dict / hashmap
 
 ```{r, echo = FALSE}
 test_datastructures_dict_set_get <- function(n) {
