@@ -71,29 +71,8 @@ Deque <- R6::R6Class("Deque",
             invisible(self)
         },
         remove = function(value) {
-            q <- private$q
-            while (!is.null(q)) {
-                v <- pairlist_car(q)
-                nextq <- pairlist_cdr(q)
-                if (v$item == value) {
-                    if (is.null(nextq)) {
-                        # the end of deque
-                        private$last <- v$prev
-                        pairlist_setcdr(private$last, NULL)
-                    }
-                    if (is.null(v$prev)) {
-                        # the beginning of deque
-                        nextv <- pairlist_car(nextq)
-                        pairlist_setcar(nextq, list(prev = NULL, item = nextv$item))
-                        private$q <- nextq
-                    } else {
-                        pairlist_setcdr(v$prev, nextq)
-                    }
-                    return(invisible(value))
-                }
-                q <- nextq
-            }
-            stop("value not found")
+            .Call("deque_remove", PACKAGE = "collections", private, value)
+            invisible(NULL)
         },
         size = function() length(private$q),
         as_list = function() {
