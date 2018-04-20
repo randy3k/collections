@@ -64,6 +64,14 @@ test_collections_queue_push_pop <- function(n) {
 
 ```{r}
 microbenchmark(
+    dequer = test_dequer_queue_push_pop(200),
+    datastructures = test_datastructures_queue_push_pop(200),
+    liqueueR = test_liqueueR_queue_push_pop(200),
+    collections = test_collections_queue_push_pop(200),
+    times = 10,
+    unit = "relative"
+)
+microbenchmark(
     dequer = test_dequer_queue_push_pop(2000),
     datastructures = test_datastructures_queue_push_pop(2000),
     liqueueR = test_liqueueR_queue_push_pop(2000),
@@ -109,6 +117,14 @@ test_collections_stack_push_pop <- function(n) {
 
 ```{r}
 microbenchmark(
+    dequer = test_dequer_stack_push_pop(200),
+    datastructures = test_datastructures_stack_push_pop(200),
+    liqueueR = test_liqueueR_stack_push_pop(200),
+    collections = test_collections_stack_push_pop(200),
+    times = 10,
+    unit = "relative"
+)
+microbenchmark(
     dequer = test_dequer_stack_push_pop(2000),
     datastructures = test_datastructures_stack_push_pop(2000),
     liqueueR = test_liqueueR_stack_push_pop(2000),
@@ -146,12 +162,62 @@ test_collections_deque_push_pop <- function(n) {
 
 ```{r}
 microbenchmark(
-    dequer = test_dequer_deque_push_pop(5000),
-    collections = test_collections_deque_push_pop(5000),
+    dequer = test_dequer_deque_push_pop(200),
+    collections = test_collections_deque_push_pop(200),
+    times = 10,
+    unit = "relative"
+)
+microbenchmark(
+    dequer = test_dequer_deque_push_pop(2000),
+    collections = test_collections_deque_push_pop(2000),
+    times = 10,
+    unit = "relative"
+)
+microbenchmark(
+    dequer = test_dequer_deque_push_pop(20000),
+    collections = test_collections_deque_push_pop(20000),
     times = 10,
     unit = "relative"
 )
 ```
+
+## Priority Queue
+
+```{r, echo = FALSE}
+test_liqueueR_pqueue_push_pop <- function(n) {
+    q <- liqueueR::PriorityQueue$new()
+    for (i in 1:n) q$push(rnorm(1), sample.int(n, 1))
+    for (i in 1:n) q$pop()
+    q
+}
+
+test_datastructures_pqueue_push_pop <- function(n) {
+    q <- datastructures::binomial_heap("integer", "numeric")
+    insert <- datastructures::insert
+    pop <- datastructures::pop
+    for (i in 1:n) insert(q, sample.int(n, 1), rnorm(1))
+    for (i in 1:n) pop(q)
+    q
+}
+
+test_collections_pqueue_push_pop <- function(n) {
+    q <- collections::PriorityQueue$new()
+    for (i in 1:n) q$push(rnorm(1), sample.int(n, 1))
+    for (i in 1:n) q$pop()
+    q
+}
+```
+
+```{r}
+microbenchmark(
+    liqueueR = test_liqueueR_pqueue_push_pop(200),
+    datastructures = test_datastructures_pqueue_push_pop(200),
+    collections = test_collections_pqueue_push_pop(200),
+    times = 10,
+    unit = "relative"
+)
+```
+
 
 ## Dict / hashmap
 
@@ -186,10 +252,10 @@ test_collections_dict_set_get <- function(n) {
 
 ```{r}
 microbenchmark(
-    datastructures = test_datastructures_dict_set_get(5000),
-    hash = test_hash_dict_set_get(5000),
-    hashmap = test_hashmap_dict_set_get(5000),
-    collections = test_collections_dict_set_get(5000),
+    datastructures = test_datastructures_dict_set_get(200),
+    hash = test_hash_dict_set_get(200),
+    hashmap = test_hashmap_dict_set_get(200),
+    collections = test_collections_dict_set_get(200),
     times = 10,
     unit = "relative"
 )
