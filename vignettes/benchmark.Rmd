@@ -64,18 +64,16 @@ test_collections_queue_push_pop <- function(n) {
 
 ```{r}
 microbenchmark(
-    dequer = test_dequer_queue_push_pop(200),
-    datastructures = test_datastructures_queue_push_pop(200),
-    liqueueR = test_liqueueR_queue_push_pop(200),
-    collections = test_collections_queue_push_pop(200),
+    dequer = test_dequer_queue_push_pop(100),
+    datastructures = test_datastructures_queue_push_pop(100),
+    liqueueR = test_liqueueR_queue_push_pop(100),
+    collections = test_collections_queue_push_pop(100),
     times = 10,
     unit = "relative"
 )
 microbenchmark(
-    dequer = test_dequer_queue_push_pop(2000),
-    datastructures = test_datastructures_queue_push_pop(2000),
-    liqueueR = test_liqueueR_queue_push_pop(2000),
-    collections = test_collections_queue_push_pop(2000),
+    dequer = test_dequer_queue_push_pop(10000),
+    collections = test_collections_queue_push_pop(10000),
     times = 10,
     unit = "relative"
 )
@@ -117,18 +115,16 @@ test_collections_stack_push_pop <- function(n) {
 
 ```{r}
 microbenchmark(
-    dequer = test_dequer_stack_push_pop(200),
-    datastructures = test_datastructures_stack_push_pop(200),
-    liqueueR = test_liqueueR_stack_push_pop(200),
-    collections = test_collections_stack_push_pop(200),
+    dequer = test_dequer_stack_push_pop(100),
+    datastructures = test_datastructures_stack_push_pop(100),
+    liqueueR = test_liqueueR_stack_push_pop(100),
+    collections = test_collections_stack_push_pop(100),
     times = 10,
     unit = "relative"
 )
 microbenchmark(
-    dequer = test_dequer_stack_push_pop(2000),
-    datastructures = test_datastructures_stack_push_pop(2000),
-    liqueueR = test_liqueueR_stack_push_pop(2000),
-    collections = test_collections_stack_push_pop(2000),
+    dequer = test_dequer_stack_push_pop(10000),
+    collections = test_collections_stack_push_pop(10000),
     times = 10,
     unit = "relative"
 )
@@ -162,20 +158,14 @@ test_collections_deque_push_pop <- function(n) {
 
 ```{r}
 microbenchmark(
-    dequer = test_dequer_deque_push_pop(200),
-    collections = test_collections_deque_push_pop(200),
+    dequer = test_dequer_deque_push_pop(100),
+    collections = test_collections_deque_push_pop(100),
     times = 10,
     unit = "relative"
 )
 microbenchmark(
-    dequer = test_dequer_deque_push_pop(2000),
-    collections = test_collections_deque_push_pop(2000),
-    times = 10,
-    unit = "relative"
-)
-microbenchmark(
-    dequer = test_dequer_deque_push_pop(20000),
-    collections = test_collections_deque_push_pop(20000),
+    dequer = test_dequer_deque_push_pop(10000),
+    collections = test_collections_deque_push_pop(10000),
     times = 10,
     unit = "relative"
 )
@@ -210,9 +200,9 @@ test_collections_pqueue_push_pop <- function(n) {
 
 ```{r}
 microbenchmark(
-    liqueueR = test_liqueueR_pqueue_push_pop(200),
-    datastructures = test_datastructures_pqueue_push_pop(200),
-    collections = test_collections_pqueue_push_pop(200),
+    liqueueR = test_liqueueR_pqueue_push_pop(100),
+    datastructures = test_datastructures_pqueue_push_pop(100),
+    collections = test_collections_pqueue_push_pop(100),
     times = 10,
     unit = "relative"
 )
@@ -252,10 +242,75 @@ test_collections_dict_set_get <- function(n) {
 
 ```{r}
 microbenchmark(
-    datastructures = test_datastructures_dict_set_get(200),
-    hash = test_hash_dict_set_get(200),
-    hashmap = test_hashmap_dict_set_get(200),
-    collections = test_collections_dict_set_get(200),
+    datastructures = test_datastructures_dict_set_get(100),
+    hash = test_hash_dict_set_get(100),
+    hashmap = test_hashmap_dict_set_get(100),
+    collections = test_collections_dict_set_get(100),
+    times = 10,
+    unit = "relative"
+)
+```
+
+## OrderedDict
+
+```{r, echo = FALSE}
+test_base_ordered_dict_set_get <- function(n) {
+    h <- list()
+    for (i in 1:n) h[[as.character(i)]] = rnorm(1)
+    for (i in 1:n) h[[as.character(i)]]
+    h
+}
+test_collections_ordered_dict_set_get <- function(n) {
+    h <- collections::Dict$new()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in 1:n) h$get(as.character(i))
+    h
+}
+```
+
+```{r}
+microbenchmark(
+    base = test_base_ordered_dict_set_get(100),
+    collections = test_collections_ordered_dict_set_get(100),
+    times = 10,
+    unit = "relative"
+)
+microbenchmark(
+    base = test_base_ordered_dict_set_get(10000),
+    collections = test_collections_ordered_dict_set_get(10000),
+    times = 10,
+    unit = "relative"
+)
+```
+
+```{r}
+test_base_ordered_dict_set_remove <- function(n) {
+    h <- list()
+    for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
+    for (i in sample(1:n)) {
+        h <- h[names(h) != as.character(i)]
+    }
+    h
+}
+test_collections_ordered_dict_set_remove <- function(n) {
+    h <- collections::Dict$new()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in sample(1:n)) h$remove(as.character(i))
+    h
+}
+
+```
+
+```{r}
+microbenchmark(
+    base = test_base_ordered_dict_set_remove(100),
+    collections = test_collections_ordered_dict_set_remove(100),
+    times = 10,
+    unit = "relative"
+)
+microbenchmark(
+    base = test_base_ordered_dict_set_remove(10000),
+    collections = test_collections_ordered_dict_set_remove(10000),
     times = 10,
     unit = "relative"
 )
