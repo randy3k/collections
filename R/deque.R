@@ -39,11 +39,15 @@ Deque <- R6::R6Class("Deque",
         },
         popleft = function() {
             if (is.null(private$q)) stop("deque is empty")
-            v <- pairlist_car(private$q)
-            private$q <- pairlist_cdr(private$q)
-            if (is.null(private$q)) {
+            nextq <- pairlist_cdr(private$q)
+            if (is.null(nextq)) {
                 private$last <- NULL
+            } else {
+                v <- pairlist_car(nextq)
+                pairlist_setcar(nextq, list(prev = NULL, item = v$item))
             }
+            v <- pairlist_car(private$q)
+            private$q <- nextq
             v$item
         },
         extend = function(deque) {
