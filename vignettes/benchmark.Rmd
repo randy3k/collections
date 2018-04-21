@@ -270,14 +270,14 @@ test_collections_ordered_dict_set_get <- function(n) {
 
 ```{r}
 microbenchmark(
+    base = test_collections_naive_ordered_dict_set_get(100),
     collections = test_collections_ordered_dict_set_get(100),
-    collections_array = test_collections_naive_ordered_dict_set_get(100),
     times = 10,
     unit = "relative"
 )
 microbenchmark(
+    base = test_collections_naive_ordered_dict_set_get(1000),
     collections = test_collections_ordered_dict_set_get(1000),
-    collections_array = test_collections_naive_ordered_dict_set_get(1000),
     times = 10,
     unit = "relative"
 )

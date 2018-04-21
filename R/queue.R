@@ -10,18 +10,10 @@ Queue <- R6::R6Class("Queue",
     ),
     public = list(
         push = function(item) {
-            if (is.null(private$q)) {
-                private$q <- private$last <- as.pairlist(list(item))
-            } else {
-                private$last <- pairlist_append(private$last, item)
-            }
-            invisible(item)
+            invisible(.Call("queue_push", PACKAGE = "collections", private, item))
         },
         pop = function() {
-            if (is.null(private$q)) stop("queue is empty")
-            v <- pairlist_car(private$q)
-            private$q <- pairlist_cdr(private$q)
-            v
+            .Call("queue_pop", PACKAGE = "collections", private)
         },
         size = function() length(private$q),
         as_list = function() as.list(private$q)

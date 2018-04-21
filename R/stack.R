@@ -6,18 +6,10 @@ Stack <- R6::R6Class("Stack",
     ),
     public = list(
         push = function(item) {
-            if (is.null(private$q)) {
-                private$q <- as.pairlist(list(item))
-            } else {
-                private$q <- pairlist_prepend(private$q, item)
-            }
-            invisible(item)
+            invisible(.Call("stack_push", PACKAGE = "collections", private, item))
         },
         pop = function() {
-            if (is.null(private$q)) stop("stack is empty")
-            v <- pairlist_car(private$q)
-            private$q <- pairlist_cdr(private$q)
-            v
+            .Call("stack_pop", PACKAGE = "collections", private)
         },
         size = function() length(private$q),
         as_list = function() as.list(private$q)

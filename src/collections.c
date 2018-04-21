@@ -1,16 +1,15 @@
 #include <R.h>
 #include <Rinternals.h>
-#include "pairlist.h"
+#include "queue.h"
+#include "stack.h"
 #include "deque.h"
 #include "priorityqueue.h"
 
 static const R_CallMethodDef CallEntries[] = {
-    {"pairlist_car", (DL_FUNC) &pairlist_car, 1},
-    {"pairlist_cdr", (DL_FUNC) &pairlist_cdr, 1},
-    {"pairlist_setcar", (DL_FUNC) &pairlist_setcar, 2},
-    {"pairlist_setcdr", (DL_FUNC) &pairlist_setcdr, 2},
-    {"pairlist_append", (DL_FUNC) &pairlist_append, 2},
-    {"pairlist_prepend", (DL_FUNC) &pairlist_prepend, 2},
+    {"queue_push", (DL_FUNC) &queue_push, 2},
+    {"queue_pop", (DL_FUNC) &queue_pop, 1},
+    {"stack_push", (DL_FUNC) &stack_push, 2},
+    {"stack_pop", (DL_FUNC) &stack_pop, 1},
     {"deque_push", (DL_FUNC) &deque_push, 2},
     {"deque_pushleft", (DL_FUNC) &deque_pushleft, 2},
     {"deque_pop", (DL_FUNC) &deque_pop, 1},
