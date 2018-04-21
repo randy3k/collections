@@ -68,13 +68,11 @@ microbenchmark(
     datastructures = test_datastructures_queue_push_pop(100),
     liqueueR = test_liqueueR_queue_push_pop(100),
     collections = test_collections_queue_push_pop(100),
-    times = 10,
     unit = "relative"
 )
 microbenchmark(
     dequer = test_dequer_queue_push_pop(1000),
     collections = test_collections_queue_push_pop(1000),
-    times = 10,
     unit = "relative"
 )
 ```
@@ -119,13 +117,11 @@ microbenchmark(
     datastructures = test_datastructures_stack_push_pop(100),
     liqueueR = test_liqueueR_stack_push_pop(100),
     collections = test_collections_stack_push_pop(100),
-    times = 10,
     unit = "relative"
 )
 microbenchmark(
     dequer = test_dequer_stack_push_pop(1000),
     collections = test_collections_stack_push_pop(1000),
-    times = 10,
     unit = "relative"
 )
 ```
@@ -160,13 +156,11 @@ test_collections_deque_push_pop <- function(n) {
 microbenchmark(
     dequer = test_dequer_deque_push_pop(100),
     collections = test_collections_deque_push_pop(100),
-    times = 10,
     unit = "relative"
 )
 microbenchmark(
     dequer = test_dequer_deque_push_pop(1000),
     collections = test_collections_deque_push_pop(1000),
-    times = 10,
     unit = "relative"
 )
 ```
@@ -203,7 +197,6 @@ microbenchmark(
     liqueueR = test_liqueueR_pqueue_push_pop(100),
     datastructures = test_datastructures_pqueue_push_pop(100),
     collections = test_collections_pqueue_push_pop(100),
-    times = 10,
     unit = "relative"
 )
 ```
@@ -246,7 +239,6 @@ microbenchmark(
     hash = test_hash_dict_set_get(100),
     hashmap = test_hashmap_dict_set_get(100),
     collections = test_collections_dict_set_get(100),
-    times = 10,
     unit = "relative"
 )
 ```
@@ -272,13 +264,11 @@ test_collections_ordered_dict_set_get <- function(n) {
 microbenchmark(
     base = test_collections_naive_ordered_dict_set_get(100),
     collections = test_collections_ordered_dict_set_get(100),
-    times = 10,
     unit = "relative"
 )
 microbenchmark(
     base = test_collections_naive_ordered_dict_set_get(1000),
     collections = test_collections_ordered_dict_set_get(1000),
-    times = 10,
     unit = "relative"
 )
 ```
