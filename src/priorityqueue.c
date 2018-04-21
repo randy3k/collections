@@ -1,7 +1,7 @@
-#include "heap.h"
+#include "priorityqueue.h"
 
 static void swap(SEXP h, int a, int b) {
-    SEXP temp = PROTECT(Rf_duplicate(VECTOR_ELT(h, a)));
+    SEXP temp = PROTECT(VECTOR_ELT(h, a));
     SET_VECTOR_ELT(h, a, VECTOR_ELT(h, b));
     SET_VECTOR_ELT(h, b, temp);
     UNPROTECT(1);
@@ -15,20 +15,21 @@ static int cmp(SEXP h, int a, int b) {
     return x < y;
 }
 
-static SEXP ensure_capacity(SEXP h, int n) {
+static void ensure_capacity(SEXP private, int n) {
+    SEXP h = Rf_findVarInFrame(private, Rf_install("h"));
     int m = Rf_length(h);
     int i;
     SEXP h2;
     if (m == 0) {
         h = Rf_allocVector(VECSXP, 16);
+        Rf_defineVar(Rf_install("h"), h, private);
     } else if (m < n + 1) {
         h2 = Rf_allocVector(VECSXP, 2 * m);
         for (i = 0; i < n; i++) {
             SET_VECTOR_ELT(h2, i, VECTOR_ELT(h, i));
         }
-        h = h2;
+        Rf_defineVar(Rf_install("h"), h2, private);
     }
-    return h;
 }
 
 static void sift_down(SEXP h, int start, int end) {
@@ -57,10 +58,9 @@ static void sift_up(SEXP h, int child) {
     }
 }
 
-SEXP heapify(SEXP h, SEXP _n) {
-    if (TYPEOF(h) != VECSXP) {
-        Rf_error("exptect an R list");
-    }
+SEXP heapify(SEXP private) {
+    SEXP h = Rf_findVarInFrame(private, Rf_install("h"));
+    SEXP _n = Rf_findVarInFrame(private, Rf_install("n"));
     int n = Rf_asInteger(_n);
     int start = (n - 2) / 2;
     while (start >= 0) {
@@ -70,25 +70,32 @@ SEXP heapify(SEXP h, SEXP _n) {
     return h;
 }
 
-SEXP heap_push(SEXP h, SEXP _n, SEXP v, SEXP p) {
+SEXP heap_push(SEXP private, SEXP v, SEXP p) {
     PROTECT(v);
     PROTECT(p);
+    SEXP _n = Rf_findVarInFrame(private, Rf_install("n"));
     int n = Rf_asInteger(_n);
-    h = ensure_capacity(h, n);
+    ensure_capacity(private, n);
+    SEXP h = Rf_findVarInFrame(private, Rf_install("h"));
     SEXP x = PROTECT(Rf_allocVector(VECSXP, 2));
     SET_VECTOR_ELT(x, 0, p);
     SET_VECTOR_ELT(x, 1, v);
     SET_VECTOR_ELT(h, n, x);
     sift_up(h, n);
     UNPROTECT(3);
-    return h;
+    Rf_defineVar(Rf_install("n"), Rf_ScalarInteger(n + 1), private);
+    return v;
 }
 
-SEXP heap_pop(SEXP h, SEXP _n) {
+SEXP heap_pop(SEXP private) {
+    SEXP h = Rf_findVarInFrame(private, Rf_install("h"));
+    SEXP _n = Rf_findVarInFrame(private, Rf_install("n"));
     int n = Rf_asInteger(_n);
-    swap(h, 0, n - 1);
-    SEXP x = PROTECT(VECTOR_ELT(h, n - 1));
+    if (n == 0) Rf_error("queue is empty");
+    SEXP x = PROTECT(VECTOR_ELT(h, 0));
+    SET_VECTOR_ELT(h, 0, VECTOR_ELT(h, n - 1));
     sift_down(h, 0, n - 2);
     UNPROTECT(1);
+    Rf_defineVar(Rf_install("n"), Rf_ScalarInteger(n - 1), private);
     return VECTOR_ELT(x, 1);
 }

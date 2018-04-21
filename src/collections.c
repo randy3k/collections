@@ -2,7 +2,7 @@
 #include <Rinternals.h>
 #include "pairlist.h"
 #include "deque.h"
-#include "heap.h"
+#include "priorityqueue.h"
 
 static const R_CallMethodDef CallEntries[] = {
     {"pairlist_car", (DL_FUNC) &pairlist_car, 1},
@@ -11,10 +11,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"pairlist_setcdr", (DL_FUNC) &pairlist_setcdr, 2},
     {"pairlist_append", (DL_FUNC) &pairlist_append, 2},
     {"pairlist_prepend", (DL_FUNC) &pairlist_prepend, 2},
+    {"deque_push", (DL_FUNC) &deque_push, 2},
+    {"deque_pushleft", (DL_FUNC) &deque_pushleft, 2},
+    {"deque_pop", (DL_FUNC) &deque_pop, 1},
+    {"deque_popleft", (DL_FUNC) &deque_popleft, 1},
     {"deque_remove", (DL_FUNC) &deque_remove, 2},
-    {"heapify", (DL_FUNC) &heapify, 2},
-    {"heap_push", (DL_FUNC) &heap_push, 4},
-    {"heap_pop", (DL_FUNC) &heap_pop, 2},
+    {"heapify", (DL_FUNC) &heapify, 1},
+    {"heap_push", (DL_FUNC) &heap_push, 3},
+    {"heap_pop", (DL_FUNC) &heap_pop, 1},
     {NULL, NULL, 0}
 };
 

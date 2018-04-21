@@ -17,8 +17,9 @@ OrderedDict <- R6::R6Class("OrderedDict",
                     private$e[[key]]
                 }
                 self$remove <- function(key) {
-                    .Internal(remove(key, private$e, FALSE))
                     private$q$remove(key)
+                    .Internal(remove(key, private$e, FALSE))
+                    invisible(NULL)
                 }
                 self$keys <- function() {
                     private$q$as_list()
@@ -40,7 +41,10 @@ OrderedDict <- R6::R6Class("OrderedDict",
                     private$e[[key]]
                 }
                 self$remove <- function(key) {
-                    private$e <- private$e[self$keys() != key]
+                    v <- self$keys() != key
+                    if (all(v)) stop("value not found")
+                    private$e <- private$e[v]
+                    invisible(NULL)
                 }
                 self$keys <- function() {
                     names(private$e)

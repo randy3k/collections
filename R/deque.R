@@ -7,55 +7,23 @@ Deque <- R6::R6Class("Deque",
     ),
     public = list(
         push = function(item) {
-            if (is.null(private$q)) {
-                private$q <- private$last <- as.pairlist(list(list(prev = NULL, item = item)))
-            } else {
-                private$last <- pairlist_append(
-                    private$last, list(prev = private$last, item = item))
-            }
-            invisible(item)
+            invisible(.Call("deque_push", PACKAGE = "collections", private, item))
         },
         pushleft = function(item) {
-            if (is.null(private$q)) {
-                private$q <- private$last <- as.pairlist(list(list(prev = NULL, item = item)))
-            } else {
-                head <- pairlist_prepend(private$q, list(prev = NULL, item = item))
-                v <- pairlist_car(private$q)
-                pairlist_setcar(private$q, list(prev = head, item = v$item))
-                private$q <- head
-            }
-            invisible(item)
+            invisible(.Call("deque_pushleft", PACKAGE = "collections", private, item))
         },
         pop = function() {
-            if (is.null(private$last)) stop("deque is empty")
-            v <- pairlist_car(private$last)
-            private$last <- v$prev
-            if (is.null(private$last)) {
-                private$q <- NULL
-            } else {
-                pairlist_setcdr(private$last, NULL)
-            }
-            v$item
+            .Call("deque_pop", PACKAGE = "collections", private)
         },
         popleft = function() {
-            if (is.null(private$q)) stop("deque is empty")
-            nextq <- pairlist_cdr(private$q)
-            if (is.null(nextq)) {
-                private$last <- NULL
-            } else {
-                v <- pairlist_car(nextq)
-                pairlist_setcar(nextq, list(prev = NULL, item = v$item))
-            }
-            v <- pairlist_car(private$q)
-            private$q <- nextq
-            v$item
+            .Call("deque_popleft", PACKAGE = "collections", private)
         },
         extend = function(deque) {
             !inherits(deque, "Deque") && stop("expect Deque object")
             q <- deque$.__enclos_env__$private$q
             while (!is.null(q)) {
                 v <- pairlist_car(q)
-                self$push(v$item)
+                self$push(v[[2]])
                 q <- pairlist_cdr(q)
             }
             invisible(self)
@@ -65,14 +33,13 @@ Deque <- R6::R6Class("Deque",
             q <- deque$.__enclos_env__$private$last
             while (!is.null(q)) {
                 v <- pairlist_car(q)
-                self$pushleft(v$item)
-                q <- v$prev
+                self$pushleft(v[[2]])
+                q <- v[[1]]
             }
             invisible(self)
         },
         remove = function(value) {
-            .Call("deque_remove", PACKAGE = "collections", private, value)
-            invisible(NULL)
+            invisible(.Call("deque_remove", PACKAGE = "collections", private, value))
         },
         size = function() length(private$q),
         as_list = function() {
@@ -81,7 +48,7 @@ Deque <- R6::R6Class("Deque",
             x <- private$q
             while (!is.null(x)) {
                 i <- i + 1
-                ret[[i]] <- pairlist_car(x)$item
+                ret[[i]] <- pairlist_car(x)[[2]]
                 x <- pairlist_cdr(x)
             }
             ret
