@@ -1,63 +1,22 @@
 #' @export
 OrderedDict <- R6::R6Class("OrderedDict",
     private = list(
-        e = NULL,
-        q = NULL
+        e = new.env(hash = TRUE),
+        q = Deque$new()
     ),
     public = list(
-        initialize = function(backend = "dict") {
-            if (backend == "dict") {
-                private$e <- new.env(hash = TRUE)
-                private$q <- Deque$new()
-                self$set <- function(key, value) {
-                    private$q$push(key)
-                    assign(key, value, envir = private$e)
-                }
-                self$get <- function(key, default = NULL) {
-                    private$e[[key]]
-                }
-                self$remove <- function(key) {
-                    private$q$remove(key)
-                    .Internal(remove(key, private$e, FALSE))
-                    invisible(NULL)
-                }
-                self$keys <- function() {
-                    private$q$as_list()
-                }
-                self$size <- function() length(ls(private$e))
-                self$as_list <- function() {
-                    ret <- list()
-                    for (key in self$keys()) {
-                        ret[[key]] <- self$get(key)
-                    }
-                    ret
-                }
-            } else if (backend == "array") {
-                private$e <- list()
-                self$set <- function(key, value) {
-                    private$e[[key]] <- value
-                }
-                self$get <- function(key, default = NULL) {
-                    private$e[[key]]
-                }
-                self$remove <- function(key) {
-                    v <- self$keys() != key
-                    if (all(v)) stop("value not found")
-                    private$e <- private$e[v]
-                    invisible(NULL)
-                }
-                self$keys <- function() {
-                    names(private$e)
-                }
-                self$size <- function() length(private$e)
-                self$as_list <- function() private$e
-            } else {
-                stop("unexpected backend")
-            }
+        set = function(key, value) {
+            private$q$push(key)
+            assign(key, value, envir = private$e)
         },
-        set = NULL,
-        get = NULL,
-        remove = NULL,
+        get = function(key, default = NULL) {
+            private$e[[key]]
+        },
+        remove = function(key) {
+            private$q$remove(key)
+            .Internal(remove(key, private$e, FALSE))
+            invisible(NULL)
+        },
         pop = function(key, default = NULL) {
             v <- self$get(key, default)
             self$remove(key)
@@ -66,7 +25,9 @@ OrderedDict <- R6::R6Class("OrderedDict",
         has = function(key) {
             key %in% self$keys()
         },
-        keys = NULL,
+        keys = function() {
+            private$q$as_list()
+        },
         values = function() {
             ret <- list()
             i <- 0
@@ -82,7 +43,62 @@ OrderedDict <- R6::R6Class("OrderedDict",
             }
             self
         },
-        size = NULL,
-        as_list = NULL
+        size = function() length(ls(private$e)),
+        as_list = function() {
+            ret <- list()
+            for (key in self$keys()) {
+                ret[[key]] <- self$get(key)
+            }
+            ret
+        }
+    )
+)
+
+#' @export
+NaiveOrderedDict <- R6::R6Class("NaiveOrderedDict",
+    private = list(
+        e = list()
+    ),
+    public = list(
+        set = function(key, value) {
+            private$e[[key]] <- value
+        },
+        get = function(key, default = NULL) {
+            private$e[[key]]
+        },
+        remove = function(key) {
+            v <- self$keys() != key
+            if (all(v)) stop("value not found")
+            private$e <- private$e[v]
+            invisible(NULL)
+        },
+        pop = function(key, default = NULL) {
+            v <- self$get(key, default)
+            self$remove(key)
+            v
+        },
+        has = function(key) {
+            key %in% self$keys()
+        },
+        keys = function() {
+            names(private$e)
+        },
+        values = function() {
+            ret <- list()
+            i <- 0
+            for (key in self$keys()) {
+                i <- i + 1
+                ret[[i]] <- self$get(key)
+            }
+            ret
+        },
+        update = function(d) {
+            for (key in d$keys()) {
+                self$set(key, d$get(key))
+            }
+            self
+        },
+        size = function() length(private$e),
+        as_list = function() private$e
     )
 )

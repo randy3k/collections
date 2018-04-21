@@ -2,6 +2,7 @@
 
 export(Deque)
 export(Dict)
+export(NaiveOrderedDict)
 export(OrderedDict)
 export(PriorityQueue)
 export(Queue)
