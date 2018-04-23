@@ -32,6 +32,12 @@ options(digits = 3)
 ## Queue
 
 ```{r, echo = FALSE}
+test_base_queue_push_pop <- function(n) {
+    q <- collections::QueueL$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
 test_dequer_queue_push_pop <- function(n) {
     q <- dequer::queue()
     pushback <- dequer::pushback
@@ -64,6 +70,7 @@ test_collections_queue_push_pop <- function(n) {
 
 ```{r}
 microbenchmark(
+    base = test_base_queue_push_pop(100),
     dequer = test_dequer_queue_push_pop(100),
     datastructures = test_datastructures_queue_push_pop(100),
     liqueueR = test_liqueueR_queue_push_pop(100),
@@ -71,6 +78,7 @@ microbenchmark(
     unit = "relative"
 )
 microbenchmark(
+    base = test_base_queue_push_pop(100),
     dequer = test_dequer_queue_push_pop(1000),
     collections = test_collections_queue_push_pop(1000),
     unit = "relative"
@@ -246,8 +254,8 @@ microbenchmark(
 ## OrderedDict
 
 ```{r, echo = FALSE}
-test_collections_naive_ordered_dict_set_get <- function(n) {
-    h <- collections::NaiveOrderedDict$new()
+test_base_ordered_dict_set_get <- function(n) {
+    h <- collections::OrderedDictL$new()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
     for (i in sample(1:n)) h$get(as.character(i))
     h

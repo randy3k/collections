@@ -1,5 +1,6 @@
 #' @export
 OrderedDict <- R6::R6Class("OrderedDict",
+    cloneable = FALSE,
     private = list(
         e = new.env(hash = TRUE),
         q = Deque$new()
@@ -55,7 +56,8 @@ OrderedDict <- R6::R6Class("OrderedDict",
 )
 
 #' @export
-NaiveOrderedDict <- R6::R6Class("NaiveOrderedDict",
+OrderedDictL <- R6::R6Class("OrderedDictL",
+    cloneable = FALSE,
     private = list(
         e = list()
     ),

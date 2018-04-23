@@ -1,5 +1,6 @@
 #' @export
 Dict <- R6::R6Class("Dict",
+    cloneable = FALSE,
     private = list(
         e = new.env(hash = TRUE)
     ),
