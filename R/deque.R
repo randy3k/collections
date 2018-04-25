@@ -61,7 +61,7 @@ Deque <- R6::R6Class("Deque",
 DequeL <- R6::R6Class("DequeL",
     cloneable = FALSE,
     private = list(
-        q = NULL,
+        q = list(),
         n = 0
     ),
     public = list(

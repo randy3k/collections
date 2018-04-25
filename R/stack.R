@@ -20,7 +20,7 @@ Stack <- R6::R6Class("Stack",
 StackL <- R6::R6Class("StackL",
     cloneable = FALSE,
     private = list(
-        q = NULL,
+        q = list(),
         n = 0
     ),
     public = list(
