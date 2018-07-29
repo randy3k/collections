@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# High Performance Container Datatypes for R
+# High Performance Container Data Types for R
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/collections)](https://cran.r-project.org/package=collections)
 
@@ -10,7 +10,7 @@ Github: <https://github.com/randy3k/collections>
 Documentation:
 [http://randy3k.github.io/collections](https://randy3k.github.io/collections)
 
-Provides high performance container datatypes such as Queue, Stack,
+Provides high performance container data types such as Queue, Stack,
 Deque, Dict and OrderedDict. Benchmarks
 <https://randy3k.github.io/collections/articles/benchmark.html> have
 shown that these containers are asymptotically more efficient than those

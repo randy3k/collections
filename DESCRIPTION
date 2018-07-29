@@ -1,13 +1,13 @@
 Package: collections
 Type: Package
-Title: High Performance Container Datatypes for R
+Title: High Performance Container Data Types for R
 Version: 0.1.0
 Date: 2018-07-29
 Authors@R: c(
     person("Randy", "Lai", , "randy.cs.lai@gmail.com", role = c("aut", "cre"))
     )
-Description: Provides high performance container datatypes such as Queue, Stack, Deque, Dict and OrderedDict. Benchmarks <https://randy3k.github.io/collections/articles/benchmark.html> have shown that these containers are asymptotically more efficient than those offered by other packages.
-URL: https://randy3k.github.io/arrangements
+Description: Provides high performance container data types such as Queue, Stack, Deque, Dict and OrderedDict. Benchmarks <https://randy3k.github.io/collections/articles/benchmark.html> have shown that these containers are asymptotically more efficient than those offered by other packages.
+URL: https://randy3k.github.io/collections
 License: MIT + file LICENSE
 Depends:
     R (>= 3.4.0)
