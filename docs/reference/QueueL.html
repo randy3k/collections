@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • collections</title>
+<title>QueueL — QueueL • collections</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,17 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="QueueL — QueueL" />
+
+<meta property="og:description" content="The QueueL class returns a queue with list backend.
+It is recommended for short queue.
+QueueL$new()
+QueueL$push(item)
+QueueL$pop()
+QueueL$size()
+QueueL$as_list()
+" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +56,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -101,17 +111,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>QueueL</h1>
+    
+    <div class="hidden name"><code>QueueL.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="benchmark.html">Benchmarking 'collections'</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>The <code>QueueL</code> class returns a queue with list backend.
+It is recommended for short queue.</p><pre>
+QueueL$new()
+QueueL$push(item)
+QueueL$pop()
+QueueL$size()
+QueueL$as_list()
+</pre>
+    
     </div>
+
+    <pre class="usage"><span class='no'>QueueL</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='Queue.html'>Queue</a></p></div>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>QueueL</span>$<span class='fu'>new</span>()
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"first"</span>)
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"second"</span>)
+<span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># first</span></div><div class='output co'>#&gt; [1] "first"</div><div class='input'><span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># second</span></div><div class='output co'>#&gt; [1] "second"</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

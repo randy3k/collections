@@ -11,7 +11,7 @@ d <- packageDescription("collections")
 ```
 
 ```{r results="asis", echo = FALSE, eval = TRUE}
-cat(c("# ", paste(trimws(strsplit(d$Title, "\n")[[1]]), collapse=" ")))
+cat(c("# ", paste(trimws(strsplit(d$Title, "\n")[[1]]), collapse = " ")))
 ```
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/collections)](https://cran.r-project.org/package=collections)

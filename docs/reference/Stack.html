@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • collections</title>
+<title>Stack — Stack • collections</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,17 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Stack — Stack" />
+
+<meta property="og:description" content="The Stack class returns a stack with pairlist backend.
+It is recommended for long stack
+Stack$new()
+Stack$push(item)
+Stack$pop()
+Stack$size()
+Stack$as_list()
+" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +56,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -101,17 +111,62 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Stack</h1>
+    
+    <div class="hidden name"><code>Stack.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="benchmark.html">Benchmarking 'collections'</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>The <code>Stack</code> class returns a stack with pairlist backend.
+It is recommended for long stack</p><pre>
+Stack$new()
+Stack$push(item)
+Stack$pop()
+Stack$size()
+Stack$as_list()
+</pre>
+    
     </div>
+
+    <pre class="usage"><span class='no'>Stack</span></pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>item</th>
+      <td><p>any R object</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='StackL.html'>StackL</a></p></div>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='no'>Stack</span>$<span class='fu'>new</span>()
+<span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"first"</span>)
+<span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"second"</span>)
+<span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># second</span></div><div class='output co'>#&gt; [1] "second"</div><div class='input'><span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># first</span></div><div class='output co'>#&gt; [1] "first"</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

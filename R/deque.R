@@ -1,3 +1,29 @@
+#' @title Double Ended Queue
+#' @description
+#' The `Deque` class creates a double ended queue with pairlist backend.
+#' It is recommended for long queue.
+#' \preformatted{
+#' Deque$new()
+#' Deque$push(item)
+#' Deque$pushleft(item)
+#' Deque$pop()
+#' Deque$popleft()
+#' Deque$extend(q)
+#' Deque$extendleft(q)
+#' Deque$remove(item)
+#' Deque$size()
+#' Deque$as_list()
+#' }
+#' @param item any R object
+#' @param q a Deque object
+#' @examples
+#' q <- Deque$new()
+#' q$push("foo")
+#' q$push("bar")
+#' q$pushleft("baz")
+#' q$pop()  # bar
+#' q$popleft()  # baz
+#' @seealso [DequeL]
 #' @export
 Deque <- R6::R6Class("Deque",
     cloneable = FALSE,
@@ -22,9 +48,9 @@ Deque <- R6::R6Class("Deque",
             !inherits(deque, "Deque") && stop("expect Deque object")
             q <- deque$.__enclos_env__$private$q
             while (!is.null(q)) {
-                v <- pairlist_car(q)
+                v <- .Call("pairlist_car", PACKAGE = "collections", q)
                 self$push(v[[2]])
-                q <- pairlist_cdr(q)
+                q <- .Call("pairlist_cdr", PACKAGE = "collections", q)
             }
             invisible(self)
         },
@@ -32,14 +58,14 @@ Deque <- R6::R6Class("Deque",
             !inherits(deque, "Deque") && stop("expect Deque object")
             q <- deque$.__enclos_env__$private$last
             while (!is.null(q)) {
-                v <- pairlist_car(q)
+                v <- .Call("pairlist_car", PACKAGE = "collections", q)
                 self$pushleft(v[[2]])
                 q <- v[[1]]
             }
             invisible(self)
         },
-        remove = function(value) {
-            invisible(.Call("deque_remove", PACKAGE = "collections", private, value))
+        remove = function(item) {
+            invisible(.Call("deque_remove", PACKAGE = "collections", private, item))
         },
         size = function() length(private$q),
         as_list = function() {
@@ -48,8 +74,8 @@ Deque <- R6::R6Class("Deque",
             x <- private$q
             while (!is.null(x)) {
                 i <- i + 1
-                ret[[i]] <- pairlist_car(x)[[2]]
-                x <- pairlist_cdr(x)
+                ret[[i]] <- .Call("pairlist_car", PACKAGE = "collections", x)[[2]]
+                x <- .Call("pairlist_cdr", PACKAGE = "collections", x)
             }
             ret
         }
@@ -57,6 +83,32 @@ Deque <- R6::R6Class("Deque",
 )
 
 
+#' @title Double Ended Queue (list based)
+#' @description
+#' The `DequeL` class creates a double ended queue with list backend.
+#' It is recommended for long queue.
+#' \preformatted{
+#' DequeL$new()
+#' DequeL$push(item)
+#' DequeL$pushleft(item)
+#' DequeL$pop()
+#' DequeL$popleft()
+#' DequeL$extend(q)
+#' DequeL$extendleft(q)
+#' DequeL$remove(item)
+#' DequeL$size()
+#' DequeL$as_list()
+#' }
+#' @param item any R object
+#' @param q a DequeL object
+#' @examples
+#' q <- DequeL$new()
+#' q$push("foo")
+#' q$push("bar")
+#' q$pushleft("baz")
+#' q$pop()  # bar
+#' q$popleft()  # baz
+#' @seealso [Deque]
 #' @export
 DequeL <- R6::R6Class("DequeL",
     cloneable = FALSE,

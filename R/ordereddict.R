@@ -1,3 +1,35 @@
+#' @title Ordered Dictionary
+#' @description
+#' The `OrderedDict` class creates an ordered dictionary.
+#' Keys are stored in a double ended queue [Deque] while items are stored in an R environment.
+#' It is recommended for large dicts.
+#' \preformatted{
+#' OrderedDict$new()
+#' OrderedDict$set(key, value)
+#' OrderedDict$get(key, default = NULL)
+#' OrderedDict$remove(key)
+#' OrderedDict$pop(key, default = NULL)
+#' OrderedDict$has(key)
+#' OrderedDict$keys()
+#' OrderedDict$values()
+#' OrderedDict$update(d)
+#' OrderedDict$size()
+#' OrderedDict$as_list()
+#' }
+#' @param key any R object, key of the item
+#' @param value any R object, value of the item
+#' @param default the default value of an item if the key is not found
+#' @param d an OrderedDict or OrderedDictL
+#' @examples
+#' d <- OrderedDict$new()
+#' d$set("apple", 5)
+#' d$set("orange", 10)
+#' d$set("banana", 3)
+#' d$get("apple")
+#' d$as_list()  # the order the item is preserved
+#' d$pop("orange")
+#' d$as_list()  # "orange" is removed
+#' @seealso [Dict] and [OrderedDictL]
 #' @export
 OrderedDict <- R6::R6Class("OrderedDict",
     cloneable = FALSE,
@@ -19,6 +51,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
             invisible(NULL)
         },
         pop = function(key, default = NULL) {
+            if (is.null(key)) stop("key cannot be empty")
             v <- self$get(key, default)
             self$remove(key)
             v
@@ -55,6 +88,38 @@ OrderedDict <- R6::R6Class("OrderedDict",
     )
 )
 
+#' @title Ordered Dictionary (list based)
+#' @description
+#' The `OrderedDictL` class creates an ordered dictionary.
+#' The key-value pairs are stored in an R environment.
+#' It is recommended for small dicts.
+#' \preformatted{
+#' OrderedDictL$new()
+#' OrderedDictL$set(key, value)
+#' OrderedDictL$get(key, default = NULL)
+#' OrderedDictL$remove(key)
+#' OrderedDictL$pop(key, default = NULL)
+#' OrderedDictL$has(key)
+#' OrderedDictL$keys()
+#' OrderedDictL$values()
+#' OrderedDictL$update(d)
+#' OrderedDictL$size()
+#' OrderedDictL$as_list()
+#' }
+#' @param key any R object, key of the item
+#' @param value any R object, value of the item
+#' @param default the default value of an item if the key is not found
+#' @param d an OrderedDictL or OrderedDictL
+#' @examples
+#' d <- OrderedDictL$new()
+#' d$set("apple", 5)
+#' d$set("orange", 10)
+#' d$set("banana", 3)
+#' d$get("apple")
+#' d$as_list()  # the order the item is preserved
+#' d$pop("orange")
+#' d$as_list()  # "orange" is removed
+#' @seealso [Dict] and [OrderedDict]
 #' @export
 OrderedDictL <- R6::R6Class("OrderedDictL",
     cloneable = FALSE,
@@ -75,6 +140,7 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
             invisible(NULL)
         },
         pop = function(key, default = NULL) {
+            if (is.null(key)) stop("key cannot be empty")
             v <- self$get(key, default)
             self$remove(key)
             v

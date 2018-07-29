@@ -1,3 +1,24 @@
+#' @title Priority Queue
+#' @description
+#' The `PriorityQueue` class creates a priority queue (a.k.a heap).
+#' \preformatted{
+#' PriorityQueue$new()
+#' PriorityQueue$push(item, priority = 0)
+#' PriorityQueue$pop()
+#' PriorityQueue$size()
+#' PriorityQueue$as_list()
+#' }
+#' @param item any R object
+#' @param priority non-negative interger, item with larger priority pops first
+#' @examples
+#' q <- PriorityQueue$new()
+#' q$push("not_urgent")
+#' q$push("urgent", priority = 2)
+#' q$push("not_as_urgent", priority = 1)
+#' q$pop()  # urgent
+#' q$pop()  # not_as_urgent
+#' q$pop()  # not_urgent
+#' @export
 #' @export
 PriorityQueue <- R6::R6Class("PriorityQueue",
     cloneable = FALSE,

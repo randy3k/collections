@@ -1,6 +1,25 @@
 # an R implemention of queue
 # inspired by https://github.com/wch/qstack/blob/master/R/queue.R
 
+#' @title Queue
+#' @description
+#' The `Queue` class creates a queue with pairlist backend.
+#' It is recommended for long queue.
+#' \preformatted{
+#' Queue$new()
+#' Queue$push(item)
+#' Queue$pop()
+#' Queue$size()
+#' Queue$as_list()
+#' }
+#' @param item any R object
+#' @examples
+#' q <- Queue$new()
+#' q$push("first")
+#' q$push("second")
+#' q$pop()  # first
+#' q$pop()  # second
+#' @seealso [QueueL]
 #' @export
 Queue <- R6::R6Class("Queue",
     cloneable = FALSE,
@@ -20,6 +39,25 @@ Queue <- R6::R6Class("Queue",
     )
 )
 
+#' @title Queue (list based)
+#' @description
+#' The `QueueL` class creates a queue with list backend.
+#' It is recommended for short queue.
+#' \preformatted{
+#' QueueL$new()
+#' QueueL$push(item)
+#' QueueL$pop()
+#' QueueL$size()
+#' QueueL$as_list()
+#' }
+#' @param item any R object
+#' @examples
+#' q <- QueueL$new()
+#' q$push("first")
+#' q$push("second")
+#' q$pop()  # first
+#' q$pop()  # second
+#' @seealso [Queue]
 #' @export
 QueueL <- R6::R6Class("QueueL",
     cloneable = FALSE,

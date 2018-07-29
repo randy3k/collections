@@ -10,6 +10,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"queue_pop", (DL_FUNC) &queue_pop, 1},
     {"stack_push", (DL_FUNC) &stack_push, 2},
     {"stack_pop", (DL_FUNC) &stack_pop, 1},
+    {"pairlist_car", (DL_FUNC) &pairlist_car, 1},
+    {"pairlist_cdr", (DL_FUNC) &pairlist_cdr, 1},
     {"deque_push", (DL_FUNC) &deque_push, 2},
     {"deque_pushleft", (DL_FUNC) &deque_pushleft, 2},
     {"deque_pop", (DL_FUNC) &deque_pop, 1},

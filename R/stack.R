@@ -1,3 +1,22 @@
+#' @title Stack
+#' @description
+#' The `Stack` class creates a stack with pairlist backend.
+#' It is recommended for long stack
+#' \preformatted{
+#' Stack$new()
+#' Stack$push(item)
+#' Stack$pop()
+#' Stack$size()
+#' Stack$as_list()
+#' }
+#' @param item any R object
+#' @examples
+#' s <- Stack$new()
+#' s$push("first")
+#' s$push("second")
+#' s$pop()  # second
+#' s$pop()  # first
+#' @seealso [StackL]
 #' @export
 Stack <- R6::R6Class("Stack",
     cloneable = FALSE,
@@ -16,6 +35,25 @@ Stack <- R6::R6Class("Stack",
     )
 )
 
+#' @title Stack (list based)
+#' @description
+#' The `StackL` class returns a stack with list backend.
+#' It is recommended for short stack
+#' \preformatted{
+#' StackL$new()
+#' StackL$push(item)
+#' StackL$pop()
+#' StackL$size()
+#' StackL$as_list()
+#' }
+#' @param item any R object
+#' @examples
+#' s <- StackL$new()
+#' s$push("first")
+#' s$push("second")
+#' s$pop()  # second
+#' s$pop()  # first
+#' @seealso [StackL]
 #' @export
 StackL <- R6::R6Class("StackL",
     cloneable = FALSE,

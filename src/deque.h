@@ -4,6 +4,10 @@
 #include <R.h>
 #include <Rinternals.h>
 
+SEXP pairlist_car(SEXP x);
+
+SEXP pairlist_cdr(SEXP x);
+
 SEXP deque_push(SEXP private, SEXP value);
 
 SEXP deque_pushleft(SEXP private, SEXP value);

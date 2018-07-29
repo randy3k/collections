@@ -1,5 +1,21 @@
 #include "deque.h"
 
+// return the current item of a pairlist
+SEXP pairlist_car(SEXP x) {
+  if (!Rf_isList(x))
+    Rf_error("x must be a pairlist");
+  return CAR(x);
+}
+
+
+// return the next item of a pairlist
+SEXP pairlist_cdr(SEXP x) {
+  if (!Rf_isList(x))
+    Rf_error("x must be a pairlist");
+  return CDR(x);
+}
+
+
 SEXP deque_push(SEXP private, SEXP value) {
     SEXP q = Rf_findVarInFrame(private, Rf_install("q"));
     SEXP last;
