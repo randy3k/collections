@@ -8,12 +8,12 @@
 \usage{
 QueueL
 }
-\arguments{
-\item{item}{any R object}
-}
 \description{
 The \code{QueueL} class creates a queue with list backend.
 It is recommended for short queue.
+}
+\section{Usage}{
+
 \preformatted{
 QueueL$new()
 QueueL$push(item)
@@ -22,6 +22,14 @@ QueueL$size()
 QueueL$as_list()
 }
 }
+
+\section{Argument}{
+
+\itemize{
+\item \code{item}: any R object
+}
+}
+
 \examples{
 q <- QueueL$new()
 q$push("first")

@@ -8,14 +8,12 @@
 \usage{
 DequeL
 }
-\arguments{
-\item{item}{any R object}
-
-\item{q}{a DequeL object}
-}
 \description{
 The \code{DequeL} class creates a double ended queue with list backend.
 It is recommended for long queue.
+}
+\section{Usage}{
+
 \preformatted{
 DequeL$new()
 DequeL$push(item)
@@ -29,6 +27,15 @@ DequeL$size()
 DequeL$as_list()
 }
 }
+
+\section{Arguments}{
+
+\itemize{
+\item \code{item}: any R object
+\item \code{q}: a DequeL object
+}
+}
+
 \examples{
 q <- DequeL$new()
 q$push("foo")

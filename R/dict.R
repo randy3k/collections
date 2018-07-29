@@ -2,6 +2,7 @@
 #' @description
 #' The `Dict` class creates an ordinary (unordered) dictionary.
 #' The key-value pairs are stored in an R environment.
+#' @section Usage:
 #' \preformatted{
 #' Dict$new()
 #' Dict$set(key, value)
@@ -15,9 +16,10 @@
 #' Dict$size()
 #' Dict$as_list()
 #' }
-#' @param key any R object, key of the item
-#' @param value any R object, value of the item
-#' @param default the default value of an item if the key is not found
+#' @section Usage:
+#' * `key`: any R object, key of the item
+#' * `value`: any R object, value of the item
+#' * `default`: the default value of an item if the key is not found
 #' @examples
 #' d <- Dict$new()
 #' d$set("apple", 5)

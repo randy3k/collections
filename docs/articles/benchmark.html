@@ -106,11 +106,11 @@
 <a class="sourceLine" id="cb1-8" data-line-number="8">)</a></code></pre></div>
 <pre><code>## Unit: relative
 ##            expr   min    lq  mean median    uq     max neval
-##            base  2.70  2.71  2.09   2.75  2.68   0.624   100
+##            base  2.60  2.71  2.67   2.66  2.60   2.325   100
 ##          dequer  1.00  1.00  1.00   1.00  1.00   1.000   100
-##  datastructures  7.95  7.95 20.69   7.89  8.09 119.514   100
-##        liqueueR 14.17 13.88 10.85  14.20 14.86   3.190   100
-##     collections  1.10  1.10  1.11   1.11  1.08   2.447   100</code></pre>
+##  datastructures  8.11  8.20 23.76   8.06  7.87 103.618   100
+##        liqueueR 14.10 14.24 12.82  13.89 14.25   3.731   100
+##     collections  1.06  1.07  1.09   1.07  1.07   0.662   100</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">microbenchmark</span>(</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">    <span class="dt">base =</span> <span class="kw">test_base_queue_push_pop</span>(<span class="dv">1000</span>),</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">dequer =</span> <span class="kw">test_dequer_queue_push_pop</span>(<span class="dv">1000</span>),</a>
@@ -118,10 +118,10 @@
 <a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">)</a></code></pre></div>
 <pre><code>## Unit: relative
-##         expr  min   lq mean median  uq  max neval
-##         base 4.84 5.10 5.42   5.21 6.2 5.01   100
-##       dequer 1.64 1.67 1.66   1.70 1.7 1.10   100
-##  collections 1.00 1.00 1.00   1.00 1.0 1.00   100</code></pre>
+##         expr  min   lq mean median   uq  max neval
+##         base 4.85 5.18 5.09   5.18 6.06 5.22   100
+##       dequer 1.68 1.72 1.61   1.68 1.72 1.41   100
+##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
 </div>
 <div id="stack" class="section level2">
 <h2 class="hasAnchor">
@@ -136,18 +136,18 @@
 <pre><code>## Unit: relative
 ##            expr   min    lq  mean median    uq  max neval
 ##          dequer  1.00  1.00  1.00   1.00  1.00 1.00   100
-##  datastructures  7.98  7.87  7.16   8.27  8.88 2.74   100
-##        liqueueR 13.52 13.82 11.90  14.11 14.69 3.04   100
-##     collections  1.11  1.11  1.13   1.15  1.20 1.09   100</code></pre>
+##  datastructures  7.97  7.75  7.61   7.84  7.80 4.20   100
+##        liqueueR 13.72 13.53 13.13  13.75 14.45 3.24   100
+##     collections  1.09  1.10  1.07   1.10  1.08 1.14   100</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">microbenchmark</span>(</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_stack_push_pop</span>(<span class="dv">1000</span>),</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">    <span class="dt">collections =</span> <span class="kw">test_collections_stack_push_pop</span>(<span class="dv">1000</span>),</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: relative
-##         expr  min   lq mean median   uq  max neval
-##       dequer 1.64 1.62 1.52   1.67 1.61 1.03   100
-##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
+##         expr  min   lq mean median  uq  max neval
+##       dequer 1.63 1.61  1.6   1.65 1.6 1.36   100
+##  collections 1.00 1.00  1.0   1.00 1.0 1.00   100</code></pre>
 </div>
 <div id="deque" class="section level2">
 <h2 class="hasAnchor">
@@ -160,16 +160,16 @@
 <pre><code>## Unit: relative
 ##         expr  min   lq mean median   uq  max neval
 ##       dequer 1.00 1.00 1.00   1.00 1.00 1.00   100
-##  collections 1.17 1.16 1.22   1.22 1.17 1.19   100</code></pre>
+##  collections 1.14 1.17 1.22   1.15 1.16 1.21   100</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">microbenchmark</span>(</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_deque_push_pop</span>(<span class="dv">1000</span>),</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">    <span class="dt">collections =</span> <span class="kw">test_collections_deque_push_pop</span>(<span class="dv">1000</span>),</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
 <a class="sourceLine" id="cb11-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: relative
-##         expr  min   lq mean median   uq  max neval
-##       dequer 1.23 1.27 1.17   1.25 1.21 1.26   100
-##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
+##         expr  min   lq mean median   uq   max neval
+##       dequer 1.28 1.31 1.25   1.27 1.32 0.887   100
+##  collections 1.00 1.00 1.00   1.00 1.00 1.000   100</code></pre>
 </div>
 <div id="priority-queue" class="section level2">
 <h2 class="hasAnchor">
@@ -182,8 +182,8 @@
 <a class="sourceLine" id="cb13-6" data-line-number="6">)</a></code></pre></div>
 <pre><code>## Unit: relative
 ##            expr   min    lq  mean median    uq  max neval
-##        liqueueR 19.77 21.59 19.27  21.01 19.13 4.79   100
-##  datastructures  5.84  5.98  5.69   5.95  5.63 1.99   100
+##        liqueueR 20.92 21.57 19.08  22.23 19.29 4.47   100
+##  datastructures  6.21  6.07  5.88   6.32  6.06 2.33   100
 ##     collections  1.00  1.00  1.00   1.00  1.00 1.00   100</code></pre>
 </div>
 <div id="dict-hashmap" class="section level2">
@@ -198,9 +198,9 @@
 <a class="sourceLine" id="cb15-7" data-line-number="7">)</a></code></pre></div>
 <pre><code>## Unit: relative
 ##            expr  min   lq mean median   uq   max neval
-##  datastructures 5.98 5.98 5.27   6.11 5.88  1.67   100
-##            hash 1.28 1.33 1.53   1.34 1.32  3.84   100
-##         hashmap 4.44 4.46 6.00   4.68 4.55 34.57   100
+##  datastructures 6.00 5.83 5.44   5.91 6.03  2.22   100
+##            hash 1.30 1.28 1.69   1.30 1.27  4.90   100
+##         hashmap 4.43 4.24 5.77   4.30 4.42 32.96   100
 ##     collections 1.00 1.00 1.00   1.00 1.00  1.00   100</code></pre>
 </div>
 <div id="ordereddict" class="section level2">
@@ -212,18 +212,18 @@
 <a class="sourceLine" id="cb17-4" data-line-number="4">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
 <a class="sourceLine" id="cb17-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: relative
-##         expr  min   lq mean median    uq   max neval
-##         base 1.02 1.03 0.98   1.07 0.957 0.745   100
-##  collections 1.00 1.00 1.00   1.00 1.000 1.000   100</code></pre>
+##         expr  min   lq mean median   uq   max neval
+##         base 1.08 1.07 1.02    1.1 1.14 0.678   100
+##  collections 1.00 1.00 1.00    1.0 1.00 1.000   100</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">microbenchmark</span>(</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">    <span class="dt">base =</span> <span class="kw">test_base_ordered_dict_set_get</span>(<span class="dv">1000</span>),</a>
 <a class="sourceLine" id="cb19-3" data-line-number="3">    <span class="dt">collections =</span> <span class="kw">test_collections_ordered_dict_set_get</span>(<span class="dv">1000</span>),</a>
 <a class="sourceLine" id="cb19-4" data-line-number="4">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
 <a class="sourceLine" id="cb19-5" data-line-number="5">)</a></code></pre></div>
 <pre><code>## Unit: relative
-##         expr  min   lq mean median   uq  max neval
-##         base 2.97 2.83 2.61   2.74 2.62 2.49   100
-##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
+##         expr  min  lq mean median   uq  max neval
+##         base 2.86 2.9 2.63   2.83 2.54 4.41   100
+##  collections 1.00 1.0 1.00   1.00 1.00 1.00   100</code></pre>
 </div>
   </div>
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • collections</title>
+<title>Priority Queue — PriorityQueue • collections</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,16 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Priority Queue — PriorityQueue" />
+
+<meta property="og:description" content="The PriorityQueue class creates a priority queue (a.k.a heap).
+PriorityQueue$new()
+PriorityQueue$push(item, priority = 0)
+PriorityQueue$pop()
+PriorityQueue$size()
+PriorityQueue$as_list()
+" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +55,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -99,102 +108,62 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Priority Queue</h1>
+    
+    <div class="hidden name"><code>PriorityQueue.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>The <code>PriorityQueue</code> class creates a priority queue (a.k.a heap).</p><pre>
+PriorityQueue$new()
+PriorityQueue$push(item, priority = 0)
+PriorityQueue$pop()
+PriorityQueue$size()
+PriorityQueue$as_list()
+</pre>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="Deque.html">Deque</a></code> </p>
-        </td>
-        <td><p>Double Ended Queue</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="DequeL.html">DequeL</a></code> </p>
-        </td>
-        <td><p>Double Ended Queue (list based)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Dict.html">Dict</a></code> </p>
-        </td>
-        <td><p>Dictionary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="OrderedDict.html">OrderedDict</a></code> </p>
-        </td>
-        <td><p>Ordered Dictionary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="OrderedDictL.html">OrderedDictL</a></code> </p>
-        </td>
-        <td><p>Ordered Dictionary (list based)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="PriorityQueue.html">PriorityQueue</a></code> </p>
-        </td>
-        <td><p>Priority Queue</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Queue.html">Queue</a></code> </p>
-        </td>
-        <td><p>Queue</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="QueueL.html">QueueL</a></code> </p>
-        </td>
-        <td><p>Queue (list based)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Stack.html">Stack</a></code> </p>
-        </td>
-        <td><p>Stack</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StackL.html">StackL</a></code> </p>
-        </td>
-        <td><p>Stack (list based)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="collections-package.html">collections-package</a></code> </p>
-        </td>
-        <td><p>collections: High Performance Container Datatypes for R</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='no'>PriorityQueue</span></pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>item</th>
+      <td><p>any R object</p></td>
+    </tr>
+    <tr>
+      <th>priority</th>
+      <td><p>non-negative interger, item with larger priority pops first</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
+    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>PriorityQueue</span>$<span class='fu'>new</span>()
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"not_urgent"</span>)
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"urgent"</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"not_as_urgent"</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># urgent</span></div><div class='output co'>#&gt; [1] "urgent"</div><div class='input'><span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># not_as_urgent</span></div><div class='output co'>#&gt; [1] "not_as_urgent"</div><div class='input'><span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># not_urgent</span></div><div class='output co'>#&gt; [1] "not_urgent"</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#format">Format</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

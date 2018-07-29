@@ -1,4 +1,4 @@
+#' @docType package
 #' @useDynLib collections
-#' @details
-#' High Performance Container Datatypes for R
+#' @importFrom R6 R6Class
 "_PACKAGE"

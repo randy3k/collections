@@ -3,6 +3,7 @@
 #' The `OrderedDict` class creates an ordered dictionary.
 #' Keys are stored in a double ended queue [Deque] while items are stored in an R environment.
 #' It is recommended for large dicts.
+#' @section Usage:
 #' \preformatted{
 #' OrderedDict$new()
 #' OrderedDict$set(key, value)
@@ -16,10 +17,11 @@
 #' OrderedDict$size()
 #' OrderedDict$as_list()
 #' }
-#' @param key any R object, key of the item
-#' @param value any R object, value of the item
-#' @param default the default value of an item if the key is not found
-#' @param d an OrderedDict or OrderedDictL
+#' @section Argument:
+#' * `key`: any R object, key of the item
+#' * `value`: any R object, value of the item
+#' * `default`: the default value of an item if the key is not found
+#' * `d`: an OrderedDict or OrderedDictL
 #' @examples
 #' d <- OrderedDict$new()
 #' d$set("apple", 5)
@@ -93,6 +95,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' The `OrderedDictL` class creates an ordered dictionary.
 #' The key-value pairs are stored in an R environment.
 #' It is recommended for small dicts.
+#' @section Usage:
 #' \preformatted{
 #' OrderedDictL$new()
 #' OrderedDictL$set(key, value)
@@ -106,10 +109,11 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' OrderedDictL$size()
 #' OrderedDictL$as_list()
 #' }
-#' @param key any R object, key of the item
-#' @param value any R object, value of the item
-#' @param default the default value of an item if the key is not found
-#' @param d an OrderedDictL or OrderedDictL
+#' @section Argument:
+#' * `key`: any R object, key of the item
+#' * `value`: any R object, value of the item
+#' * `default`: the default value of an item if the key is not found
+#' * `d`: an OrderedDict or OrderedDictL
 #' @examples
 #' d <- OrderedDictL$new()
 #' d$set("apple", 5)

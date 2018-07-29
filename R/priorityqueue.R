@@ -1,6 +1,7 @@
 #' @title Priority Queue
 #' @description
 #' The `PriorityQueue` class creates a priority queue (a.k.a heap).
+#' @section Usage:
 #' \preformatted{
 #' PriorityQueue$new()
 #' PriorityQueue$push(item, priority = 0)
@@ -8,8 +9,9 @@
 #' PriorityQueue$size()
 #' PriorityQueue$as_list()
 #' }
-#' @param item any R object
-#' @param priority non-negative interger, item with larger priority pops first
+#' @section Argument:
+#' * `item`: any R object
+#' * `priority`: non-negative interger, item with larger priority pops first
 #' @examples
 #' q <- PriorityQueue$new()
 #' q$push("not_urgent")

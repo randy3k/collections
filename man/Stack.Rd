@@ -8,12 +8,12 @@
 \usage{
 Stack
 }
-\arguments{
-\item{item}{any R object}
-}
 \description{
 The \code{Stack} class creates a stack with pairlist backend.
 It is recommended for long stack
+}
+\section{Usage}{
+
 \preformatted{
 Stack$new()
 Stack$push(item)
@@ -22,6 +22,14 @@ Stack$size()
 Stack$as_list()
 }
 }
+
+\section{Argument}{
+
+\itemize{
+\item \code{item}: any R object
+}
+}
+
 \examples{
 s <- Stack$new()
 s$push("first")

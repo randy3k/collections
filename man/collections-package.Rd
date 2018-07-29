@@ -8,9 +8,6 @@
 \description{
 Provides high performance container datatypes such as Queue, Stack, Deque, Dict and OrderedDict. Benchmarks <https://randy3k.github.io/collections/articles/benchmark.html> have shown that these containers are asymptotically more efficient than those offered by other packages.
 }
-\details{
-High Performance Container Datatypes for R
-}
 \seealso{
 Useful links:
 \itemize{

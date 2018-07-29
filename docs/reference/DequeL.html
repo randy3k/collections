@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • collections</title>
+<title>Double Ended Queue (list based) — DequeL • collections</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,22 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Double Ended Queue (list based) — DequeL" />
+
+<meta property="og:description" content="The DequeL class creates a double ended queue with list backend.
+It is recommended for long queue.
+DequeL$new()
+DequeL$push(item)
+DequeL$pushleft(item)
+DequeL$pop()
+DequeL$popleft()
+DequeL$extend(q)
+DequeL$extendleft(q)
+DequeL$remove(item)
+DequeL$size()
+DequeL$as_list()
+" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +61,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -99,102 +114,74 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Double Ended Queue (list based)</h1>
+    
+    <div class="hidden name"><code>DequeL.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>The <code>DequeL</code> class creates a double ended queue with list backend.
+It is recommended for long queue.</p><pre>
+DequeL$new()
+DequeL$push(item)
+DequeL$pushleft(item)
+DequeL$pop()
+DequeL$popleft()
+DequeL$extend(q)
+DequeL$extendleft(q)
+DequeL$remove(item)
+DequeL$size()
+DequeL$as_list()
+</pre>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="Deque.html">Deque</a></code> </p>
-        </td>
-        <td><p>Double Ended Queue</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="DequeL.html">DequeL</a></code> </p>
-        </td>
-        <td><p>Double Ended Queue (list based)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Dict.html">Dict</a></code> </p>
-        </td>
-        <td><p>Dictionary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="OrderedDict.html">OrderedDict</a></code> </p>
-        </td>
-        <td><p>Ordered Dictionary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="OrderedDictL.html">OrderedDictL</a></code> </p>
-        </td>
-        <td><p>Ordered Dictionary (list based)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="PriorityQueue.html">PriorityQueue</a></code> </p>
-        </td>
-        <td><p>Priority Queue</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Queue.html">Queue</a></code> </p>
-        </td>
-        <td><p>Queue</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="QueueL.html">QueueL</a></code> </p>
-        </td>
-        <td><p>Queue (list based)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Stack.html">Stack</a></code> </p>
-        </td>
-        <td><p>Stack</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StackL.html">StackL</a></code> </p>
-        </td>
-        <td><p>Stack (list based)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="collections-package.html">collections-package</a></code> </p>
-        </td>
-        <td><p>collections: High Performance Container Datatypes for R</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='no'>DequeL</span></pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>item</th>
+      <td><p>any R object</p></td>
+    </tr>
+    <tr>
+      <th>q</th>
+      <td><p>a DequeL object</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
+    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='Deque.html'>Deque</a></p></div>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>DequeL</span>$<span class='fu'>new</span>()
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"foo"</span>)
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"bar"</span>)
+<span class='no'>q</span>$<span class='fu'>pushleft</span>(<span class='st'>"baz"</span>)
+<span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># bar</span></div><div class='output co'>#&gt; <span class='error'>Error in private$q[[private$n + 1]]: subscript out of bounds</span></div><div class='input'><span class='no'>q</span>$<span class='fu'>popleft</span>()  <span class='co'># baz</span></div><div class='output co'>#&gt; [1] "baz"</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

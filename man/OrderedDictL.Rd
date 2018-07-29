@@ -8,19 +8,13 @@
 \usage{
 OrderedDictL
 }
-\arguments{
-\item{key}{any R object, key of the item}
-
-\item{value}{any R object, value of the item}
-
-\item{default}{the default value of an item if the key is not found}
-
-\item{d}{an OrderedDictL or OrderedDictL}
-}
 \description{
 The \code{OrderedDictL} class creates an ordered dictionary.
 The key-value pairs are stored in an R environment.
 It is recommended for small dicts.
+}
+\section{Usage}{
+
 \preformatted{
 OrderedDictL$new()
 OrderedDictL$set(key, value)
@@ -35,6 +29,17 @@ OrderedDictL$size()
 OrderedDictL$as_list()
 }
 }
+
+\section{Argument}{
+
+\itemize{
+\item \code{key}: any R object, key of the item
+\item \code{value}: any R object, value of the item
+\item \code{default}: the default value of an item if the key is not found
+\item \code{d}: an OrderedDict or OrderedDictL
+}
+}
+
 \examples{
 d <- OrderedDictL$new()
 d$set("apple", 5)

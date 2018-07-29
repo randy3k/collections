@@ -8,12 +8,12 @@
 \usage{
 Queue
 }
-\arguments{
-\item{item}{any R object}
-}
 \description{
 The \code{Queue} class creates a queue with pairlist backend.
 It is recommended for long queue.
+}
+\section{Usage}{
+
 \preformatted{
 Queue$new()
 Queue$push(item)
@@ -22,6 +22,14 @@ Queue$size()
 Queue$as_list()
 }
 }
+
+\section{Argument}{
+
+\itemize{
+\item \code{item}: any R object
+}
+}
+
 \examples{
 q <- Queue$new()
 q$push("first")

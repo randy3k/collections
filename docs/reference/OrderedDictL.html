@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Stack — Stack • collections</title>
+<title>Ordered Dictionary (list based) — OrderedDictL • collections</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,15 +30,22 @@
 
 
 
-<meta property="og:title" content="Stack — Stack" />
+<meta property="og:title" content="Ordered Dictionary (list based) — OrderedDictL" />
 
-<meta property="og:description" content="The Stack class creates a stack with pairlist backend.
-It is recommended for long stack
-Stack$new()
-Stack$push(item)
-Stack$pop()
-Stack$size()
-Stack$as_list()
+<meta property="og:description" content="The OrderedDictL class creates an ordered dictionary.
+The key-value pairs are stored in an R environment.
+It is recommended for small dicts.
+OrderedDictL$new()
+OrderedDictL$set(key, value)
+OrderedDictL$get(key, default = NULL)
+OrderedDictL$remove(key)
+OrderedDictL$pop(key, default = NULL)
+OrderedDictL$has(key)
+OrderedDictL$keys()
+OrderedDictL$values()
+OrderedDictL$update(d)
+OrderedDictL$size()
+OrderedDictL$as_list()
 " />
 <meta name="twitter:card" content="summary" />
 
@@ -111,32 +118,51 @@ Stack$as_list()
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Stack</h1>
+    <h1>Ordered Dictionary (list based)</h1>
     
-    <div class="hidden name"><code>Stack.Rd</code></div>
+    <div class="hidden name"><code>OrderedDictL.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The <code>Stack</code> class creates a stack with pairlist backend.
-It is recommended for long stack</p><pre>
-Stack$new()
-Stack$push(item)
-Stack$pop()
-Stack$size()
-Stack$as_list()
+    <p>The <code>OrderedDictL</code> class creates an ordered dictionary.
+The key-value pairs are stored in an R environment.
+It is recommended for small dicts.</p><pre>
+OrderedDictL$new()
+OrderedDictL$set(key, value)
+OrderedDictL$get(key, default = NULL)
+OrderedDictL$remove(key)
+OrderedDictL$pop(key, default = NULL)
+OrderedDictL$has(key)
+OrderedDictL$keys()
+OrderedDictL$values()
+OrderedDictL$update(d)
+OrderedDictL$size()
+OrderedDictL$as_list()
 </pre>
     
     </div>
 
-    <pre class="usage"><span class='no'>Stack</span></pre>
+    <pre class="usage"><span class='no'>OrderedDictL</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>item</th>
-      <td><p>any R object</p></td>
+      <th>key</th>
+      <td><p>any R object, key of the item</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>any R object, value of the item</p></td>
+    </tr>
+    <tr>
+      <th>default</th>
+      <td><p>the default value of an item if the key is not found</p></td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td><p>an OrderedDictL or OrderedDictL</p></td>
     </tr>
     </table>
     
@@ -146,14 +172,28 @@ Stack$as_list()
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='StackL.html'>StackL</a></p></div>
+    <div class='dont-index'><p><a href='Dict.html'>Dict</a> and <a href='OrderedDict.html'>OrderedDict</a></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='no'>Stack</span>$<span class='fu'>new</span>()
-<span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"first"</span>)
-<span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"second"</span>)
-<span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># second</span></div><div class='output co'>#&gt; [1] "second"</div><div class='input'><span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># first</span></div><div class='output co'>#&gt; [1] "first"</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='no'>OrderedDictL</span>$<span class='fu'>new</span>()
+<span class='no'>d</span>$<span class='fu'>set</span>(<span class='st'>"apple"</span>, <span class='fl'>5</span>)
+<span class='no'>d</span>$<span class='fu'>set</span>(<span class='st'>"orange"</span>, <span class='fl'>10</span>)
+<span class='no'>d</span>$<span class='fu'>set</span>(<span class='st'>"banana"</span>, <span class='fl'>3</span>)
+<span class='no'>d</span>$<span class='fu'>get</span>(<span class='st'>"apple"</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>d</span>$<span class='fu'>as_list</span>()  <span class='co'># the order the item is preserved</span></div><div class='output co'>#&gt; $apple
+#&gt; [1] 5
+#&gt; 
+#&gt; $orange
+#&gt; [1] 10
+#&gt; 
+#&gt; $banana
+#&gt; [1] 3
+#&gt; </div><div class='input'><span class='no'>d</span>$<span class='fu'>pop</span>(<span class='st'>"orange"</span>)</div><div class='output co'>#&gt; [1] 10</div><div class='input'><span class='no'>d</span>$<span class='fu'>as_list</span>()  <span class='co'># "orange" is removed</span></div><div class='output co'>#&gt; $apple
+#&gt; [1] 5
+#&gt; 
+#&gt; $banana
+#&gt; [1] 3
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

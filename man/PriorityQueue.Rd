@@ -8,13 +8,11 @@
 \usage{
 PriorityQueue
 }
-\arguments{
-\item{item}{any R object}
-
-\item{priority}{non-negative interger, item with larger priority pops first}
-}
 \description{
 The \code{PriorityQueue} class creates a priority queue (a.k.a heap).
+}
+\section{Usage}{
+
 \preformatted{
 PriorityQueue$new()
 PriorityQueue$push(item, priority = 0)
@@ -23,6 +21,15 @@ PriorityQueue$size()
 PriorityQueue$as_list()
 }
 }
+
+\section{Argument}{
+
+\itemize{
+\item \code{item}: any R object
+\item \code{priority}: non-negative interger, item with larger priority pops first
+}
+}
+
 \examples{
 q <- PriorityQueue$new()
 q$push("not_urgent")

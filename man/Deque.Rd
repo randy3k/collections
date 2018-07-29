@@ -8,14 +8,12 @@
 \usage{
 Deque
 }
-\arguments{
-\item{item}{any R object}
-
-\item{q}{a Deque object}
-}
 \description{
 The \code{Deque} class creates a double ended queue with pairlist backend.
 It is recommended for long queue.
+}
+\section{Usage}{
+
 \preformatted{
 Deque$new()
 Deque$push(item)
@@ -29,6 +27,15 @@ Deque$size()
 Deque$as_list()
 }
 }
+
+\section{Arguments}{
+
+\itemize{
+\item \code{item}: any R object
+\item \code{q}: a Deque object
+}
+}
+
 \examples{
 q <- Deque$new()
 q$push("foo")

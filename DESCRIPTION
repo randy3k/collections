@@ -2,6 +2,7 @@ Package: collections
 Type: Package
 Title: High Performance Container Datatypes for R
 Version: 0.1.0
+Date: 2018-07-29
 Authors@R: c(
     person("Randy", "Lai", , "randy.cs.lai@gmail.com", role = c("aut", "cre"))
     )
@@ -13,6 +14,7 @@ Depends:
 NeedsCompilation: yes
 ByteCompile: yes
 Imports: R6
+Suggests: testthat
 LazyData: true
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)

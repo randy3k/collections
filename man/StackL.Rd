@@ -8,12 +8,12 @@
 \usage{
 StackL
 }
-\arguments{
-\item{item}{any R object}
-}
 \description{
 The \code{StackL} class returns a stack with list backend.
 It is recommended for short stack
+}
+\section{Usage}{
+
 \preformatted{
 StackL$new()
 StackL$push(item)
@@ -22,6 +22,14 @@ StackL$size()
 StackL$as_list()
 }
 }
+
+\section{Argument}{
+
+\itemize{
+\item \code{item}: any R object
+}
+}
+
 \examples{
 s <- StackL$new()
 s$push("first")

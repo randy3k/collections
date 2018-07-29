@@ -8,19 +8,13 @@
 \usage{
 OrderedDict
 }
-\arguments{
-\item{key}{any R object, key of the item}
-
-\item{value}{any R object, value of the item}
-
-\item{default}{the default value of an item if the key is not found}
-
-\item{d}{an OrderedDict or OrderedDictL}
-}
 \description{
 The \code{OrderedDict} class creates an ordered dictionary.
 Keys are stored in a double ended queue \link{Deque} while items are stored in an R environment.
 It is recommended for large dicts.
+}
+\section{Usage}{
+
 \preformatted{
 OrderedDict$new()
 OrderedDict$set(key, value)
@@ -35,6 +29,17 @@ OrderedDict$size()
 OrderedDict$as_list()
 }
 }
+
+\section{Argument}{
+
+\itemize{
+\item \code{key}: any R object, key of the item
+\item \code{value}: any R object, value of the item
+\item \code{default}: the default value of an item if the key is not found
+\item \code{d}: an OrderedDict or OrderedDictL
+}
+}
+
 \examples{
 d <- OrderedDict$new()
 d$set("apple", 5)

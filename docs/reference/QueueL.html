@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>QueueL — QueueL • collections</title>
+<title>Queue (list based) — QueueL • collections</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="QueueL — QueueL" />
+<meta property="og:title" content="Queue (list based) — QueueL" />
 
-<meta property="og:description" content="The QueueL class returns a queue with list backend.
+<meta property="og:description" content="The QueueL class creates a queue with list backend.
 It is recommended for short queue.
 QueueL$new()
 QueueL$push(item)
@@ -111,14 +111,14 @@ QueueL$as_list()
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>QueueL</h1>
+    <h1>Queue (list based)</h1>
     
     <div class="hidden name"><code>QueueL.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The <code>QueueL</code> class returns a queue with list backend.
+    <p>The <code>QueueL</code> class creates a queue with list backend.
 It is recommended for short queue.</p><pre>
 QueueL$new()
 QueueL$push(item)
@@ -130,7 +130,16 @@ QueueL$as_list()
     </div>
 
     <pre class="usage"><span class='no'>QueueL</span></pre>
-        
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>item</th>
+      <td><p>any R object</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
@@ -149,6 +158,7 @@ QueueL$as_list()
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#format">Format</a></li>
 

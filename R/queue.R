@@ -5,6 +5,7 @@
 #' @description
 #' The `Queue` class creates a queue with pairlist backend.
 #' It is recommended for long queue.
+#' @section Usage:
 #' \preformatted{
 #' Queue$new()
 #' Queue$push(item)
@@ -12,7 +13,8 @@
 #' Queue$size()
 #' Queue$as_list()
 #' }
-#' @param item any R object
+#' @section Argument:
+#' * `item`: any R object
 #' @examples
 #' q <- Queue$new()
 #' q$push("first")
@@ -43,6 +45,7 @@ Queue <- R6::R6Class("Queue",
 #' @description
 #' The `QueueL` class creates a queue with list backend.
 #' It is recommended for short queue.
+#' @section Usage:
 #' \preformatted{
 #' QueueL$new()
 #' QueueL$push(item)
@@ -50,7 +53,8 @@ Queue <- R6::R6Class("Queue",
 #' QueueL$size()
 #' QueueL$as_list()
 #' }
-#' @param item any R object
+#' @section Argument:
+#' * `item`: any R object
 #' @examples
 #' q <- QueueL$new()
 #' q$push("first")

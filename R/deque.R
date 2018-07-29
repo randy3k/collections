@@ -2,6 +2,7 @@
 #' @description
 #' The `Deque` class creates a double ended queue with pairlist backend.
 #' It is recommended for long queue.
+#' @section Usage:
 #' \preformatted{
 #' Deque$new()
 #' Deque$push(item)
@@ -14,8 +15,9 @@
 #' Deque$size()
 #' Deque$as_list()
 #' }
-#' @param item any R object
-#' @param q a Deque object
+#' @section Arguments:
+#' * `item`: any R object
+#' * `q`: a Deque object
 #' @examples
 #' q <- Deque$new()
 #' q$push("foo")
@@ -87,6 +89,7 @@ Deque <- R6::R6Class("Deque",
 #' @description
 #' The `DequeL` class creates a double ended queue with list backend.
 #' It is recommended for long queue.
+#' @section Usage:
 #' \preformatted{
 #' DequeL$new()
 #' DequeL$push(item)
@@ -99,8 +102,9 @@ Deque <- R6::R6Class("Deque",
 #' DequeL$size()
 #' DequeL$as_list()
 #' }
-#' @param item any R object
-#' @param q a DequeL object
+#' @section Arguments:
+#' * `item`: any R object
+#' * `q`: a DequeL object
 #' @examples
 #' q <- DequeL$new()
 #' q$push("foo")
@@ -128,7 +132,7 @@ DequeL <- R6::R6Class("DequeL",
             invisible(item)
         },
         pop = function() {
-            v <- private$q[[private$n + 1]]
+            v <- private$q[[private$n]]
             private$q <- private$q[-private$n]
             private$n <- private$n - 1
             v
