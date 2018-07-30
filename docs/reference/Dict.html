@@ -33,19 +33,7 @@
 <meta property="og:title" content="Dictionary — Dict" />
 
 <meta property="og:description" content="The Dict class creates an ordinary (unordered) dictionary.
-The key-value pairs are stored in an R environment.
-Dict$new()
-Dict$set(key, value)
-Dict$get(key, default = NULL)
-Dict$remove(key)
-Dict$pop(key, default = NULL)
-Dict$has(key)
-Dict$keys()
-Dict$values()
-Dict$update(d)
-Dict$size()
-Dict$as_list()
-" />
+The key-value pairs are stored in an R environment." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -125,7 +113,20 @@ Dict$as_list()
     <div class="ref-description">
     
     <p>The <code>Dict</code> class creates an ordinary (unordered) dictionary.
-The key-value pairs are stored in an R environment.</p><pre>
+The key-value pairs are stored in an R environment.</p>
+    
+    </div>
+
+    <pre class="usage"><span class='no'>Dict</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    
+    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
+
+    
+    <pre>
 Dict$new()
 Dict$set(key, value)
 Dict$get(key, default = NULL)
@@ -138,31 +139,11 @@ Dict$update(d)
 Dict$size()
 Dict$as_list()
 </pre>
-    
-    </div>
-
-    <pre class="usage"><span class='no'>Dict</span></pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>key</th>
-      <td><p>any R object, key of the item</p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>any R object, value of the item</p></td>
-    </tr>
-    <tr>
-      <th>default</th>
-      <td><p>the default value of an item if the key is not found</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    <ul>
+<li><p><code>key</code>: any R object, key of the item</p></li>
+<li><p><code>value</code>: any R object, value of the item</p></li>
+<li><p><code>default</code>: the default value of an item if the key is not found</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -192,9 +173,10 @@ Dict$as_list()
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#format">Format</a></li>
+
+      <li><a href="#usage">Usage</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

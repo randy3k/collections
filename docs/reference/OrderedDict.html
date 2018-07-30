@@ -34,19 +34,7 @@
 
 <meta property="og:description" content="The OrderedDict class creates an ordered dictionary.
 Keys are stored in a double ended queue Deque while items are stored in an R environment.
-It is recommended for large dicts.
-OrderedDict$new()
-OrderedDict$set(key, value)
-OrderedDict$get(key, default = NULL)
-OrderedDict$remove(key)
-OrderedDict$pop(key, default = NULL)
-OrderedDict$has(key)
-OrderedDict$keys()
-OrderedDict$values()
-OrderedDict$update(d)
-OrderedDict$size()
-OrderedDict$as_list()
-" />
+It is recommended for large dicts." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,7 +115,20 @@ OrderedDict$as_list()
     
     <p>The <code>OrderedDict</code> class creates an ordered dictionary.
 Keys are stored in a double ended queue <a href='Deque.html'>Deque</a> while items are stored in an R environment.
-It is recommended for large dicts.</p><pre>
+It is recommended for large dicts.</p>
+    
+    </div>
+
+    <pre class="usage"><span class='no'>OrderedDict</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    
+    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
+
+    
+    <pre>
 OrderedDict$new()
 OrderedDict$set(key, value)
 OrderedDict$get(key, default = NULL)
@@ -141,34 +142,15 @@ OrderedDict$size()
 OrderedDict$as_list()
 </pre>
     
-    </div>
+    <h2 class="hasAnchor" id="argument"><a class="anchor" href="#argument"></a>Argument</h2>
 
-    <pre class="usage"><span class='no'>OrderedDict</span></pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>key</th>
-      <td><p>any R object, key of the item</p></td>
-    </tr>
-    <tr>
-      <th>value</th>
-      <td><p>any R object, value of the item</p></td>
-    </tr>
-    <tr>
-      <th>default</th>
-      <td><p>the default value of an item if the key is not found</p></td>
-    </tr>
-    <tr>
-      <th>d</th>
-      <td><p>an OrderedDict or OrderedDictL</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    <ul>
+<li><p><code>key</code>: any R object, key of the item</p></li>
+<li><p><code>value</code>: any R object, value of the item</p></li>
+<li><p><code>default</code>: the default value of an item if the key is not found</p></li>
+<li><p><code>d</code>: an OrderedDict or OrderedDictL</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -198,9 +180,12 @@ OrderedDict$as_list()
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#format">Format</a></li>
+
+      <li><a href="#usage">Usage</a></li>
+
+      <li><a href="#argument">Argument</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

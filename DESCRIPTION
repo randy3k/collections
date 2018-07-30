@@ -1,6 +1,6 @@
 Package: collections
 Type: Package
-Title: High Performance Container Data Types for R
+Title: High Performance Container Data Types
 Version: 0.1.0
 Date: 2018-07-29
 Authors@R: c(
@@ -16,5 +16,5 @@ ByteCompile: yes
 Imports: R6
 Suggests: testthat
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
