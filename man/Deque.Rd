@@ -10,7 +10,7 @@ Deque
 }
 \description{
 The \code{Deque} class creates a double ended queue with pairlist backend.
-It is recommended for long queue.
+It is recommended for long queues.
 }
 \section{Usage}{
 

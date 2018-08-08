@@ -10,7 +10,7 @@ Queue
 }
 \description{
 The \code{Queue} class creates a queue with pairlist backend.
-It is recommended for long queue.
+It is recommended for long queues.
 }
 \section{Usage}{
 

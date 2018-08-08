@@ -10,7 +10,7 @@ QueueL
 }
 \description{
 The \code{QueueL} class creates a queue with list backend.
-It is recommended for short queue.
+It is recommended for short queues.
 }
 \section{Usage}{
 

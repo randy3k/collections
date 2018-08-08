@@ -10,7 +10,7 @@ Stack
 }
 \description{
 The \code{Stack} class creates a stack with pairlist backend.
-It is recommended for long stack
+It is recommended for long stacks.
 }
 \section{Usage}{
 

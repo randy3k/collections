@@ -10,7 +10,7 @@ StackL
 }
 \description{
 The \code{StackL} class returns a stack with list backend.
-It is recommended for short stack
+It is recommended for short stacks.
 }
 \section{Usage}{
 

@@ -1,7 +1,7 @@
 #' @title Double Ended Queue
 #' @description
 #' The `Deque` class creates a double ended queue with pairlist backend.
-#' It is recommended for long queue.
+#' It is recommended for long queues.
 #' @section Usage:
 #' \preformatted{
 #' Deque$new()
@@ -88,7 +88,7 @@ Deque <- R6::R6Class("Deque",
 #' @title Double Ended Queue (list based)
 #' @description
 #' The `DequeL` class creates a double ended queue with list backend.
-#' It is recommended for long queue.
+#' It is recommended for short queues.
 #' @section Usage:
 #' \preformatted{
 #' DequeL$new()

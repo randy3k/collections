@@ -10,7 +10,7 @@ DequeL
 }
 \description{
 The \code{DequeL} class creates a double ended queue with list backend.
-It is recommended for long queue.
+It is recommended for short queues.
 }
 \section{Usage}{
 
