@@ -174,3 +174,4 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
         as_list = function() private$e
     )
 )
+

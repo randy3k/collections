@@ -22,6 +22,7 @@ We are comparing these packages with `collections`.
     `r packageDescription("hash")$Version`
 - [hashmap](https://CRAN.R-project.org/package=hashmap)
     `r packageDescription("hashmap")$Version`
+- base: R native methods implemented by collections
 
 
 ```{r, echo = FALSE}
@@ -32,12 +33,6 @@ options(digits = 3)
 ## Queue
 
 ```{r, echo = FALSE}
-test_base_queue_push_pop <- function(n) {
-    q <- collections::QueueL$new()
-    for (i in 1:n) q$push(rnorm(1))
-    for (i in 1:n) q$pop()
-    q
-}
 test_dequer_queue_push_pop <- function(n) {
     q <- dequer::queue()
     pushback <- dequer::pushback
@@ -60,6 +55,12 @@ test_liqueueR_queue_push_pop <- function(n) {
     for (i in 1:n) q$pop()
     q
 }
+test_collections_queue_l_push_pop <- function(n) {
+    q <- collections::QueueL$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
 test_collections_queue_push_pop <- function(n) {
     q <- collections::Queue$new()
     for (i in 1:n) q$push(rnorm(1))
@@ -70,16 +71,16 @@ test_collections_queue_push_pop <- function(n) {
 
 ```{r}
 microbenchmark(
-    base = test_base_queue_push_pop(100),
     dequer = test_dequer_queue_push_pop(100),
     datastructures = test_datastructures_queue_push_pop(100),
     liqueueR = test_liqueueR_queue_push_pop(100),
+    base = test_collections_queue_l_push_pop(100),
     collections = test_collections_queue_push_pop(100),
     unit = "relative"
 )
 microbenchmark(
-    base = test_base_queue_push_pop(1000),
     dequer = test_dequer_queue_push_pop(1000),
+    base = test_collections_queue_l_push_pop(1000),
     collections = test_collections_queue_push_pop(1000),
     unit = "relative"
 )
@@ -111,6 +112,12 @@ test_liqueueR_stack_push_pop <- function(n) {
     for (i in 1:n) q$pop()
     q
 }
+test_collections_stack_l_push_pop <- function(n) {
+    q <- collections::StackL$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
 test_collections_stack_push_pop <- function(n) {
     q <- collections::Stack$new()
     for (i in 1:n) q$push(rnorm(1))
@@ -124,11 +131,13 @@ microbenchmark(
     dequer = test_dequer_stack_push_pop(100),
     datastructures = test_datastructures_stack_push_pop(100),
     liqueueR = test_liqueueR_stack_push_pop(100),
+    base = test_collections_stack_l_push_pop(100),
     collections = test_collections_stack_push_pop(100),
     unit = "relative"
 )
 microbenchmark(
     dequer = test_dequer_stack_push_pop(1000),
+    base = test_collections_stack_l_push_pop(1000),
     collections = test_collections_stack_push_pop(1000),
     unit = "relative"
 )
@@ -149,6 +158,15 @@ test_dequer_deque_push_pop <- function(n) {
     }
     q
 }
+test_collections_deque_l_push_pop <- function(n) {
+    q <- collections::DequeL$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:floor(n / 2)) {
+        q$pop()
+        q$popleft()
+    }
+    q
+}
 test_collections_deque_push_pop <- function(n) {
     q <- collections::Deque$new()
     for (i in 1:n) q$push(rnorm(1))
@@ -163,11 +181,13 @@ test_collections_deque_push_pop <- function(n) {
 ```{r}
 microbenchmark(
     dequer = test_dequer_deque_push_pop(100),
+    base = test_collections_deque_l_push_pop(100),
     collections = test_collections_deque_push_pop(100),
     unit = "relative"
 )
 microbenchmark(
     dequer = test_dequer_deque_push_pop(1000),
+    base = test_collections_deque_l_push_pop(1000),
     collections = test_collections_deque_push_pop(1000),
     unit = "relative"
 )
@@ -218,25 +238,25 @@ test_datastructures_dict_set_get <- function(n) {
     insert <- datastructures::insert
     get <- datastructures::get
     for (i in 1:n) insert(h, as.character(i), rnorm(1))
-    for (i in 1:n) get(h, as.character(i))
+    for (i in 1:n) get(h, as.character(sample.int(n, 1)))
     h
 }
 test_hash_dict_set_get <- function(n) {
     h <- hash::hash()
     for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
-    for (i in 1:n) h[[as.character(i)]]
+    for (i in 1:n) h[[as.character(sample.int(n, 1))]]
     h
 }
 test_hashmap_dict_set_get <- function(n) {
     h <- hashmap::hashmap(keys = character(0), values = numeric(0))
     for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
-    for (i in 1:n) h[[as.character(i)]]
+    for (i in 1:n) h[[as.character(sample.int(n, 1))]]
     h
 }
 test_collections_dict_set_get <- function(n) {
     h <- collections::Dict$new()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
-    for (i in 1:n) h$get(as.character(i))
+    for (i in 1:n) h$get(as.character(sample.int(n, 1)))
     h
 }
 ```
@@ -254,7 +274,7 @@ microbenchmark(
 ## OrderedDict
 
 ```{r, echo = FALSE}
-test_base_ordered_dict_set_get <- function(n) {
+test_collections_ordered_dict_l_set_get <- function(n) {
     h <- collections::OrderedDictL$new()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
     for (i in sample(1:n)) h$get(as.character(i))
@@ -270,12 +290,12 @@ test_collections_ordered_dict_set_get <- function(n) {
 
 ```{r}
 microbenchmark(
-    base = test_base_ordered_dict_set_get(100),
+    base = test_collections_ordered_dict_l_set_get(100),
     collections = test_collections_ordered_dict_set_get(100),
     unit = "relative"
 )
 microbenchmark(
-    base = test_base_ordered_dict_set_get(1000),
+    base = test_collections_ordered_dict_l_set_get(1000),
     collections = test_collections_ordered_dict_set_get(1000),
     unit = "relative"
 )

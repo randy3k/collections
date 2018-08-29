@@ -165,3 +165,4 @@ DequeL <- R6::R6Class("DequeL",
         as_list = function() private$q
     )
 )
+

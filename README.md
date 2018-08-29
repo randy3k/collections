@@ -24,8 +24,7 @@ ended queues and it supports arbitary R objects. However, it uses
 for long queues.
 
 [datastructures](https://CRAN.R-project.org/package=datastructures) uses
-‘Boost’ and ‘STL’ data types to implement queues and hashmaps. It only
-supports atomic vectors.
+‘Boost’ and ‘STL’ data types to implement queues and hashmaps.
 
 [liqueueR](https://CRAN.R-project.org/package=liqueueR) implements
 queues using R lists.
