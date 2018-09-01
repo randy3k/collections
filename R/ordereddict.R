@@ -2,7 +2,6 @@
 #' @description
 #' The `OrderedDict` class creates an ordered dictionary.
 #' Keys are stored in a double ended queue [Deque] while items are stored in an R environment.
-#' It is recommended for large dicts.
 #' @section Usage:
 #' \preformatted{
 #' OrderedDict$new()
@@ -104,7 +103,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' @description
 #' The `OrderedDictL` class creates an ordered dictionary.
 #' The key-value pairs are stored in an R environment.
-#' It is recommended for small dicts.
+#' Pure R implementation, mainly for benchmark.
 #' @section Usage:
 #' \preformatted{
 #' OrderedDictL$new()

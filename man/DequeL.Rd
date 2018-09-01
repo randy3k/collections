@@ -10,7 +10,7 @@ DequeL
 }
 \description{
 The \code{DequeL} class creates a double ended queue with list backend.
-It is recommended for short queues.
+Pure R implementation, mainly for benchmark.
 }
 \section{Usage}{
 

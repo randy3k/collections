@@ -11,7 +11,6 @@ OrderedDict
 \description{
 The \code{OrderedDict} class creates an ordered dictionary.
 Keys are stored in a double ended queue \link{Deque} while items are stored in an R environment.
-It is recommended for large dicts.
 }
 \section{Usage}{
 

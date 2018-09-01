@@ -34,7 +34,7 @@
 
 <meta property="og:description" content="The OrderedDictL class creates an ordered dictionary.
 The key-value pairs are stored in an R environment.
-It is recommended for small dicts." />
+Pure R implementation, mainly for benchmark." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,7 +115,7 @@ It is recommended for small dicts." />
     
     <p>The <code>OrderedDictL</code> class creates an ordered dictionary.
 The key-value pairs are stored in an R environment.
-It is recommended for small dicts.</p>
+Pure R implementation, mainly for benchmark.</p>
     
     </div>
 
@@ -134,6 +134,7 @@ OrderedDictL$set(key, value)
 OrderedDictL$get(key, default = NULL)
 OrderedDictL$remove(key)
 OrderedDictL$pop(key, default = NULL)
+OrderedDict$popitem(last = TRUE, default = NULL)
 OrderedDictL$has(key)
 OrderedDictL$keys()
 OrderedDictL$values()

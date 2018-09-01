@@ -11,7 +11,7 @@ OrderedDictL
 \description{
 The \code{OrderedDictL} class creates an ordered dictionary.
 The key-value pairs are stored in an R environment.
-It is recommended for small dicts.
+Pure R implementation, mainly for benchmark.
 }
 \section{Usage}{
 

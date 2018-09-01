@@ -1,7 +1,6 @@
 #' @title Stack
 #' @description
 #' The `Stack` class creates a stack with pairlist backend.
-#' It is recommended for long stacks.
 #' @section Usage:
 #' \preformatted{
 #' Stack$new()
@@ -40,7 +39,7 @@ Stack <- R6::R6Class("Stack",
 #' @title Stack (list based)
 #' @description
 #' The `StackL` class returns a stack with list backend.
-#' It is recommended for short stacks.
+#' Pure R implementation, mainly for benchmark.
 #' @section Usage:
 #' \preformatted{
 #' StackL$new()
