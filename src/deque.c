@@ -17,7 +17,7 @@ SEXP pairlist_cdr(SEXP x) {
 
 
 SEXP deque_push(SEXP private, SEXP value) {
-    SEXP q = Rf_findVarInFrame(private, Rf_install("q"));
+    SEXP q = PROTECT(Rf_findVarInFrame(private, Rf_install("q")));
     SEXP last;
     SEXP v;
     SEXP x = PROTECT(Rf_allocVector(VECSXP ,2));
@@ -35,12 +35,12 @@ SEXP deque_push(SEXP private, SEXP value) {
         SETCDR(last, v);
         Rf_defineVar(Rf_install("last"), v, private);
     }
-    UNPROTECT(2);
+    UNPROTECT(3);
     return value;
 }
 
 SEXP deque_pushleft(SEXP private, SEXP value) {
-    SEXP q = Rf_findVarInFrame(private, Rf_install("q"));
+    SEXP q = PROTECT(Rf_findVarInFrame(private, Rf_install("q")));
     SEXP v;
     SEXP x = PROTECT(Rf_allocVector(VECSXP ,2));
     if (q == R_NilValue) {
@@ -56,12 +56,12 @@ SEXP deque_pushleft(SEXP private, SEXP value) {
         SET_VECTOR_ELT(CAR(q), 0, v);
         Rf_defineVar(Rf_install("q"), v, private);
     }
-    UNPROTECT(2);
+    UNPROTECT(3);
     return value;
 }
 
 SEXP deque_pop(SEXP private) {
-    SEXP last = Rf_findVarInFrame(private, Rf_install("last"));
+    SEXP last = PROTECT(Rf_findVarInFrame(private, Rf_install("last")));
     if (last == R_NilValue) Rf_error("deque is empty");
     SEXP prev = VECTOR_ELT(CAR(last), 0);
     if (prev == R_NilValue) {
@@ -70,11 +70,12 @@ SEXP deque_pop(SEXP private) {
         SETCDR(prev, R_NilValue);
     }
     Rf_defineVar(Rf_install("last"), prev, private);
+    UNPROTECT(1);
     return VECTOR_ELT(CAR(last), 1);
 }
 
 SEXP deque_popleft(SEXP private) {
-    SEXP q = Rf_findVarInFrame(private, Rf_install("q"));
+    SEXP q = PROTECT(Rf_findVarInFrame(private, Rf_install("q")));
     if (q == R_NilValue) Rf_error("deque is empty");
     SEXP nextq = CDR(q);
     if (nextq == R_NilValue) {
@@ -83,6 +84,7 @@ SEXP deque_popleft(SEXP private) {
         SET_VECTOR_ELT(CAR(nextq), 0, R_NilValue);
     }
     Rf_defineVar(Rf_install("q"), nextq, private);
+    UNPROTECT(1);
     return VECTOR_ELT(CAR(q), 1);
 }
 

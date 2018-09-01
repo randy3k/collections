@@ -16,8 +16,9 @@ SEXP stack_push(SEXP private, SEXP value) {
 }
 
 SEXP stack_pop(SEXP private) {
-    SEXP q = Rf_findVarInFrame(private, Rf_install("q"));
+    SEXP q = PROTECT(Rf_findVarInFrame(private, Rf_install("q")));
     if (q == R_NilValue) Rf_error("stack is empty");
     Rf_defineVar(Rf_install("q"), CDR(q), private);
+    UNPROTECT(1);
     return CAR(q);
 }
