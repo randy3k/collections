@@ -41,13 +41,13 @@ Dict <- R6::R6Class("Dict",
             assign(key, value, envir = private$e)
         },
         get = function(key, default = NULL) {
-            private$e[[key]]
+            .Call("dict_get", PACKAGE = "collections", private$e, key, default)
         },
         remove = function(key) {
-            rm(list = key, envir = private$e)
+            .Internal(remove(key, private$e, FALSE))
+            invisible(NULL)
         },
         pop = function(key, default = NULL) {
-            if (is.null(key)) stop("key cannot be empty")
             v <- self$get(key, default)
             self$remove(key)
             v
