@@ -36,10 +36,14 @@
 OrderedDict <- R6::R6Class("OrderedDict",
     cloneable = FALSE,
     private = list(
-        e = new.env(hash = TRUE),
-        q = Deque$new()
+        e = NULL,
+        q = NULL
     ),
     public = list(
+        initialize = function() {
+            private$e <- new.env(hash = TRUE)
+            private$q <- Deque$new()
+        },
         set = function(key, value) {
             private$q$push(key)
             assign(key, value, envir = private$e)

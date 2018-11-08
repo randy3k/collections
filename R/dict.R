@@ -34,9 +34,12 @@
 Dict <- R6::R6Class("Dict",
     cloneable = FALSE,
     private = list(
-        e = new.env(hash = TRUE)
+        e = NULL
     ),
     public = list(
+        initialize = function() {
+            private$e <- new.env(hash = TRUE)
+        },
         set = function(key, value) {
             assign(key, value, envir = private$e)
         },
