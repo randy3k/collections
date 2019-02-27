@@ -9,6 +9,7 @@
 #' Queue$new()
 #' Queue$push(item)
 #' Queue$pop()
+#' Queue$peek()
 #' Queue$clear()
 #' Queue$size()
 #' Queue$as_list()
@@ -39,6 +40,10 @@ Queue <- R6::R6Class("Queue",
         pop = function() {
             .Call("queue_pop", PACKAGE = "collections", private)
         },
+        peek = function() {
+            if (is.null(private$q)) stop("queue is empty")
+            .Call("pairlist_car", PACKAGE = "collections", private$q)
+        },
         clear = function() {
             private$q <- NULL
             private$last <- NULL
@@ -57,6 +62,7 @@ Queue <- R6::R6Class("Queue",
 #' QueueL$new()
 #' QueueL$push(item)
 #' QueueL$pop()
+#' QueueL$peek()
 #' QueueL$clear()
 #' QueueL$size()
 #' QueueL$as_list()
@@ -92,6 +98,10 @@ QueueL <- R6::R6Class("QueueL",
             private$q <- private$q[-1]
             private$n <- private$n - 1
             v
+        },
+        peek = function() {
+            if (private$n == 0) stop("queue is empty")
+            private$q[[1]]
         },
         clear = function() {
             private$q <- list()

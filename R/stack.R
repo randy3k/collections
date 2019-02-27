@@ -6,6 +6,7 @@
 #' Stack$new()
 #' Stack$push(item)
 #' Stack$pop()
+#' Stack$peek()
 #' Stack$clear()
 #' Stack$size()
 #' Stack$as_list()
@@ -35,6 +36,10 @@ Stack <- R6::R6Class("Stack",
         pop = function() {
             .Call("stack_pop", PACKAGE = "collections", private)
         },
+        peek = function() {
+            if (is.null(private$q)) stop("stack is empty")
+            .Call("pairlist_car", PACKAGE = "collections", private$q)
+        },
         clear = function() {
             private$q <- NULL
         },
@@ -52,6 +57,7 @@ Stack <- R6::R6Class("Stack",
 #' StackL$new()
 #' StackL$push(item)
 #' StackL$pop()
+#' StackL$peek()
 #' StackL$clear()
 #' StackL$size()
 #' StackL$as_list()
@@ -87,6 +93,10 @@ StackL <- R6::R6Class("StackL",
             private$q <- private$q[-1]
             private$n <- private$n - 1
             v
+        },
+        peek = function() {
+            if (private$n == 0) stop("stack is empty")
+            private$q[[1]]
         },
         clear = function() {
             private$q <- list()
