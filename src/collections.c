@@ -18,7 +18,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"deque_pop", (DL_FUNC) &deque_pop, 1},
     {"deque_popleft", (DL_FUNC) &deque_popleft, 1},
     {"deque_remove", (DL_FUNC) &deque_remove, 2},
-    {"dict_get", (DL_FUNC) &dict_get, 3},
+    {"dict_get", (DL_FUNC) &dict_get, 2},
     {"heapify", (DL_FUNC) &heapify, 1},
     {"heap_push", (DL_FUNC) &heap_push, 3},
     {"heap_pop", (DL_FUNC) &heap_pop, 1},

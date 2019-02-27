@@ -6,9 +6,9 @@
 #' \preformatted{
 #' Dict$new()
 #' Dict$set(key, value)
-#' Dict$get(key, default = NULL)
+#' Dict$get(key)
 #' Dict$remove(key)
-#' Dict$pop(key, default = NULL)
+#' Dict$pop(key)
 #' Dict$has(key)
 #' Dict$keys()
 #' Dict$values()
@@ -43,15 +43,15 @@ Dict <- R6::R6Class("Dict",
         set = function(key, value) {
             assign(key, value, envir = private$e)
         },
-        get = function(key, default = NULL) {
-            .Call("dict_get", PACKAGE = "collections", private$e, key, default)
+        get = function(key) {
+            .Call("dict_get", PACKAGE = "collections", private$e, key)
         },
         remove = function(key) {
             .Internal(remove(key, private$e, FALSE))
             invisible(NULL)
         },
-        pop = function(key, default = NULL) {
-            v <- self$get(key, default)
+        pop = function(key) {
+            v <- self$get(key)
             self$remove(key)
             v
         },

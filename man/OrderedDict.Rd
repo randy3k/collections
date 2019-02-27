@@ -17,10 +17,10 @@ Keys are stored in a double ended queue \link{Deque} while items are stored in a
 \preformatted{
 OrderedDict$new()
 OrderedDict$set(key, value)
-OrderedDict$get(key, default = NULL)
+OrderedDict$get(key)
 OrderedDict$remove(key)
-OrderedDict$pop(key, default = NULL)
-OrderedDict$popitem(last = TRUE, default = NULL)
+OrderedDict$pop(key)
+OrderedDict$popitem(last = TRUE)
 OrderedDict$has(key)
 OrderedDict$keys()
 OrderedDict$values()
@@ -35,7 +35,6 @@ OrderedDict$as_list()
 \itemize{
 \item \code{key}: any R object, key of the item
 \item \code{value}: any R object, value of the item
-\item \code{default}: the default value of an item if the key is not found
 \item \code{d}: an OrderedDict or OrderedDictL
 }
 }
