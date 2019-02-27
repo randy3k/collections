@@ -8,6 +8,8 @@
 #' Deque$pushleft(item)
 #' Deque$pop()
 #' Deque$popleft()
+#' Deque$peek()
+#' Deque$peekleft()
 #' Deque$extend(q)
 #' Deque$extendleft(q)
 #' Deque$remove(item)
@@ -48,6 +50,14 @@ Deque <- R6::R6Class("Deque",
         },
         popleft = function() {
             .Call("deque_popleft", PACKAGE = "collections", private)
+        },
+        peek = function() {
+            if (is.null(private$last)) stop("deque is empty")
+            .Call("pairlist_car", PACKAGE = "collections", private$last)[[2]]
+        },
+        peekleft = function() {
+            if (is.null(private$q)) stop("deque is empty")
+            .Call("pairlist_car", PACKAGE = "collections", private$q)[[2]]
         },
         extend = function(deque) {
             !inherits(deque, "Deque") && stop("expect Deque object")
@@ -103,6 +113,8 @@ Deque <- R6::R6Class("Deque",
 #' DequeL$pushleft(item)
 #' DequeL$pop()
 #' DequeL$popleft()
+#' DequeL$peek()
+#' DequeL$peekleft()
 #' DequeL$extend(q)
 #' DequeL$extendleft(q)
 #' DequeL$clear()
@@ -155,6 +167,14 @@ DequeL <- R6::R6Class("DequeL",
             private$q <- private$q[-1]
             private$n <- private$n - 1
             v
+        },
+        peek = function() {
+            if (private$n == 0) stop("deque is empty")
+            private$q[[private$n]]
+        },
+        peekleft = function() {
+            if (private$n == 0) stop("deque is empty")
+            private$q[[1]]
         },
         extend = function(deque) {
             !inherits(deque, "DequeL") && stop("expect DequeL object")
