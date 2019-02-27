@@ -17,6 +17,7 @@ The \code{Stack} class creates a stack with pairlist backend.
 Stack$new()
 Stack$push(item)
 Stack$pop()
+Stack$peek()
 Stack$clear()
 Stack$size()
 Stack$as_list()

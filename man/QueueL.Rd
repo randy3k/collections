@@ -18,6 +18,7 @@ Pure R implementation, mainly for benchmark.
 QueueL$new()
 QueueL$push(item)
 QueueL$pop()
+QueueL$peek()
 QueueL$clear()
 QueueL$size()
 QueueL$as_list()
