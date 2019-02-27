@@ -51,7 +51,8 @@ OrderedDict <- R6::R6Class("OrderedDict",
             .Call("dict_get", PACKAGE = "collections", private$e, key)
         },
         remove = function(key) {
-            private$q$remove(key)
+            result <- try(private$q$remove(key), silent = TRUE)
+            inherits(result, "try-error") && stop("key not found")
             .Internal(remove(key, private$e, FALSE))
             invisible(NULL)
         },
@@ -163,7 +164,7 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
         },
         remove = function(key) {
             v <- self$keys() != key
-            if (all(v)) stop("value not found")
+            if (all(v)) stop("key not found")
             private$e <- private$e[v]
             invisible(NULL)
         },
