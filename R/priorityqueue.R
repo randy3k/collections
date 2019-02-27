@@ -36,6 +36,14 @@ PriorityQueue <- R6::R6Class("PriorityQueue",
             .Call("heap_pop", PACKAGE = "collections", private)
         },
         size = function() private$n,
-        as_list = function() lapply(seq_len(private$n), function(i) private$h[[i]][[2]])
+        as_list = function() {
+            priorities <- sapply(seq_len(private$n), function(i) private$h[[i]][[1]])
+            ord <- order(priorities, decreasing = TRUE)
+            ret <- list()
+            for (i in seq_len(private$n)) {
+                ret[[i]] <- private$h[[ord[i]]][[2]]
+            }
+            ret
+        }
     )
 )
