@@ -13,6 +13,7 @@
 #' Dict$keys()
 #' Dict$values()
 #' Dict$update(d)
+#' Dict$clear()
 #' Dict$size()
 #' Dict$as_list()
 #' }
@@ -38,7 +39,7 @@ Dict <- R6::R6Class("Dict",
     ),
     public = list(
         initialize = function() {
-            private$e <- new.env(hash = TRUE)
+            self$clear()
         },
         set = function(key, value) {
             assign(key, value, envir = private$e)
@@ -69,6 +70,9 @@ Dict <- R6::R6Class("Dict",
                 self$set(key, d$get(key))
             }
             self
+        },
+        clear = function() {
+            private$e <- new.env(hash = TRUE)
         },
         size = function() length(ls(private$e)),
         as_list = function() as.list(private$e)

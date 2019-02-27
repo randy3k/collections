@@ -98,6 +98,13 @@ test_that("extend", {
     expect_equal(q$popleft(), "b")
 })
 
+test_that("clear", {
+    q <- Deque$new()
+    q$push("a")
+    q$push("b")
+    q$clear()
+    expect_equal(q$size(), 0)
+})
 
 context("DequeL")
 
@@ -198,4 +205,12 @@ test_that("extend", {
     expect_equal(q$pop(), "b")
     q$extendleft(q2)
     expect_equal(q$popleft(), "b")
+})
+
+test_that("clear", {
+    q <- DequeL$new()
+    q$push("a")
+    q$push("b")
+    q$clear()
+    expect_equal(q$size(), 0)
 })

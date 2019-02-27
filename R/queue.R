@@ -9,6 +9,7 @@
 #' Queue$new()
 #' Queue$push(item)
 #' Queue$pop()
+#' Queue$clear()
 #' Queue$size()
 #' Queue$as_list()
 #' }
@@ -29,11 +30,18 @@ Queue <- R6::R6Class("Queue",
         last = NULL
     ),
     public = list(
+        initialize = function() {
+            self$clear()
+        },
         push = function(item) {
             invisible(.Call("queue_push", PACKAGE = "collections", private, item))
         },
         pop = function() {
             .Call("queue_pop", PACKAGE = "collections", private)
+        },
+        clear = function() {
+            private$q <- NULL
+            private$last <- NULL
         },
         size = function() length(private$q),
         as_list = function() as.list(private$q)
@@ -49,6 +57,7 @@ Queue <- R6::R6Class("Queue",
 #' QueueL$new()
 #' QueueL$push(item)
 #' QueueL$pop()
+#' QueueL$clear()
 #' QueueL$size()
 #' QueueL$as_list()
 #' }
@@ -65,10 +74,13 @@ Queue <- R6::R6Class("Queue",
 QueueL <- R6::R6Class("QueueL",
     cloneable = FALSE,
     private = list(
-        q = list(),
-        n = 0
+        q = NULL,
+        n = NULL
     ),
     public = list(
+        initialize = function() {
+            self$clear()
+        },
         push = function(item) {
             private$q[[private$n + 1]] <- item
             private$n <- private$n + 1
@@ -80,6 +92,10 @@ QueueL <- R6::R6Class("QueueL",
             private$q <- private$q[-1]
             private$n <- private$n - 1
             v
+        },
+        clear = function() {
+            private$q <- list()
+            private$n <- 0
         },
         size = function() private$n,
         as_list = function() private$q

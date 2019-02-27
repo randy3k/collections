@@ -15,6 +15,15 @@ test_that("push and pop", {
     expect_error(q$pop(), "empty")
 })
 
+test_that("clear", {
+    q <- Queue$new()
+    q$push("a")
+    q$push("b")
+    q$push("c")
+    q$clear()
+    expect_equal(q$size(), 0)
+})
+
 
 context("QueueL")
 
@@ -31,4 +40,13 @@ test_that("push and pop", {
     expect_equal(q$pop(), 3)
     expect_equal(q$size(), 0)
     expect_error(q$pop(), "empty")
+})
+
+test_that("clear", {
+    q <- QueueL$new()
+    q$push("a")
+    q$push("b")
+    q$push("c")
+    q$clear()
+    expect_equal(q$size(), 0)
 })

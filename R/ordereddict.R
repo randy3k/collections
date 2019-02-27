@@ -14,6 +14,7 @@
 #' OrderedDict$keys()
 #' OrderedDict$values()
 #' OrderedDict$update(d)
+#' OrderedDict$clear()
 #' OrderedDict$size()
 #' OrderedDict$as_list()
 #' }
@@ -40,8 +41,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
     ),
     public = list(
         initialize = function() {
-            private$e <- new.env(hash = TRUE)
-            private$q <- Deque$new()
+            self$clear()
         },
         set = function(key, value) {
             private$q$push(key)
@@ -91,6 +91,10 @@ OrderedDict <- R6::R6Class("OrderedDict",
             }
             self
         },
+        clear = function() {
+            private$e <- new.env(hash = TRUE)
+            private$q <- Deque$new()
+        },
         size = function() length(ls(private$e)),
         as_list = function() {
             ret <- list()
@@ -105,7 +109,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' @title Ordered Dictionary (list based)
 #' @description
 #' The `OrderedDictL` class creates an ordered dictionary.
-#' The key-value pairs are stored in an R environment.
+#' The key-value pairs are stored in an R List.
 #' Pure R implementation, mainly for benchmark.
 #' @section Usage:
 #' \preformatted{
@@ -119,6 +123,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' OrderedDictL$keys()
 #' OrderedDictL$values()
 #' OrderedDictL$update(d)
+#' OrderedDictL$clear()
 #' OrderedDictL$size()
 #' OrderedDictL$as_list()
 #' }
@@ -140,9 +145,12 @@ OrderedDict <- R6::R6Class("OrderedDict",
 OrderedDictL <- R6::R6Class("OrderedDictL",
     cloneable = FALSE,
     private = list(
-        e = list()
+        e = NULL
     ),
     public = list(
+        initialize = function() {
+            self$clear()
+        },
         set = function(key, value) {
             private$e[[key]] <- value
         },
@@ -195,6 +203,9 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
                 self$set(key, d$get(key))
             }
             self
+        },
+        clear = function() {
+            private$e <- list()
         },
         size = function() length(private$e),
         as_list = function() private$e

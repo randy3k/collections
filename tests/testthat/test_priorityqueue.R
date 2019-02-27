@@ -33,3 +33,13 @@ test_that("as_list", {
     q$push("c", 1)
     expect_equal(q$as_list(), list("b", "a", "d", "c"))
 })
+
+test_that("clear", {
+    q <- PriorityQueue$new()
+    q$push("a", 2)
+    q$push("b", 3)
+    q$push("d", 2)
+    q$push("c", 1)
+    q$clear()
+    expect_equal(q$size(), 0)
+})

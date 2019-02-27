@@ -6,6 +6,7 @@
 #' Stack$new()
 #' Stack$push(item)
 #' Stack$pop()
+#' Stack$clear()
 #' Stack$size()
 #' Stack$as_list()
 #' }
@@ -25,11 +26,17 @@ Stack <- R6::R6Class("Stack",
         q = NULL
     ),
     public = list(
+        initialize = function() {
+            self$clear()
+        },
         push = function(item) {
             invisible(.Call("stack_push", PACKAGE = "collections", private, item))
         },
         pop = function() {
             .Call("stack_pop", PACKAGE = "collections", private)
+        },
+        clear = function() {
+            private$q <- NULL
         },
         size = function() length(private$q),
         as_list = function() as.list(private$q)
@@ -45,6 +52,7 @@ Stack <- R6::R6Class("Stack",
 #' StackL$new()
 #' StackL$push(item)
 #' StackL$pop()
+#' StackL$clear()
 #' StackL$size()
 #' StackL$as_list()
 #' }
@@ -61,10 +69,13 @@ Stack <- R6::R6Class("Stack",
 StackL <- R6::R6Class("StackL",
     cloneable = FALSE,
     private = list(
-        q = list(),
-        n = 0
+        q = NULL,
+        n = NULL
     ),
     public = list(
+        initialize = function() {
+            self$clear()
+        },
         push = function(item) {
             private$q <- c(item, private$q)
             private$n <- private$n + 1
@@ -76,6 +87,10 @@ StackL <- R6::R6Class("StackL",
             private$q <- private$q[-1]
             private$n <- private$n - 1
             v
+        },
+        clear = function() {
+            private$q <- list()
+            private$n <- 0
         },
         size = function() private$n,
         as_list = function() private$q
