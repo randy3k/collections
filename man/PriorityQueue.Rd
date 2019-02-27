@@ -17,6 +17,7 @@ The \code{PriorityQueue} class creates a priority queue (a.k.a heap).
 PriorityQueue$new()
 PriorityQueue$push(item, priority = 0)
 PriorityQueue$pop()
+PriorityQueue$clear()
 PriorityQueue$size()
 PriorityQueue$as_list()
 }

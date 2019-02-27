@@ -22,6 +22,7 @@ Deque$popleft()
 Deque$extend(q)
 Deque$extendleft(q)
 Deque$remove(item)
+Deque$clear()
 Deque$size()
 Deque$as_list()
 }

@@ -17,6 +17,7 @@ The \code{Queue} class creates a queue with pairlist backend.
 Queue$new()
 Queue$push(item)
 Queue$pop()
+Queue$clear()
 Queue$size()
 Queue$as_list()
 }

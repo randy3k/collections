@@ -10,7 +10,7 @@ OrderedDictL
 }
 \description{
 The \code{OrderedDictL} class creates an ordered dictionary.
-The key-value pairs are stored in an R environment.
+The key-value pairs are stored in an R List.
 Pure R implementation, mainly for benchmark.
 }
 \section{Usage}{
@@ -26,6 +26,7 @@ OrderedDictL$has(key)
 OrderedDictL$keys()
 OrderedDictL$values()
 OrderedDictL$update(d)
+OrderedDictL$clear()
 OrderedDictL$size()
 OrderedDictL$as_list()
 }

@@ -25,6 +25,7 @@ OrderedDict$has(key)
 OrderedDict$keys()
 OrderedDict$values()
 OrderedDict$update(d)
+OrderedDict$clear()
 OrderedDict$size()
 OrderedDict$as_list()
 }

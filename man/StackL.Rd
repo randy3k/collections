@@ -18,6 +18,7 @@ Pure R implementation, mainly for benchmark.
 StackL$new()
 StackL$push(item)
 StackL$pop()
+StackL$clear()
 StackL$size()
 StackL$as_list()
 }

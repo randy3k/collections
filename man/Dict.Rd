@@ -24,6 +24,7 @@ Dict$has(key)
 Dict$keys()
 Dict$values()
 Dict$update(d)
+Dict$clear()
 Dict$size()
 Dict$as_list()
 }

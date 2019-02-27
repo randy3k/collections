@@ -62,7 +62,7 @@ Keys are stored in a double ended queue Deque while items are stored in an R env
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collections</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.3</span>
       </span>
     </div>
 
@@ -129,14 +129,15 @@ Keys are stored in a double ended queue <a href='Deque.html'>Deque</a> while ite
     <pre>
 OrderedDict$new()
 OrderedDict$set(key, value)
-OrderedDict$get(key, default = NULL)
+OrderedDict$get(key)
 OrderedDict$remove(key)
-OrderedDict$pop(key, default = NULL)
-OrderedDict$popitem(last = TRUE, default = NULL)
+OrderedDict$pop(key)
+OrderedDict$popitem(last = TRUE)
 OrderedDict$has(key)
 OrderedDict$keys()
 OrderedDict$values()
 OrderedDict$update(d)
+OrderedDict$clear()
 OrderedDict$size()
 OrderedDict$as_list()
 </pre>
@@ -147,7 +148,6 @@ OrderedDict$as_list()
     <ul>
 <li><p><code>key</code>: any R object, key of the item</p></li>
 <li><p><code>value</code>: any R object, value of the item</p></li>
-<li><p><code>default</code>: the default value of an item if the key is not found</p></li>
 <li><p><code>d</code>: an OrderedDict or OrderedDictL</p></li>
 </ul>
     
