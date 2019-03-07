@@ -17,9 +17,9 @@ Keys are stored in a double ended queue \link{Deque} while items are stored in a
 \preformatted{
 OrderedDict$new()
 OrderedDict$set(key, value)
-OrderedDict$get(key, default = NULL)
+OrderedDict$get(key, default)
 OrderedDict$remove(key)
-OrderedDict$pop(key, default = NULL)
+OrderedDict$pop(key, default)
 OrderedDict$popitem(last = TRUE)
 OrderedDict$has(key)
 OrderedDict$keys()

@@ -17,9 +17,9 @@ The key-value pairs are stored in an R environment.
 \preformatted{
 Dict$new()
 Dict$set(key, value)
-Dict$get(key, default = NULL)
+Dict$get(key, default)
 Dict$remove(key)
-Dict$pop(key, default = NULL)
+Dict$pop(key, default)
 Dict$has(key)
 Dict$keys()
 Dict$values()

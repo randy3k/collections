@@ -18,9 +18,9 @@ Pure R implementation, mainly for benchmark.
 \preformatted{
 OrderedDictL$new()
 OrderedDictL$set(key, value)
-OrderedDictL$get(key, default = NULL)
+OrderedDictL$get(key, default)
 OrderedDictL$remove(key)
-OrderedDictL$pop(key, default = NULL)
+OrderedDictL$pop(key, default)
 OrderedDict$popitem(last = TRUE)
 OrderedDictL$has(key)
 OrderedDictL$keys()

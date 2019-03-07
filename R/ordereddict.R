@@ -6,9 +6,9 @@
 #' \preformatted{
 #' OrderedDict$new()
 #' OrderedDict$set(key, value)
-#' OrderedDict$get(key, default = NULL)
+#' OrderedDict$get(key, default)
 #' OrderedDict$remove(key)
-#' OrderedDict$pop(key, default = NULL)
+#' OrderedDict$pop(key, default)
 #' OrderedDict$popitem(last = TRUE)
 #' OrderedDict$has(key)
 #' OrderedDict$keys()
@@ -117,9 +117,9 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' \preformatted{
 #' OrderedDictL$new()
 #' OrderedDictL$set(key, value)
-#' OrderedDictL$get(key, default = NULL)
+#' OrderedDictL$get(key, default)
 #' OrderedDictL$remove(key)
-#' OrderedDictL$pop(key, default = NULL)
+#' OrderedDictL$pop(key, default)
 #' OrderedDict$popitem(last = TRUE)
 #' OrderedDictL$has(key)
 #' OrderedDictL$keys()
