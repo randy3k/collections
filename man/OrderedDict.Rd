@@ -15,7 +15,7 @@ Keys are stored in a double ended queue \link{Deque} while items are stored in a
 \section{Usage}{
 
 \preformatted{
-OrderedDict$new(...)
+OrderedDict$new(items = NULL)
 OrderedDict$set(key, value)
 OrderedDict$get(key, default)
 OrderedDict$remove(key)
@@ -34,7 +34,7 @@ OrderedDict$as_list()
 \section{Argument}{
 
 \itemize{
-\item \code{...}: initialization list
+\item \code{items}: initialization list
 \item \code{key}: any R object, key of the item
 \item \code{value}: any R object, value of the item
 \item \code{default}: optinal, the default value of an item if the key is not found
@@ -43,7 +43,7 @@ OrderedDict$as_list()
 }
 
 \examples{
-d <- OrderedDict$new(apple = 5, orange = 10)
+d <- OrderedDict$new(list(apple = 5, orange = 10))
 d$set("banana", 3)
 d$get("apple")
 d$as_list()  # the order the item is preserved

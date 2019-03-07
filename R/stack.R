@@ -3,7 +3,7 @@
 #' The `Stack` class creates a stack with pairlist backend.
 #' @section Usage:
 #' \preformatted{
-#' Stack$new(...)
+#' Stack$new(items = NULL)
 #' Stack$push(item)
 #' Stack$pop()
 #' Stack$peek()
@@ -12,7 +12,7 @@
 #' Stack$as_list()
 #' }
 #' @section Argument:
-#' * `...`: initialization list
+#' * `items`: initialization list
 #' * `item`: any R object
 #' @examples
 #' s <- Stack$new()
@@ -28,15 +28,15 @@ Stack <- R6::R6Class("Stack",
         q = NULL
     ),
     public = list(
-        initialize = function(...) {
+        initialize = function(items = NULL) {
             self$clear()
-            args <- list(...)
-            for (i in seq_along(args)) {
-                self$push(args[[i]])
+            for (i in seq_along(items)) {
+                self$push(items[[i]])
             }
         },
         push = function(item) {
-            invisible(.Call("stack_push", PACKAGE = "collections", private, item))
+            .Call("stack_push", PACKAGE = "collections", private, item)
+            invisible(self)
         },
         pop = function() {
             .Call("stack_pop", PACKAGE = "collections", private)
@@ -59,7 +59,7 @@ Stack <- R6::R6Class("Stack",
 #' Pure R implementation, mainly for benchmark.
 #' @section Usage:
 #' \preformatted{
-#' StackL$new(...)
+#' StackL$new(items = NULL)
 #' StackL$push(item)
 #' StackL$pop()
 #' StackL$peek()
@@ -68,7 +68,7 @@ Stack <- R6::R6Class("Stack",
 #' StackL$as_list()
 #' }
 #' @section Argument:
-#' * `...`: initialization list
+#' * `items`: initialization list
 #' * `item`: any R object
 #' @examples
 #' s <- StackL$new()
@@ -85,17 +85,16 @@ StackL <- R6::R6Class("StackL",
         n = NULL
     ),
     public = list(
-        initialize = function(...) {
+        initialize = function(items = NULL) {
             self$clear()
-            args <- list(...)
-            for (i in seq_along(args)) {
-                self$push(args[[i]])
+            for (i in seq_along(items)) {
+                self$push(items[[i]])
             }
         },
         push = function(item) {
             private$q <- c(item, private$q)
             private$n <- private$n + 1
-            invisible(item)
+            invisible(self)
         },
         pop = function() {
             if (private$n == 0) stop("stack is empty")

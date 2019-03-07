@@ -15,7 +15,7 @@ Pure R implementation, mainly for benchmark.
 \section{Usage}{
 
 \preformatted{
-StackL$new(...)
+StackL$new(items = NULL)
 StackL$push(item)
 StackL$pop()
 StackL$peek()
@@ -28,7 +28,7 @@ StackL$as_list()
 \section{Argument}{
 
 \itemize{
-\item \code{...}: initialization list
+\item \code{items}: initialization list
 \item \code{item}: any R object
 }
 }

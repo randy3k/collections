@@ -15,7 +15,7 @@ Pure R implementation, mainly for benchmark.
 \section{Usage}{
 
 \preformatted{
-DequeL$new(...)
+DequeL$new(items = NULL)
 DequeL$push(item)
 DequeL$pushleft(item)
 DequeL$pop()
@@ -34,7 +34,7 @@ DequeL$as_list()
 \section{Arguments}{
 
 \itemize{
-\item \code{...}: initialization list
+\item \code{items}: initialization list
 \item \code{item}: any R object
 \item \code{q}: a DequeL object
 }

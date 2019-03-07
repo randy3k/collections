@@ -4,7 +4,7 @@
 #' Keys are stored in a double ended queue [Deque] while items are stored in an R environment.
 #' @section Usage:
 #' \preformatted{
-#' OrderedDict$new(...)
+#' OrderedDict$new(items = NULL)
 #' OrderedDict$set(key, value)
 #' OrderedDict$get(key, default)
 #' OrderedDict$remove(key)
@@ -19,13 +19,13 @@
 #' OrderedDict$as_list()
 #' }
 #' @section Argument:
-#' * `...`: initialization list
+#' * `items`: initialization list
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
 #' * `default`: optinal, the default value of an item if the key is not found
 #' * `d`: an OrderedDict or OrderedDictL
 #' @examples
-#' d <- OrderedDict$new(apple = 5, orange = 10)
+#' d <- OrderedDict$new(list(apple = 5, orange = 10))
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # the order the item is preserved
@@ -40,11 +40,10 @@ OrderedDict <- R6::R6Class("OrderedDict",
         q = NULL
     ),
     public = list(
-        initialize = function(...) {
+        initialize = function(items = NULL) {
             self$clear()
-            args <- list(...)
-            for (argname in names(args)) {
-                self$set(argname, args[[argname]])
+            for (argname in names(items)) {
+                self$set(argname, items[[argname]])
             }
         },
         set = function(key, value) {
@@ -119,7 +118,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' Pure R implementation, mainly for benchmark.
 #' @section Usage:
 #' \preformatted{
-#' OrderedDictL$new()
+#' OrderedDictL$new(items = NULL)
 #' OrderedDictL$set(key, value)
 #' OrderedDictL$get(key, default)
 #' OrderedDictL$remove(key)
@@ -134,12 +133,13 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' OrderedDictL$as_list()
 #' }
 #' @section Argument:
+#' * `items`: initialization list
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
 #' * `default`: optinal, the default value of an item if the key is not found
 #' * `d`: an OrderedDict or OrderedDictL
 #' @examples
-#' d <- OrderedDictL$new(apple = 5, orange = 10)
+#' d <- OrderedDictL$new(list(apple = 5, orange = 10))
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # the order the item is preserved
@@ -153,11 +153,10 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
         e = NULL
     ),
     public = list(
-        initialize = function(...) {
+        initialize = function(items = NULL) {
             self$clear()
-            args <- list(...)
-            for (argname in names(args)) {
-                self$set(argname, args[[argname]])
+            for (argname in names(items)) {
+                self$set(argname, items[[argname]])
             }
         },
         set = function(key, value) {

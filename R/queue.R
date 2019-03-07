@@ -6,7 +6,7 @@
 #' The `Queue` class creates a queue with pairlist backend.
 #' @section Usage:
 #' \preformatted{
-#' Queue$new(...)
+#' Queue$new(items = NULL)
 #' Queue$push(item)
 #' Queue$pop()
 #' Queue$peek()
@@ -15,7 +15,7 @@
 #' Queue$as_list()
 #' }
 #' @section Argument:
-#' * `...`: initialization list
+#' * `items`: initialization list
 #' * `item`: any R object
 #' @examples
 #' q <- Queue$new()
@@ -32,11 +32,10 @@ Queue <- R6::R6Class("Queue",
         last = NULL
     ),
     public = list(
-        initialize = function(...) {
+        initialize = function(items = NULL) {
             self$clear()
-            args <- list(...)
-            for (i in seq_along(args)) {
-                self$push(args[[i]])
+            for (i in seq_along(items)) {
+                self$push(items[[i]])
             }
         },
         push = function(item) {
@@ -90,11 +89,10 @@ QueueL <- R6::R6Class("QueueL",
         n = NULL
     ),
     public = list(
-        initialize = function(...) {
+        initialize = function(items = NULL) {
             self$clear()
-            args <- list(...)
-            for (i in seq_along(args)) {
-                self$push(args[[i]])
+            for (i in seq_along(items)) {
+                self$push(items[[i]])
             }
         },
         push = function(item) {

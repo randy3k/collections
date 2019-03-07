@@ -8,7 +8,7 @@ missing_arg <- function() .Call("missing_arg", PACKAGE = "collections")
 #' The key-value pairs are stored in an R environment.
 #' @section Usage:
 #' \preformatted{
-#' Dict$new(...)
+#' Dict$new(items = NULL)
 #' Dict$set(key, value)
 #' Dict$get(key, default)
 #' Dict$remove(key)
@@ -22,12 +22,12 @@ missing_arg <- function() .Call("missing_arg", PACKAGE = "collections")
 #' Dict$as_list()
 #' }
 #' @section Usage:
-#' * `...`: initialization list
+#' * `items`: initialization list
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
 #' @examples
-#' d <- Dict$new(apple = 5, orange = 10)
+#' d <- Dict$new(list(apple = 5, orange = 10))
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # unordered
@@ -41,11 +41,10 @@ Dict <- R6::R6Class("Dict",
         e = NULL
     ),
     public = list(
-        initialize = function(...) {
+        initialize = function(items = NULL) {
             self$clear()
-            args <- list(...)
-            for (argname in names(args)) {
-                self$set(argname, args[[argname]])
+            for (argname in names(items)) {
+                self$set(argname, items[[argname]])
             }
         },
         set = function(key, value) {

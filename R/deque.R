@@ -3,7 +3,7 @@
 #' The `Deque` class creates a double ended queue with pairlist backend.
 #' @section Usage:
 #' \preformatted{
-#' Deque$new(...)
+#' Deque$new(items = NULL)
 #' Deque$push(item)
 #' Deque$pushleft(item)
 #' Deque$pop()
@@ -18,7 +18,7 @@
 #' Deque$as_list()
 #' }
 #' @section Arguments:
-#' * `...`: initialization list
+#' * `items`: initialization list
 #' * `item`: any R object
 #' * `q`: a Deque object
 #' @examples
@@ -37,11 +37,10 @@ Deque <- R6::R6Class("Deque",
         last = NULL
     ),
     public = list(
-        initialize = function(...) {
+        initialize = function(items = NULL) {
             self$clear()
-            args <- list(...)
-            for (i in seq_along(args)) {
-                self$push(args[[i]])
+            for (i in seq_along(items)) {
+                self$push(items[[i]])
             }
         },
         push = function(item) {
@@ -113,7 +112,7 @@ Deque <- R6::R6Class("Deque",
 #' Pure R implementation, mainly for benchmark.
 #' @section Usage:
 #' \preformatted{
-#' DequeL$new(...)
+#' DequeL$new(items = NULL)
 #' DequeL$push(item)
 #' DequeL$pushleft(item)
 #' DequeL$pop()
@@ -128,7 +127,7 @@ Deque <- R6::R6Class("Deque",
 #' DequeL$as_list()
 #' }
 #' @section Arguments:
-#' * `...`: initialization list
+#' * `items`: initialization list
 #' * `item`: any R object
 #' * `q`: a DequeL object
 #' @examples
@@ -147,11 +146,10 @@ DequeL <- R6::R6Class("DequeL",
         n = NULL
     ),
     public = list(
-        initialize = function(...) {
+        initialize = function(items = NULL) {
             self$clear()
-            args <- list(...)
-            for (i in seq_along(args)) {
-                self$push(args[[i]])
+            for (i in seq_along(items)) {
+                self$push(items[[i]])
             }
         },
         push = function(item) {
