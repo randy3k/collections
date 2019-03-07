@@ -23,6 +23,9 @@
 #' q$push("second")
 #' q$pop()  # first
 #' q$pop()  # second
+#'
+#' q <- Queue$new(list("foo", "bar"))
+#' q$push("baz")$push("bla")
 #' @seealso [QueueL]
 #' @export
 Queue <- R6::R6Class("Queue",
@@ -81,6 +84,9 @@ Queue <- R6::R6Class("Queue",
 #' q$push("second")
 #' q$pop()  # first
 #' q$pop()  # second
+#'
+#' q <- QueueL$new(list("foo", "bar"))
+#' q$push("baz")$push("bla")
 #' @seealso [Queue]
 #' @export
 QueueL <- R6::R6Class("QueueL",

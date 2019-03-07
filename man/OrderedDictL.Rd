@@ -50,6 +50,7 @@ d$get("apple")
 d$as_list()  # the order the item is preserved
 d$pop("orange")
 d$as_list()  # "orange" is removed
+d$set("orange", 3)$set("pear", 7)  # chain methods
 }
 \seealso{
 \link{Dict} and \link{OrderedDict}

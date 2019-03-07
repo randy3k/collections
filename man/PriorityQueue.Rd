@@ -41,5 +41,8 @@ q$push("not_as_urgent", priority = 1)
 q$pop()  # urgent
 q$pop()  # not_as_urgent
 q$pop()  # not_urgent
+
+q <- PriorityQueue$new(list("not_urgent", "urgent"), c(0, 2))
+q$push("not_as_urgent", 1)$push("not_urgent2")
 }
 \keyword{datasets}

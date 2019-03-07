@@ -31,6 +31,7 @@
 #' d$as_list()  # the order the item is preserved
 #' d$pop("orange")
 #' d$as_list()  # "orange" is removed
+#' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [Dict] and [OrderedDictL]
 #' @export
 OrderedDict <- R6::R6Class("OrderedDict",
@@ -49,6 +50,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
         set = function(key, value) {
             private$q$push(key)
             assign(key, value, envir = private$e)
+            invisible(self)
         },
         get = function(key, default = missing_arg()) {
             .Call("dict_get", PACKAGE = "collections", private$e, key, default)
@@ -57,7 +59,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
             result <- try(private$q$remove(key), silent = TRUE)
             inherits(result, "try-error") && stop("key not found")
             .Internal(remove(key, private$e, FALSE))
-            invisible(NULL)
+            invisible(self)
         },
         pop = function(key, default = missing_arg()) {
             v <- self$get(key, default)
@@ -145,6 +147,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' d$as_list()  # the order the item is preserved
 #' d$pop("orange")
 #' d$as_list()  # "orange" is removed
+#' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [Dict] and [OrderedDict]
 #' @export
 OrderedDictL <- R6::R6Class("OrderedDictL",
@@ -176,7 +179,7 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
             v <- self$keys() != key
             if (all(v)) stop("key not found")
             private$e <- private$e[v]
-            invisible(NULL)
+            invisible(self)
         },
         pop = function(key, default) {
             v <- self$get(key, default)

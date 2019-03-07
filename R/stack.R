@@ -20,6 +20,9 @@
 #' s$push("second")
 #' s$pop()  # second
 #' s$pop()  # first
+#'
+#' s <- Stack$new(list("foo", "bar"))
+#' s$push("baz")$push("bla")
 #' @seealso [StackL]
 #' @export
 Stack <- R6::R6Class("Stack",
@@ -76,6 +79,9 @@ Stack <- R6::R6Class("Stack",
 #' s$push("second")
 #' s$pop()  # second
 #' s$pop()  # first
+#'
+#' s <- StackL$new(list("foo", "bar"))
+#' s$push("baz")$push("bla")
 #' @seealso [StackL]
 #' @export
 StackL <- R6::R6Class("StackL",

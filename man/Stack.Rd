@@ -38,6 +38,9 @@ s$push("first")
 s$push("second")
 s$pop()  # second
 s$pop()  # first
+
+s <- Stack$new(list("foo", "bar"))
+s$push("baz")$push("bla")
 }
 \seealso{
 \link{StackL}

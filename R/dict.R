@@ -33,6 +33,7 @@ missing_arg <- function() .Call("missing_arg", PACKAGE = "collections")
 #' d$as_list()  # unordered
 #' d$pop("orange")
 #' d$as_list()  # "orange" is removed
+#' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [OrderedDict] and [OrderedDictL]
 #' @export
 Dict <- R6::R6Class("Dict",

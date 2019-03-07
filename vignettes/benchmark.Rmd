@@ -14,7 +14,7 @@ We are comparing these packages with `collections`.
 
 - [dequer](https://CRAN.R-project.org/package=dequer)
     `r packageDescription("dequer")$Version`
-- [datastructures ](https://CRAN.R-project.org/package=datastructures )
+- [datastructures](https://CRAN.R-project.org/package=datastructures )
     `r packageDescription("datastructures")$Version`
 - [liqueueR](https://CRAN.R-project.org/package=liqueueR)
     `r packageDescription("liqueueR")$Version`

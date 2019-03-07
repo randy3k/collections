@@ -28,6 +28,9 @@
 #' q$pushleft("baz")
 #' q$pop()  # bar
 #' q$popleft()  # baz
+#'
+#' q <- Deque$new(list("foo", "bar"))
+#' q$push("baz")$pushleft("bla")
 #' @seealso [DequeL]
 #' @export
 Deque <- R6::R6Class("Deque",
@@ -140,6 +143,9 @@ Deque <- R6::R6Class("Deque",
 #' q$pushleft("baz")
 #' q$pop()  # bar
 #' q$popleft()  # baz
+#'
+#' q <- DequeL$new(list("foo", "bar"))
+#' q$push("baz")$pushleft("bla")
 #' @seealso [Deque]
 #' @export
 DequeL <- R6::R6Class("DequeL",

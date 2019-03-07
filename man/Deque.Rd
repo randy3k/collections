@@ -46,6 +46,9 @@ q$push("bar")
 q$pushleft("baz")
 q$pop()  # bar
 q$popleft()  # baz
+
+q <- Deque$new(list("foo", "bar"))
+q$push("baz")$pushleft("bla")
 }
 \seealso{
 \link{DequeL}

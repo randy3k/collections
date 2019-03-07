@@ -38,6 +38,9 @@ q$push("first")
 q$push("second")
 q$pop()  # first
 q$pop()  # second
+
+q <- Queue$new(list("foo", "bar"))
+q$push("baz")$push("bla")
 }
 \seealso{
 \link{QueueL}

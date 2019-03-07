@@ -163,7 +163,9 @@ DequeL$as_list()
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"foo"</span>)
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"bar"</span>)
 <span class='no'>q</span>$<span class='fu'>pushleft</span>(<span class='st'>"baz"</span>)
-<span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># bar</span></div><div class='output co'>#&gt; [1] "bar"</div><div class='input'><span class='no'>q</span>$<span class='fu'>popleft</span>()  <span class='co'># baz</span></div><div class='output co'>#&gt; [1] "baz"</div></pre>
+<span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># bar</span></div><div class='output co'>#&gt; [1] "bar"</div><div class='input'><span class='no'>q</span>$<span class='fu'>popleft</span>()  <span class='co'># baz</span></div><div class='output co'>#&gt; [1] "baz"</div><div class='input'>
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>DequeL</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"baz"</span>)$<span class='fu'>pushleft</span>(<span class='st'>"bla"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
