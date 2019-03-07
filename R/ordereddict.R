@@ -157,7 +157,7 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
         set = function(key, value) {
             private$e[[key]] <- value
         },
-        get = function(key, default = NULL) {
+        get = function(key, default) {
             if (self$has(key)) {
                 private$e[[key]]
             } else if (missing(default)) {
@@ -172,7 +172,7 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
             private$e <- private$e[v]
             invisible(NULL)
         },
-        pop = function(key, default = NULL) {
+        pop = function(key, default) {
             v <- self$get(key, default)
             self$remove(key)
             v
