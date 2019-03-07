@@ -39,9 +39,7 @@ Dict$as_list()
 }
 
 \examples{
-d <- Dict$new()
-d$set("apple", 5)
-d$set("orange", 10)
+d <- Dict$new(apple = 5, orange = 10)
 d$set("banana", 3)
 d$get("apple")
 d$as_list()  # unordered

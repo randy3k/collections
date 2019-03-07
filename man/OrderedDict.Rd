@@ -43,9 +43,7 @@ OrderedDict$as_list()
 }
 
 \examples{
-d <- OrderedDict$new()
-d$set("apple", 5)
-d$set("orange", 10)
+d <- OrderedDict$new(apple = 5, orange = 10)
 d$set("banana", 3)
 d$get("apple")
 d$as_list()  # the order the item is preserved

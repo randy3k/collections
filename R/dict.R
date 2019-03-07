@@ -27,9 +27,7 @@ missing_arg <- function() .Call("missing_arg", PACKAGE = "collections")
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
 #' @examples
-#' d <- Dict$new()
-#' d$set("apple", 5)
-#' d$set("orange", 10)
+#' d <- Dict$new(apple = 5, orange = 10)
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # unordered

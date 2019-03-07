@@ -43,9 +43,7 @@ OrderedDictL$as_list()
 }
 
 \examples{
-d <- OrderedDictL$new()
-d$set("apple", 5)
-d$set("orange", 10)
+d <- OrderedDictL$new(apple = 5, orange = 10)
 d$set("banana", 3)
 d$get("apple")
 d$as_list()  # the order the item is preserved
