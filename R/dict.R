@@ -20,6 +20,7 @@
 #' @section Usage:
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
+#' * `default`: the default value of an item if the key is not found
 #' @examples
 #' d <- Dict$new()
 #' d$set("apple", 5)
