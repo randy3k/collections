@@ -4,6 +4,8 @@
 #include <R.h>
 #include <Rinternals.h>
 
+SEXP missing_arg();
+
 SEXP dict_get(SEXP e, SEXP key, SEXP _default);
 
 #endif

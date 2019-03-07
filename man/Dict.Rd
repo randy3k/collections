@@ -33,7 +33,7 @@ Dict$as_list()
 \itemize{
 \item \code{key}: any R object, key of the item
 \item \code{value}: any R object, value of the item
-\item \code{default}: the default value of an item if the key is not found
+\item \code{default}: optional, the default value of an item if the key is not found
 }
 }
 

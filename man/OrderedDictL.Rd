@@ -21,7 +21,7 @@ OrderedDictL$set(key, value)
 OrderedDictL$get(key, default = NULL)
 OrderedDictL$remove(key)
 OrderedDictL$pop(key, default = NULL)
-OrderedDict$popitem(last = TRUE, default = NULL)
+OrderedDict$popitem(last = TRUE)
 OrderedDictL$has(key)
 OrderedDictL$keys()
 OrderedDictL$values()
@@ -37,7 +37,7 @@ OrderedDictL$as_list()
 \itemize{
 \item \code{key}: any R object, key of the item
 \item \code{value}: any R object, value of the item
-\item \code{default}: the default value of an item if the key is not found
+\item \code{default}: optinal, the default value of an item if the key is not found
 \item \code{d}: an OrderedDict or OrderedDictL
 }
 }

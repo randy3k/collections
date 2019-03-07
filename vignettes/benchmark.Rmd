@@ -236,9 +236,8 @@ microbenchmark(
 test_datastructures_dict_set_get <- function(n) {
     h <- datastructures::hashmap()
     insert <- datastructures::insert
-    get <- datastructures::get
     for (i in 1:n) insert(h, as.character(i), rnorm(1))
-    for (i in 1:n) get(h, as.character(sample.int(n, 1)))
+    for (i in 1:n) h[as.character(sample.int(n, 1))]
     h
 }
 test_hash_dict_set_get <- function(n) {
