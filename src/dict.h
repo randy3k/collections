@@ -4,6 +4,6 @@
 #include <R.h>
 #include <Rinternals.h>
 
-SEXP dict_get(SEXP e, SEXP key);
+SEXP dict_get(SEXP e, SEXP key, SEXP _default);
 
 #endif
