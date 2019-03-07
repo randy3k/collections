@@ -93,7 +93,7 @@ Deque <- R6::R6Class("Deque",
         },
         size = function() length(private$q),
         as_list = function() {
-            ret <- list()
+            ret <- vector("list", self$size())
             i <- 0
             x <- private$q
             while (!is.null(x)) {

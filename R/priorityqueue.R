@@ -47,7 +47,7 @@ PriorityQueue <- R6::R6Class("PriorityQueue",
         as_list = function() {
             priorities <- sapply(seq_len(private$n), function(i) private$h[[i]][[1]])
             ord <- order(priorities, decreasing = TRUE)
-            ret <- list()
+            ret <- vector("list", self$size())
             for (i in seq_len(private$n)) {
                 ret[[i]] <- private$h[[ord[i]]][[2]]
             }
