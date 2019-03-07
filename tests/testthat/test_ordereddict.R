@@ -34,4 +34,12 @@ test_that("clear", {
     expect_equal(d$size(), 0)
 })
 
+
+test_that("NULL and default", {
+    d <- Container$new()
+    d$set("b", NULL)
+    expect_equal(d$get("b"), NULL)
+    expect_equal(d$get("a", "default"), "default")
+})
+
 }

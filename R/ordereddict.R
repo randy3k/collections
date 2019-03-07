@@ -163,7 +163,7 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
             }
         },
         set = function(key, value) {
-            private$e[[key]] <- value
+            private$e[key] <- list(value)
             invisible(self)
         },
         get = function(key, default) {
