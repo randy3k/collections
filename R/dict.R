@@ -83,6 +83,10 @@ Dict <- R6::R6Class("Dict",
             private$e <- new.env(hash = TRUE)
         },
         size = function() length(ls(private$e)),
-        as_list = function() as.list(private$e)
+        as_list = function() as.list(private$e),
+        print = function() {
+            n <- self$size()
+            cat("Dict object with", n, "item(s).\n")
+        }
     )
 )

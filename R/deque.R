@@ -107,6 +107,10 @@ Deque <- R6::R6Class("Deque",
                 x <- .Call("pairlist_cdr", PACKAGE = "collections", x)
             }
             ret
+        },
+        print = function() {
+            n <- self$size()
+            cat("Deque object with", n, "item(s).\n")
         }
     )
 )
@@ -219,6 +223,10 @@ DequeL <- R6::R6Class("DequeL",
             invisible(self)
         },
         size = function() length(private$q),
-        as_list = function() private$q
+        as_list = function() private$q,
+        print = function() {
+            n <- self$size()
+            cat("DequeL object with", n, "item(s).\n")
+        }
     )
 )

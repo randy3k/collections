@@ -61,6 +61,10 @@ PriorityQueue <- R6::R6Class("PriorityQueue",
                 ret[[i]] <- private$h[[ord[i]]][[2]]
             }
             ret
+        },
+        print = function() {
+            n <- self$size()
+            cat("PriorityQueue object with", n, "item(s).\n")
         }
     )
 )

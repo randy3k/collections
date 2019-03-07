@@ -57,7 +57,11 @@ Queue <- R6::R6Class("Queue",
             private$last <- NULL
         },
         size = function() length(private$q),
-        as_list = function() as.list(private$q)
+        as_list = function() as.list(private$q),
+        print = function() {
+            n <- self$size()
+            cat("Queue object with", n, "item(s).\n")
+        }
     )
 )
 
@@ -123,6 +127,10 @@ QueueL <- R6::R6Class("QueueL",
             private$n <- 0
         },
         size = function() private$n,
-        as_list = function() private$q
+        as_list = function() private$q,
+        print = function() {
+            n <- self$size()
+            cat("QueueL object with", n, "item(s).\n")
+        }
     )
 )

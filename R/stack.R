@@ -52,7 +52,11 @@ Stack <- R6::R6Class("Stack",
             private$q <- NULL
         },
         size = function() length(private$q),
-        as_list = function() as.list(private$q)
+        as_list = function() as.list(private$q),
+        print = function() {
+            n <- self$size()
+            cat("Stack object with", n, "item(s).\n")
+        }
     )
 )
 
@@ -118,6 +122,10 @@ StackL <- R6::R6Class("StackL",
             private$n <- 0
         },
         size = function() private$n,
-        as_list = function() private$q
+        as_list = function() private$q,
+        print = function() {
+            n <- self$size()
+            cat("StackL object with", n, "item(s).\n")
+        }
     )
 )

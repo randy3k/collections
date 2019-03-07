@@ -109,6 +109,10 @@ OrderedDict <- R6::R6Class("OrderedDict",
                 ret[[i]] <- self$get(keys[i])
             }
             ret
+        },
+        print = function() {
+            n <- self$size()
+            cat("OrderedDict object with", n, "item(s).\n")
         }
     )
 )
@@ -221,6 +225,10 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
             private$e <- list()
         },
         size = function() length(private$e),
-        as_list = function() private$e
+        as_list = function() private$e,
+        print = function() {
+            n <- self$size()
+            cat("OrderedDictL object with", n, "item(s).\n")
+        }
     )
 )
