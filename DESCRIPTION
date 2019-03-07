@@ -1,7 +1,7 @@
 Package: collections
 Type: Package
 Title: High Performance Container Data Types
-Version: 0.1.5
+Version: 0.1.5.9999
 Date: 2019-3-7
 Authors@R: c(
     person("Randy", "Lai", , "randy.cs.lai@gmail.com", role = c("aut", "cre"))
