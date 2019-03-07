@@ -27,7 +27,7 @@ PriorityQueue$as_list()
 
 \itemize{
 \item \code{item}: any R object
-\item \code{priority}: non-negative interger, item with larger priority pops first
+\item \code{priority}: a real number, item with larger priority pops first
 }
 }
 

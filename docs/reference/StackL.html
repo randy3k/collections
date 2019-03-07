@@ -150,7 +150,10 @@ StackL$as_list()
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='no'>StackL</span>$<span class='fu'>new</span>(<span class='no'>...</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): '...' used in an incorrect context</span></div><div class='input'><span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"first"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 's' not found</span></div><div class='input'><span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"second"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 's' not found</span></div><div class='input'><span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># second</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 's' not found</span></div><div class='input'><span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># first</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 's' not found</span></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='no'>StackL</span>$<span class='fu'>new</span>()
+<span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"first"</span>)
+<span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"second"</span>)
+<span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># second</span></div><div class='output co'>#&gt; [1] "second"</div><div class='input'><span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># first</span></div><div class='output co'>#&gt; [1] "first"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

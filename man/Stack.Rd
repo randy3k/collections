@@ -33,7 +33,7 @@ Stack$as_list()
 }
 
 \examples{
-s <- Stack$new(...)
+s <- Stack$new()
 s$push("first")
 s$push("second")
 s$pop()  # second

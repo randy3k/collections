@@ -15,7 +15,7 @@
 #' * `...`: initialization list
 #' * `item`: any R object
 #' @examples
-#' s <- Stack$new(...)
+#' s <- Stack$new()
 #' s$push("first")
 #' s$push("second")
 #' s$pop()  # second
@@ -71,7 +71,7 @@ Stack <- R6::R6Class("Stack",
 #' * `...`: initialization list
 #' * `item`: any R object
 #' @examples
-#' s <- StackL$new(...)
+#' s <- StackL$new()
 #' s$push("first")
 #' s$push("second")
 #' s$pop()  # second

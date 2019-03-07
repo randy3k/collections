@@ -12,7 +12,7 @@
 #' }
 #' @section Argument:
 #' * `item`: any R object
-#' * `priority`: non-negative interger, item with larger priority pops first
+#' * `priority`: a real number, item with larger priority pops first
 #' @examples
 #' q <- PriorityQueue$new()
 #' q$push("not_urgent")

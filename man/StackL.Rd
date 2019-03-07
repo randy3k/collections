@@ -34,7 +34,7 @@ StackL$as_list()
 }
 
 \examples{
-s <- StackL$new(...)
+s <- StackL$new()
 s$push("first")
 s$push("second")
 s$pop()  # second
