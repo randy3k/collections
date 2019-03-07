@@ -127,7 +127,7 @@ The key-value pairs are stored in an R environment.</p>
 
     
     <pre>
-Dict$new()
+Dict$new(...)
 Dict$set(key, value)
 Dict$get(key, default)
 Dict$remove(key)
@@ -141,6 +141,7 @@ Dict$size()
 Dict$as_list()
 </pre>
     <ul>
+<li><p><code>...</code>: initialization list</p></li>
 <li><p><code>key</code>: any R object, key of the item</p></li>
 <li><p><code>value</code>: any R object, value of the item</p></li>
 <li><p><code>default</code>: optional, the default value of an item if the key is not found</p></li>

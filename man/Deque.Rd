@@ -14,7 +14,7 @@ The \code{Deque} class creates a double ended queue with pairlist backend.
 \section{Usage}{
 
 \preformatted{
-Deque$new()
+Deque$new(...)
 Deque$push(item)
 Deque$pushleft(item)
 Deque$pop()
@@ -33,6 +33,7 @@ Deque$as_list()
 \section{Arguments}{
 
 \itemize{
+\item \code{...}: initialization list
 \item \code{item}: any R object
 \item \code{q}: a Deque object
 }

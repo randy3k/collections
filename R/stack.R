@@ -3,7 +3,7 @@
 #' The `Stack` class creates a stack with pairlist backend.
 #' @section Usage:
 #' \preformatted{
-#' Stack$new()
+#' Stack$new(...)
 #' Stack$push(item)
 #' Stack$pop()
 #' Stack$peek()
@@ -12,9 +12,10 @@
 #' Stack$as_list()
 #' }
 #' @section Argument:
+#' * `...`: initialization list
 #' * `item`: any R object
 #' @examples
-#' s <- Stack$new()
+#' s <- Stack$new(...)
 #' s$push("first")
 #' s$push("second")
 #' s$pop()  # second
@@ -27,8 +28,12 @@ Stack <- R6::R6Class("Stack",
         q = NULL
     ),
     public = list(
-        initialize = function() {
+        initialize = function(...) {
             self$clear()
+            args <- list(...)
+            for (i in seq_along(args)) {
+                self$push(args[[i]])
+            }
         },
         push = function(item) {
             invisible(.Call("stack_push", PACKAGE = "collections", private, item))
@@ -54,7 +59,7 @@ Stack <- R6::R6Class("Stack",
 #' Pure R implementation, mainly for benchmark.
 #' @section Usage:
 #' \preformatted{
-#' StackL$new()
+#' StackL$new(...)
 #' StackL$push(item)
 #' StackL$pop()
 #' StackL$peek()
@@ -63,9 +68,10 @@ Stack <- R6::R6Class("Stack",
 #' StackL$as_list()
 #' }
 #' @section Argument:
+#' * `...`: initialization list
 #' * `item`: any R object
 #' @examples
-#' s <- StackL$new()
+#' s <- StackL$new(...)
 #' s$push("first")
 #' s$push("second")
 #' s$pop()  # second
@@ -79,8 +85,12 @@ StackL <- R6::R6Class("StackL",
         n = NULL
     ),
     public = list(
-        initialize = function() {
+        initialize = function(...) {
             self$clear()
+            args <- list(...)
+            for (i in seq_along(args)) {
+                self$push(args[[i]])
+            }
         },
         push = function(item) {
             private$q <- c(item, private$q)

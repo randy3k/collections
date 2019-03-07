@@ -4,7 +4,7 @@
 #' Keys are stored in a double ended queue [Deque] while items are stored in an R environment.
 #' @section Usage:
 #' \preformatted{
-#' OrderedDict$new()
+#' OrderedDict$new(...)
 #' OrderedDict$set(key, value)
 #' OrderedDict$get(key, default)
 #' OrderedDict$remove(key)
@@ -19,6 +19,7 @@
 #' OrderedDict$as_list()
 #' }
 #' @section Argument:
+#' * `...`: initialization list
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
 #' * `default`: optinal, the default value of an item if the key is not found
@@ -41,8 +42,12 @@ OrderedDict <- R6::R6Class("OrderedDict",
         q = NULL
     ),
     public = list(
-        initialize = function() {
+        initialize = function(...) {
             self$clear()
+            args <- list(...)
+            for (argname in names(args)) {
+                self$set(argname, args[[argname]])
+            }
         },
         set = function(key, value) {
             private$q$push(key)
@@ -151,8 +156,12 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
         e = NULL
     ),
     public = list(
-        initialize = function() {
+        initialize = function(...) {
             self$clear()
+            args <- list(...)
+            for (argname in names(args)) {
+                self$set(argname, args[[argname]])
+            }
         },
         set = function(key, value) {
             private$e[[key]] <- value

@@ -3,7 +3,7 @@
 #' The `Deque` class creates a double ended queue with pairlist backend.
 #' @section Usage:
 #' \preformatted{
-#' Deque$new()
+#' Deque$new(...)
 #' Deque$push(item)
 #' Deque$pushleft(item)
 #' Deque$pop()
@@ -18,6 +18,7 @@
 #' Deque$as_list()
 #' }
 #' @section Arguments:
+#' * `...`: initialization list
 #' * `item`: any R object
 #' * `q`: a Deque object
 #' @examples
@@ -36,8 +37,12 @@ Deque <- R6::R6Class("Deque",
         last = NULL
     ),
     public = list(
-        initialize = function() {
+        initialize = function(...) {
             self$clear()
+            args <- list(...)
+            for (i in seq_along(args)) {
+                self$push(args[[i]])
+            }
         },
         push = function(item) {
             invisible(.Call("deque_push", PACKAGE = "collections", private, item))
@@ -108,7 +113,7 @@ Deque <- R6::R6Class("Deque",
 #' Pure R implementation, mainly for benchmark.
 #' @section Usage:
 #' \preformatted{
-#' DequeL$new()
+#' DequeL$new(...)
 #' DequeL$push(item)
 #' DequeL$pushleft(item)
 #' DequeL$pop()
@@ -123,6 +128,7 @@ Deque <- R6::R6Class("Deque",
 #' DequeL$as_list()
 #' }
 #' @section Arguments:
+#' * `...`: initialization list
 #' * `item`: any R object
 #' * `q`: a DequeL object
 #' @examples
@@ -141,8 +147,12 @@ DequeL <- R6::R6Class("DequeL",
         n = NULL
     ),
     public = list(
-        initialize = function() {
+        initialize = function(...) {
             self$clear()
+            args <- list(...)
+            for (i in seq_along(args)) {
+                self$push(args[[i]])
+            }
         },
         push = function(item) {
             private$q[[private$n + 1]] <- item
