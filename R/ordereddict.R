@@ -78,7 +78,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
             key %in% self$keys()
         },
         keys = function() {
-            unlist(private$q$as_list())
+            as.character(private$q$as_list())
         },
         values = function() {
             ret <- vector("list", self$size())
@@ -161,6 +161,7 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
         },
         set = function(key, value) {
             private$e[[key]] <- value
+            invisible(self)
         },
         get = function(key, default) {
             if (self$has(key)) {
@@ -197,14 +198,13 @@ OrderedDictL <- R6::R6Class("OrderedDictL",
             key %in% self$keys()
         },
         keys = function() {
-            names(private$e)
+            as.character(names(private$e))
         },
         values = function() {
-            ret <- list()
-            i <- 0
-            for (key in self$keys()) {
-                i <- i + 1
-                ret[[i]] <- self$get(key)
+            ret <- vector("list", self$size())
+            keys <- self$keys()
+            for (i in seq_along(keys)) {
+                ret[[i]] <- self$get(keys[i])
             }
             ret
         },

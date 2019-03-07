@@ -49,13 +49,14 @@ Dict <- R6::R6Class("Dict",
         },
         set = function(key, value) {
             assign(key, value, envir = private$e)
+            invisible(self)
         },
         get = function(key, default = missing_arg()) {
             .Call("dict_get", PACKAGE = "collections", private$e, key, default)
         },
         remove = function(key) {
             .Internal(remove(key, private$e, FALSE))
-            invisible(NULL)
+            invisible(self)
         },
         pop = function(key, default = missing_arg()) {
             v <- self$get(key, default)

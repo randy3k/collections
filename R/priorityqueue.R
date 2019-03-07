@@ -39,7 +39,8 @@ PriorityQueue <- R6::R6Class("PriorityQueue",
             }
         },
         push = function(item, priority = 0) {
-            invisible(.Call("heap_push", PACKAGE = "collections", private, item, priority))
+            .Call("heap_push", PACKAGE = "collections", private, item, priority)
+            invisible(self)
         },
         pop = function() {
             .Call("heap_pop", PACKAGE = "collections", private)

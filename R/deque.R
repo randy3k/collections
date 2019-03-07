@@ -44,10 +44,13 @@ Deque <- R6::R6Class("Deque",
             }
         },
         push = function(item) {
-            invisible(.Call("deque_push", PACKAGE = "collections", private, item))
+            .Call("deque_push", PACKAGE = "collections", private, item)
+            invisible(self)
         },
         pushleft = function(item) {
-            invisible(.Call("deque_pushleft", PACKAGE = "collections", private, item))
+            .Call("deque_pushleft", PACKAGE = "collections", private, item)
+            invisible(self)
+
         },
         pop = function() {
             .Call("deque_pop", PACKAGE = "collections", private)
@@ -88,15 +91,15 @@ Deque <- R6::R6Class("Deque",
             private$last <- NULL
         },
         remove = function(item) {
-            invisible(.Call("deque_remove", PACKAGE = "collections", private, item))
+            .Call("deque_remove", PACKAGE = "collections", private, item)
+            invisible(self)
         },
         size = function() length(private$q),
         as_list = function() {
-            ret <- vector("list", self$size())
-            i <- 0
+            n <- self$size()
+            ret <- vector("list", n)
             x <- private$q
-            while (!is.null(x)) {
-                i <- i + 1
+            for (i in seq_len(n)) {
                 ret[[i]] <- .Call("pairlist_car", PACKAGE = "collections", x)[[2]]
                 x <- .Call("pairlist_cdr", PACKAGE = "collections", x)
             }
@@ -155,12 +158,12 @@ DequeL <- R6::R6Class("DequeL",
         push = function(item) {
             private$q[[private$n + 1]] <- item
             private$n <- private$n + 1
-            invisible(item)
+            invisible(self)
         },
         pushleft = function(item) {
             private$q <- c(item, private$q)
             private$n <- private$n + 1
-            invisible(item)
+            invisible(self)
         },
         pop = function() {
             if (private$n == 0) stop("deque is empty")
@@ -207,7 +210,7 @@ DequeL <- R6::R6Class("DequeL",
             if (is.na(ind)) stop("value not found")
             private$q <- private$q[-ind]
             private$n <- private$n - 1
-            invisible(value)
+            invisible(self)
         },
         size = function() length(private$q),
         as_list = function() private$q

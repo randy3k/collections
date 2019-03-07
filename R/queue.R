@@ -39,7 +39,8 @@ Queue <- R6::R6Class("Queue",
             }
         },
         push = function(item) {
-            invisible(.Call("queue_push", PACKAGE = "collections", private, item))
+            .Call("queue_push", PACKAGE = "collections", private, item)
+            invisible(self)
         },
         pop = function() {
             .Call("queue_pop", PACKAGE = "collections", private)
@@ -98,7 +99,7 @@ QueueL <- R6::R6Class("QueueL",
         push = function(item) {
             private$q[[private$n + 1]] <- item
             private$n <- private$n + 1
-            invisible(item)
+            invisible(self)
         },
         pop = function() {
             if (private$n == 0) stop("queue is empty")
