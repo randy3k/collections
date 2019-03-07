@@ -3,7 +3,7 @@
 #' The `PriorityQueue` class creates a priority queue (a.k.a heap).
 #' @section Usage:
 #' \preformatted{
-#' PriorityQueue$new()
+#' PriorityQueue$new(items = NULL, priorities = NULL)
 #' PriorityQueue$push(item, priority = 0)
 #' PriorityQueue$pop()
 #' PriorityQueue$clear()
@@ -11,6 +11,8 @@
 #' PriorityQueue$as_list()
 #' }
 #' @section Argument:
+#' * `items`: initialization list
+#' * `priorities`: a vector of priorities of the same length of `items`
 #' * `item`: any R object
 #' * `priority`: a real number, item with larger priority pops first
 #' @examples
@@ -30,8 +32,11 @@ PriorityQueue <- R6::R6Class("PriorityQueue",
         n = NULL
     ),
     public = list(
-        initialize = function() {
+        initialize = function(items = NULL, priorities = rep(0, length(items))) {
             self$clear()
+            for (i in seq_along(items)) {
+                self$push(items[[i]], priorities[i])
+            }
         },
         push = function(item, priority = 0) {
             invisible(.Call("heap_push", PACKAGE = "collections", private, item, priority))

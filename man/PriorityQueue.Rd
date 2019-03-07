@@ -14,7 +14,7 @@ The \code{PriorityQueue} class creates a priority queue (a.k.a heap).
 \section{Usage}{
 
 \preformatted{
-PriorityQueue$new()
+PriorityQueue$new(items = NULL, priorities = NULL)
 PriorityQueue$push(item, priority = 0)
 PriorityQueue$pop()
 PriorityQueue$clear()
@@ -26,6 +26,8 @@ PriorityQueue$as_list()
 \section{Argument}{
 
 \itemize{
+\item \code{items}: initialization list
+\item \code{priorities}: a vector of priorities of the same length of \code{items}
 \item \code{item}: any R object
 \item \code{priority}: a real number, item with larger priority pops first
 }

@@ -127,7 +127,7 @@
 
     
     <pre>
-PriorityQueue$new()
+PriorityQueue$new(items = NULL, priorities = NULL)
 PriorityQueue$push(item, priority = 0)
 PriorityQueue$pop()
 PriorityQueue$clear()
@@ -139,6 +139,8 @@ PriorityQueue$as_list()
 
     
     <ul>
+<li><p><code>items</code>: initialization list</p></li>
+<li><p><code>priorities</code>: a vector of priorities of the same length of <code>items</code></p></li>
 <li><p><code>item</code>: any R object</p></li>
 <li><p><code>priority</code>: a real number, item with larger priority pops first</p></li>
 </ul>
