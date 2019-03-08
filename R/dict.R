@@ -71,7 +71,9 @@ Dict <- R6::R6Class("Dict",
             ls(private$e)
         },
         values = function() {
-            self$as_list()
+            ret <- self$as_list()
+            names(ret) <- NULL
+            ret
         },
         update = function(d) {
             for (key in d$keys()) {
