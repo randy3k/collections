@@ -77,7 +77,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
             list(key = key, value = v)
         },
         has = function(key) {
-            key %in% self$keys()
+            key %in% ls(private$e)
         },
         keys = function() {
             as.character(private$q$as_list())
