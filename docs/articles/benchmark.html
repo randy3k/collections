@@ -5,11 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Benchmarking ‘collections’ • collections</title>
+<title>Benchmarking 'collections' • collections</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Benchmarking ‘collections’">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Benchmarking 'collections'">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collections</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5.9999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.9999</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -67,6 +68,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -98,142 +100,142 @@
 <div id="queue" class="section level2">
 <h2 class="hasAnchor">
 <a href="#queue" class="anchor"></a>Queue</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb1-2" title="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_queue_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb1-3" title="3">    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_queue_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb1-4" title="4">    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_queue_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb1-5" title="5">    <span class="dt">base =</span> <span class="kw">test_collections_queue_l_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb1-6" title="6">    <span class="dt">collections =</span> <span class="kw">test_collections_queue_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb1-7" title="7">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb1-8" title="8">)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_queue_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_queue_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_queue_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="dt">base =</span> <span class="kw">test_collections_queue_l_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_queue_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
-##            expr   min    lq  mean median    uq     max neval
-##          dequer  1.00  1.00  1.00   1.00  1.00   1.000   100
-##  datastructures  8.63  8.62 25.69   9.03  7.95 104.978   100
-##        liqueueR 14.61 14.60 12.35  15.68 13.68   3.771   100
-##            base  2.86  2.84  2.42   2.99  2.71   0.753   100
-##     collections  1.14  1.16  1.04   1.20  1.12   0.522   100</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb3-2" title="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_queue_push_pop</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb3-3" title="3">    <span class="dt">base =</span> <span class="kw">test_collections_queue_l_push_pop</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb3-4" title="4">    <span class="dt">collections =</span> <span class="kw">test_collections_queue_push_pop</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb3-6" title="6">)</a></code></pre></div>
+##            expr   min    lq   mean median    uq    max neval
+##          dequer  1.04  1.05  0.891   1.03  1.06  0.515   100
+##  datastructures  8.39  8.42 21.749   8.23  7.69 59.611   100
+##        liqueueR 17.12 17.29 12.208  18.05 16.93  1.330   100
+##            base  1.24  1.27  0.959   1.25  1.30  0.170   100
+##     collections  1.00  1.00  1.000   1.00  1.00  1.000   100</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_queue_push_pop</span>(<span class="dv">1000</span>),</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="dt">base =</span> <span class="kw">test_collections_queue_l_push_pop</span>(<span class="dv">1000</span>),</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_queue_push_pop</span>(<span class="dv">1000</span>),</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
 ##         expr  min   lq mean median   uq  max neval
-##       dequer 1.63 1.67 1.68   1.67 1.67 4.09   100
-##         base 4.75 5.19 5.14   5.34 5.92 2.66   100
+##       dequer 1.79 1.77 1.76   1.82 1.72 1.14   100
+##         base 2.16 2.13 2.27   2.19 2.22 1.36   100
 ##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
 </div>
 <div id="stack" class="section level2">
 <h2 class="hasAnchor">
 <a href="#stack" class="anchor"></a>Stack</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb5-2" title="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_stack_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb5-3" title="3">    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_stack_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb5-4" title="4">    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_stack_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb5-5" title="5">    <span class="dt">base =</span> <span class="kw">test_collections_stack_l_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb5-6" title="6">    <span class="dt">collections =</span> <span class="kw">test_collections_stack_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb5-7" title="7">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb5-8" title="8">)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_stack_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_stack_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_stack_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="dt">base =</span> <span class="kw">test_collections_stack_l_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_stack_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
 ##            expr   min    lq  mean median    uq  max neval
-##          dequer  1.00  1.00  1.00   1.00  1.00 1.00   100
-##  datastructures  9.28 10.24  7.55   8.82  8.75 2.62   100
-##        liqueueR 15.29 16.24 11.97  14.92 14.07 3.00   100
-##            base  2.68  2.58  2.27   2.46  2.63 1.39   100
-##     collections  1.15  1.20  1.23   1.14  1.29 1.34   100</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb7-2" title="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_stack_push_pop</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb7-3" title="3">    <span class="dt">base =</span> <span class="kw">test_collections_stack_l_push_pop</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb7-4" title="4">    <span class="dt">collections =</span> <span class="kw">test_collections_stack_push_pop</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb7-5" title="5">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb7-6" title="6">)</a></code></pre></div>
+##          dequer  1.08  1.08  1.16   1.08  1.06 1.51   100
+##  datastructures  8.16  8.16  8.06   8.39  8.54 2.50   100
+##        liqueueR 16.57 17.33 16.28  18.01 16.77 3.61   100
+##            base  1.32  1.31  1.49   1.34  1.41 2.14   100
+##     collections  1.00  1.00  1.00   1.00  1.00 1.00   100</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_stack_push_pop</span>(<span class="dv">1000</span>),</span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="dt">base =</span> <span class="kw">test_collections_stack_l_push_pop</span>(<span class="dv">1000</span>),</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_stack_push_pop</span>(<span class="dv">1000</span>),</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
 ##         expr  min   lq mean median   uq  max neval
-##       dequer 1.61 1.60 1.53   1.56 1.58 1.16   100
-##         base 3.97 4.03 3.90   4.17 4.56 1.88   100
+##       dequer 1.74 1.75 1.69   1.75 1.72 2.93   100
+##         base 2.92 2.90 3.06   2.95 4.50 1.57   100
 ##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
 </div>
 <div id="deque" class="section level2">
 <h2 class="hasAnchor">
 <a href="#deque" class="anchor"></a>Deque</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb9-2" title="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_deque_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb9-3" title="3">    <span class="dt">base =</span> <span class="kw">test_collections_deque_l_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb9-4" title="4">    <span class="dt">collections =</span> <span class="kw">test_collections_deque_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb9-5" title="5">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb9-6" title="6">)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb9-2"><a href="#cb9-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_deque_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb9-3"><a href="#cb9-3"></a>    <span class="dt">base =</span> <span class="kw">test_collections_deque_l_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_deque_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb9-5"><a href="#cb9-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
 ##         expr  min   lq mean median   uq  max neval
 ##       dequer 1.00 1.00 1.00   1.00 1.00 1.00   100
-##         base 2.98 2.91 3.07   2.93 3.06 1.54   100
-##  collections 1.26 1.23 1.33   1.24 1.24 1.17   100</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb11-2" title="2">    <span class="dt">dequer =</span> <span class="kw">test_dequer_deque_push_pop</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb11-3" title="3">    <span class="dt">base =</span> <span class="kw">test_collections_deque_l_push_pop</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb11-4" title="4">    <span class="dt">collections =</span> <span class="kw">test_collections_deque_push_pop</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb11-5" title="5">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb11-6" title="6">)</a></code></pre></div>
+##         base 2.61 2.69 2.73   2.80 2.54 1.33   100
+##  collections 1.16 1.16 1.20   1.15 1.11 1.06   100</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb11-2"><a href="#cb11-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_deque_push_pop</span>(<span class="dv">1000</span>),</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="dt">base =</span> <span class="kw">test_collections_deque_l_push_pop</span>(<span class="dv">1000</span>),</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_deque_push_pop</span>(<span class="dv">1000</span>),</span>
+<span id="cb11-5"><a href="#cb11-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
 ##         expr  min   lq mean median   uq   max neval
-##       dequer 1.19 1.22 1.24   1.20 1.21 0.984   100
-##         base 4.52 4.95 5.05   5.17 5.26 2.798   100
+##       dequer 1.25 1.24 1.28   1.27 1.31 0.947   100
+##         base 4.36 4.35 4.56   4.77 5.25 2.136   100
 ##  collections 1.00 1.00 1.00   1.00 1.00 1.000   100</code></pre>
 </div>
 <div id="priority-queue" class="section level2">
 <h2 class="hasAnchor">
 <a href="#priority-queue" class="anchor"></a>Priority Queue</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb13-2" title="2">    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_pqueue_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb13-3" title="3">    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_pqueue_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb13-4" title="4">    <span class="dt">collections =</span> <span class="kw">test_collections_pqueue_push_pop</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb13-5" title="5">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb13-6" title="6">)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_pqueue_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb13-3"><a href="#cb13-3"></a>    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_pqueue_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb13-4"><a href="#cb13-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_pqueue_push_pop</span>(<span class="dv">100</span>),</span>
+<span id="cb13-5"><a href="#cb13-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
-##            expr   min    lq  mean median    uq   max neval
-##        liqueueR 20.26 22.11 19.37  22.44 18.58 10.05   100
-##  datastructures  5.98  5.96  5.72   6.56  5.83  2.42   100
-##     collections  1.00  1.00  1.00   1.00  1.00  1.00   100</code></pre>
+##            expr   min   lq  mean median    uq  max neval
+##        liqueueR 21.91 24.1 18.91  23.02 20.19 15.1   100
+##  datastructures  5.65  5.9  4.81   5.67  5.17  2.3   100
+##     collections  1.00  1.0  1.00   1.00  1.00  1.0   100</code></pre>
 </div>
 <div id="dict-hashmap" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dict-hashmap" class="anchor"></a>Dict / hashmap</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb15-2" title="2">    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_dict_set_get</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb15-3" title="3">    <span class="dt">hash =</span> <span class="kw">test_hash_dict_set_get</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb15-4" title="4">    <span class="dt">hashmap =</span> <span class="kw">test_hashmap_dict_set_get</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb15-5" title="5">    <span class="dt">collections =</span> <span class="kw">test_collections_dict_set_get</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb15-6" title="6">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb15-7" title="7">)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb15-2"><a href="#cb15-2"></a>    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_dict_set_get</span>(<span class="dv">100</span>),</span>
+<span id="cb15-3"><a href="#cb15-3"></a>    <span class="dt">hash =</span> <span class="kw">test_hash_dict_set_get</span>(<span class="dv">100</span>),</span>
+<span id="cb15-4"><a href="#cb15-4"></a>    <span class="dt">hashmap =</span> <span class="kw">test_hashmap_dict_set_get</span>(<span class="dv">100</span>),</span>
+<span id="cb15-5"><a href="#cb15-5"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_dict_set_get</span>(<span class="dv">100</span>),</span>
+<span id="cb15-6"><a href="#cb15-6"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
-##            expr  min   lq mean median    uq   max neval
-##  datastructures 6.31 6.28 6.04   6.38 6.592  2.71   100
-##            hash 1.04 1.02 1.32   1.02 0.987  4.04   100
-##         hashmap 2.92 2.84 3.83   2.89 2.930 27.25   100
-##     collections 1.00 1.00 1.00   1.00 1.000  1.00   100</code></pre>
+##            expr   min    lq  mean median    uq   max neval
+##  datastructures 6.272 6.253 4.379   6.22 4.874 1.253   100
+##            hash 1.000 1.000 1.000   1.00 1.000 1.000   100
+##         hashmap 2.776 3.019 3.268   3.17 2.764 8.564   100
+##     collections 0.946 0.981 0.822   1.01 0.889 0.465   100</code></pre>
 </div>
 <div id="ordereddict" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ordereddict" class="anchor"></a>OrderedDict</h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb17-2" title="2">    <span class="dt">base =</span> <span class="kw">test_collections_ordered_dict_l_set_get</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb17-3" title="3">    <span class="dt">collections =</span> <span class="kw">test_collections_ordered_dict_set_get</span>(<span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb17-4" title="4">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb17-5" title="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>    <span class="dt">base =</span> <span class="kw">test_collections_ordered_dict_l_set_get</span>(<span class="dv">100</span>),</span>
+<span id="cb17-3"><a href="#cb17-3"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_ordered_dict_set_get</span>(<span class="dv">100</span>),</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
 ##         expr  min   lq mean median   uq  max neval
-##         base 1.31 1.29 1.13   1.29 1.31 0.84   100
+##         base 1.36 1.34 1.27   1.36 1.35 1.04   100
 ##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">microbenchmark</span>(</a>
-<a class="sourceLine" id="cb19-2" title="2">    <span class="dt">base =</span> <span class="kw">test_collections_ordered_dict_l_set_get</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb19-3" title="3">    <span class="dt">collections =</span> <span class="kw">test_collections_ordered_dict_set_get</span>(<span class="dv">1000</span>),</a>
-<a class="sourceLine" id="cb19-4" title="4">    <span class="dt">unit =</span> <span class="st">"relative"</span></a>
-<a class="sourceLine" id="cb19-5" title="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">microbenchmark</span>(</span>
+<span id="cb19-2"><a href="#cb19-2"></a>    <span class="dt">base =</span> <span class="kw">test_collections_ordered_dict_l_set_get</span>(<span class="dv">1000</span>),</span>
+<span id="cb19-3"><a href="#cb19-3"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_ordered_dict_set_get</span>(<span class="dv">1000</span>),</span>
+<span id="cb19-4"><a href="#cb19-4"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>)</span></code></pre></div>
 <pre><code>## Unit: relative
 ##         expr  min   lq mean median   uq  max neval
-##         base 3.06 3.13 2.88   3.11 3.03 1.94   100
-##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
+##         base 2.83 2.83  2.6   2.76 2.55 1.74   100
+##  collections 1.00 1.00  1.0   1.00 1.00 1.00   100</code></pre>
 </div>
   </div>
 
@@ -255,17 +257,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Randy Lai.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

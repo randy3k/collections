@@ -56,13 +56,13 @@ test_liqueueR_queue_push_pop <- function(n) {
     q
 }
 test_collections_queue_l_push_pop <- function(n) {
-    q <- collections::QueueL$new()
+    q <- collections::QueueL()
     for (i in 1:n) q$push(rnorm(1))
     for (i in 1:n) q$pop()
     q
 }
 test_collections_queue_push_pop <- function(n) {
-    q <- collections::Queue$new()
+    q <- collections::Queue()
     for (i in 1:n) q$push(rnorm(1))
     for (i in 1:n) q$pop()
     q
@@ -113,13 +113,13 @@ test_liqueueR_stack_push_pop <- function(n) {
     q
 }
 test_collections_stack_l_push_pop <- function(n) {
-    q <- collections::StackL$new()
+    q <- collections::StackL()
     for (i in 1:n) q$push(rnorm(1))
     for (i in 1:n) q$pop()
     q
 }
 test_collections_stack_push_pop <- function(n) {
-    q <- collections::Stack$new()
+    q <- collections::Stack()
     for (i in 1:n) q$push(rnorm(1))
     for (i in 1:n) q$pop()
     q

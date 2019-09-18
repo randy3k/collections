@@ -5,7 +5,7 @@ context(container)
 Container <- eval(as.name(container))
 
 test_that("push, peek and pop", {
-    q <- Container$new()
+    q <- Container()
     q$push(1)$push(2)
     expect_equal(q$size(), 2)
     expect_equal(q$peek(), 1)
@@ -23,7 +23,7 @@ test_that("push, peek and pop", {
 })
 
 test_that("clear", {
-    q <- Container$new()
+    q <- Container()
     q$push("a")$push("b")$push("c")
     q$clear()
     expect_equal(q$size(), 0)
