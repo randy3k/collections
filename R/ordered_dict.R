@@ -98,7 +98,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
         },
         clear = function() {
             private$e <- new.env(hash = TRUE)
-            private$q <- Deque$new()
+            private$q <- Deque()
         },
         size = function() length(ls(private$e)),
         as_list = function() {

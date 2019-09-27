@@ -5,7 +5,7 @@ context(container)
 Container <- eval(as.name(container))
 
 test_that("push, peek and pop", {
-    q <- Container$new()
+    q <- Container()
     q$push(1)$push(2)
     expect_equal(q$size(), 2)
     expect_equal(q$peek(), 2)
@@ -24,7 +24,7 @@ test_that("push, peek and pop", {
 
 
 test_that("push, peek and pop", {
-    q <- Container$new()
+    q <- Container()
     q$pushleft(1)$pushleft(2)
     expect_equal(q$size(), 2)
     expect_equal(q$peekleft(), 2)
@@ -42,7 +42,7 @@ test_that("push, peek and pop", {
 })
 
 test_that("random push and pop", {
-    q <- Container$new()
+    q <- Container()
     q$pushleft(1)$push("a")$pushleft(2)$push("b")
     expect_equal(q$size(), 4)
     expect_equal(q$popleft(), 2)
@@ -58,7 +58,7 @@ test_that("random push and pop", {
 })
 
 test_that("random push and pop 2", {
-    q <- Container$new()
+    q <- Container()
     q$pushleft(1)$push("a")$pushleft(2)$push("b")
     expect_equal(q$size(), 4)
     expect_equal(q$pop(), "b")
@@ -74,7 +74,7 @@ test_that("random push and pop 2", {
 })
 
 test_that("remove", {
-    q <- Container$new()
+    q <- Container()
     q$push("a")$pushleft(1)$push("b")$pushleft(2)
     expect_equal(q$size(), 4)
     q$remove("a")
@@ -88,8 +88,8 @@ test_that("remove", {
 
 
 test_that("extend", {
-    q <- Container$new()
-    q2 <- Container$new()
+    q <- Container()
+    q2 <- Container()
     q2$push("a")$push("b")
     q$extend(q2)
     expect_equal(q$size(), 2)
@@ -99,7 +99,7 @@ test_that("extend", {
 })
 
 test_that("clear", {
-    q <- Container$new()
+    q <- Container()
     q$push("a")$push("b")
     q$clear()
     expect_equal(q$size(), 0)

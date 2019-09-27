@@ -46,3 +46,23 @@ class(PriorityQueue) <- "PriorityQueueMeta"
     .Deprecated("PriorityQueue", old = "PriorityQueue$new")
     x
 }
+
+
+class(Deque) <- "DequeMeta"
+
+#' @method $ DequeMeta
+#' @export
+`$.DequeMeta` <- function(x, key) {
+    .Deprecated("Deque", old = "Deque$new")
+    x
+}
+
+
+class(DequeL) <- "DequeLMeta"
+
+#' @method $ DequeLMeta
+#' @export
+`$.DequeLMeta` <- function(x, key) {
+    .Deprecated("DequeL", old = "DequeL$new")
+    x
+}
