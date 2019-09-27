@@ -86,3 +86,13 @@ class(OrderedDictL) <- "OrderedDictLMeta"
     .Deprecated("OrderedDictL", old = "OrderedDictL$new")
     x
 }
+
+
+class(Dict) <- "DictMeta"
+
+#' @method $ DictMeta
+#' @export
+`$.DictMeta` <- function(x, key) {
+    .Deprecated("Dict", old = "Dict$new")
+    x
+}
