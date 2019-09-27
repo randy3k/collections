@@ -4,7 +4,7 @@
 #include "stack.h"
 #include "deque.h"
 #include "dict.h"
-#include "priorityqueue.h"
+#include "priority_queue.h"
 
 static const R_CallMethodDef CallEntries[] = {
     {"queue_push", (DL_FUNC) &queue_push, 2},

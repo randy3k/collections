@@ -1,4 +1,4 @@
-#include "priorityqueue.h"
+#include "priority_queue.h"
 
 static void swap(SEXP h, int a, int b) {
     SEXP temp = PROTECT(VECTOR_ELT(h, a));
