@@ -66,3 +66,23 @@ class(DequeL) <- "DequeLMeta"
     .Deprecated("DequeL", old = "DequeL$new")
     x
 }
+
+
+class(OrderedDict) <- "OrderedDictMeta"
+
+#' @method $ OrderedDictMeta
+#' @export
+`$.OrderedDictMeta` <- function(x, key) {
+    .Deprecated("OrderedDict", old = "OrderedDict$new")
+    x
+}
+
+
+class(OrderedDictL) <- "OrderedDictLMeta"
+
+#' @method $ OrderedDictLMeta
+#' @export
+`$.OrderedDictLMeta` <- function(x, key) {
+    .Deprecated("OrderedDictL", old = "OrderedDictL$new")
+    x
+}

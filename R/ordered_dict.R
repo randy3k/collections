@@ -1,22 +1,21 @@
 #' @title Ordered Dictionary
 #' @description
-#' The `OrderedDict` class creates an ordered dictionary.
-#' Keys are stored in a double ended queue [Deque] while items are stored in an R environment.
+#' The `OrderedDict` function creates an ordered dictionary.
 #' @section Usage:
 #' \preformatted{
-#' OrderedDict$new(items = NULL)
-#' OrderedDict$set(key, value)
-#' OrderedDict$get(key, default)
-#' OrderedDict$remove(key)
-#' OrderedDict$pop(key, default)
-#' OrderedDict$popitem(last = TRUE)
-#' OrderedDict$has(key)
-#' OrderedDict$keys()
-#' OrderedDict$values()
-#' OrderedDict$update(d)
-#' OrderedDict$clear()
-#' OrderedDict$size()
-#' OrderedDict$as_list()
+#' OrderedDict(items = NULL)
+#' .$set(key, value)
+#' .$get(key, default)
+#' .$remove(key)
+#' .$pop(key, default)
+#' .$popitem(last = TRUE)
+#' .$has(key)
+#' .$keys()
+#' .$values()
+#' .$update(d)
+#' .$clear()
+#' .$size()
+#' .$as_list()
 #' }
 #' @section Argument:
 #' * `items`: initialization list
@@ -25,7 +24,7 @@
 #' * `default`: optinal, the default value of an item if the key is not found
 #' * `d`: an OrderedDict or OrderedDictL
 #' @examples
-#' d <- OrderedDict$new(list(apple = 5, orange = 10))
+#' d <- OrderedDict(list(apple = 5, orange = 10))
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # the order the item is preserved
@@ -34,109 +33,114 @@
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [Dict] and [OrderedDictL]
 #' @export
-OrderedDict <- R6::R6Class("OrderedDict",
-    cloneable = FALSE,
-    private = list(
-        e = NULL,
-        q = NULL
-    ),
-    public = list(
-        initialize = function(items = NULL) {
-            self$clear()
-            for (argname in names(items)) {
-                self$set(argname, items[[argname]])
-            }
-        },
-        set = function(key, value) {
-            private$q$push(key)
-            assign(key, value, envir = private$e)
-            invisible(self)
-        },
-        get = function(key, default = missing_arg()) {
-            .Call("dict_get", PACKAGE = "collections", private$e, key, default)
-        },
-        remove = function(key) {
-            result <- try(private$q$remove(key), silent = TRUE)
-            inherits(result, "try-error") && stop("key not found")
-            .Internal(remove(key, private$e, FALSE))
-            invisible(self)
-        },
-        pop = function(key, default = missing_arg()) {
-            v <- self$get(key, default)
-            self$remove(key)
-            v
-        },
-        popitem = function(last = TRUE) {
-            if (last) {
-                key <- private$q$pop()
-            } else {
-                key <- private$q$popleft()
-            }
-            v <- self$get(key)
-            .Internal(remove(key, private$e, FALSE))
-            list(key = key, value = v)
-        },
-        has = function(key) {
-            key %in% ls(private$e)
-        },
-        keys = function() {
-            as.character(private$q$as_list())
-        },
-        values = function() {
-            ret <- vector("list", self$size())
-            keys <- self$keys()
-            for (i in seq_along(keys)) {
-                ret[[i]] <- self$get(keys[i])
-            }
-            ret
-        },
-        update = function(d) {
-            for (key in d$keys()) {
-                self$set(key, d$get(key))
-            }
-            self
-        },
-        clear = function() {
-            private$e <- new.env(hash = TRUE)
-            private$q <- Deque()
-        },
-        size = function() length(ls(private$e)),
-        as_list = function() {
-            ret <- vector("list", self$size())
-            keys <- self$keys()
-            names(ret) <- keys
-            for (i in seq_along(keys)) {
-                ret[[i]] <- self$get(keys[i])
-            }
-            ret
-        },
-        print = function() {
-            n <- self$size()
-            cat("OrderedDict object with", n, "item(s).\n")
-        }
-    )
-)
+OrderedDict <- function(...) {
+    self <- environment()
+    e <- NULL
+    q <- NULL
 
-#' @title Ordered Dictionary (list based)
+    initialize <- function(items = NULL) {
+        clear()
+        for (argname in names(items)) {
+            set(argname, items[[argname]])
+        }
+    }
+    set <- function(key, value) {
+        q$push(key)
+        assign(key, value, envir = e)
+        invisible(self)
+    }
+    get <- function(key, default = missing_arg()) {
+        .Call("dict_get", PACKAGE = "collections", e, key, default)
+    }
+    remove <- function(key) {
+        result <- try(q$remove(key), silent = TRUE)
+        inherits(result, "try-error") && stop("key not found")
+        .Internal(remove(key, e, FALSE))
+        invisible(self)
+    }
+    pop <- function(key, default = missing_arg()) {
+        v <- get(key, default)
+        remove(key)
+        v
+    }
+    popitem <- function(last = TRUE) {
+        if (last) {
+            key <- q$pop()
+        } else {
+            key <- q$popleft()
+        }
+        v <- get(key)
+        .Internal(remove(key, e, FALSE))
+        list(key = key, value = v)
+    }
+    has <- function(key) {
+        key %in% ls(e)
+    }
+    keys <- function() {
+        as.character(q$as_list())
+    }
+    values <- function() {
+        ret <- vector("list", size())
+        keys <- keys()
+        for (i in seq_along(keys)) {
+            ret[[i]] <- get(keys[i])
+        }
+        ret
+    }
+    update <- function(d) {
+        for (key in d$keys()) {
+            set(key, d$get(key))
+        }
+        self
+    }
+    clear <- function() {
+        e <<- new.env(hash = TRUE)
+        q <<- Deque()
+        invisible(self)
+    }
+    size <- function() length(ls(e))
+    as_list <- function() {
+        ret <- vector("list", size())
+        keys <- keys()
+        names(ret) <- keys
+        for (i in seq_along(keys)) {
+            ret[[i]] <- get(keys[i])
+        }
+        ret
+    }
+
+    initialize(...)
+    class(self) <- "OrderedDict"
+    self
+}
+
+#' @method print OrderedDict
+#' @export
+print.OrderedDict <- function(self) {
+    n <- self$size()
+    cat("OrderedDict object with", n, "item(s)\n")
+}
+
+
+#' @title Ordered Dictionary (R implementation)
 #' @description
-#' The `OrderedDictL` class creates an ordered dictionary.
-#' The key-value pairs are stored in an R List.
-#' Pure R implementation, mainly for benchmark.
+#' The `OrderedDictL` function creates an ordered dictionary.
+#' Pure R implementation for benchmarking.
 #' @section Usage:
 #' \preformatted{
-#' OrderedDictL$new(items = NULL)
-#' OrderedDictL$set(key, value)
-#' OrderedDictL$get(key, default)
-#' OrderedDictL$remove(key)
-#' OrderedDictL$pop(key, default)
-#' OrderedDict$popitem(last = TRUE)
-#' OrderedDictL$has(key)
-#' OrderedDictL$keys()
-#' OrderedDictL$values()
-#' OrderedDictL$update(d)
-#' OrderedDictL$clear()
-#' OrderedDictL$size()
-#' OrderedDictL$as_list()
+#' OrderedDictL(items = NULL)
+#' .$set(key, value)
+#' .$get(key, default)
+#' .$remove(key)
+#' .$pop(key, default)
+#' .$popitem(last = TRUE)
+#' .$has(key)
+#' .$keys()
+#' .$values()
+#' .$update(d)
+#' .$clear()
+#' .$size()
+#' .$as_list()
 #' }
 #' @section Argument:
 #' * `items`: initialization list
@@ -145,7 +149,7 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' * `default`: optinal, the default value of an item if the key is not found
 #' * `d`: an OrderedDict or OrderedDictL
 #' @examples
-#' d <- OrderedDictL$new(list(apple = 5, orange = 10))
+#' d <- OrderedDictL(list(apple = 5, orange = 10))
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # the order the item is preserved
@@ -154,81 +158,86 @@ OrderedDict <- R6::R6Class("OrderedDict",
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [Dict] and [OrderedDict]
 #' @export
-OrderedDictL <- R6::R6Class("OrderedDictL",
-    cloneable = FALSE,
-    private = list(
-        e = NULL
-    ),
-    public = list(
-        initialize = function(items = NULL) {
-            self$clear()
-            for (argname in names(items)) {
-                self$set(argname, items[[argname]])
-            }
-        },
-        set = function(key, value) {
-            private$e[key] <- list(value)
-            invisible(self)
-        },
-        get = function(key, default) {
-            if (self$has(key)) {
-                private$e[[key]]
-            } else if (missing(default)) {
-                stop("key not found")
-            }  else {
-                default
-            }
-        },
-        remove = function(key) {
-            v <- self$keys() != key
-            if (all(v)) stop("key not found")
-            private$e <- private$e[v]
-            invisible(self)
-        },
-        pop = function(key, default) {
-            v <- self$get(key, default)
-            self$remove(key)
-            v
-        },
-        popitem = function(last = TRUE) {
-            if (last) {
-                keys <- self$keys()
-                key <- key[length(keys)]
-            } else {
-                keys <- self$keys()[1]
-            }
-            v <- self$get(key)
-            self$remove(key)
-            list(key = key, vlaue = v)
-        },
-        has = function(key) {
-            key %in% self$keys()
-        },
-        keys = function() {
-            as.character(names(private$e))
-        },
-        values = function() {
-            ret <- vector("list", self$size())
-            keys <- self$keys()
-            for (i in seq_along(keys)) {
-                ret[[i]] <- self$get(keys[i])
-            }
-            ret
-        },
-        update = function(d) {
-            for (key in d$keys()) {
-                self$set(key, d$get(key))
-            }
-            self
-        },
-        clear = function() {
-            private$e <- list()
-        },
-        size = function() length(private$e),
-        as_list = function() private$e,
-        print = function() {
-            n <- self$size()
-            cat("OrderedDictL object with", n, "item(s).\n")
+OrderedDictL <- function(...) {
+    self <- environment()
+    e <- NULL
+
+    initialize <- function(items = NULL) {
+        clear()
+        for (argname in names(items)) {
+            set(argname, items[[argname]])
         }
-    )
-)
+    }
+    set <- function(key, value) {
+        e[key] <<- list(value)
+        invisible(self)
+    }
+    get <- function(key, default) {
+        if (has(key)) {
+            e[[key]]
+        } else if (missing(default)) {
+            stop("key not found")
+        } else {
+            default
+        }
+    }
+    remove <- function(key) {
+        v <- keys() != key
+        if (all(v)) stop("key not found")
+        e <<- e[v]
+        invisible(self)
+    }
+    pop <- function(key, default) {
+        v <- get(key, default)
+        remove(key)
+        v
+    }
+    popitem <- function(last = TRUE) {
+        if (last) {
+            keys <- keys()
+            key <- key[length(keys)]
+        } else {
+            keys <- keys()[1]
+        }
+        v <- get(key)
+        remove(key)
+        list(key = key, vlaue = v)
+    }
+    has <- function(key) {
+        key %in% keys()
+    }
+    keys <- function() {
+        as.character(names(e))
+    }
+    values <- function() {
+        ret <- vector("list", size())
+        keys <- keys()
+        for (i in seq_along(keys)) {
+            ret[[i]] <- get(keys[i])
+        }
+        ret
+    }
+    update <- function(d) {
+        for (key in d$keys()) {
+            set(key, d$get(key))
+        }
+        self
+    }
+    clear <- function() {
+        e <<- list()
+        invisible(self)
+    }
+    size <- function() length(e)
+    as_list <- function() e
+
+    initialize(...)
+    class(self) <- "OrderedDictL"
+    self
+}
+
+#' @method print OrderedDictL
+#' @export
+print.OrderedDictL <- function(self) {
+    n <- self$size()
+    cat("OrderedDictL object with", n, "item(s)\n")
+}

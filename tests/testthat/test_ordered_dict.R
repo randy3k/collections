@@ -5,7 +5,7 @@ context(container)
 Container <- eval(as.name(container))
 
 test_that("push and pop", {
-    d <- Container$new()
+    d <- Container()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
@@ -26,7 +26,7 @@ test_that("push and pop", {
 })
 
 test_that("clear", {
-    d <- Container$new()
+    d <- Container()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
@@ -36,7 +36,7 @@ test_that("clear", {
 
 
 test_that("NULL and default", {
-    d <- Container$new()
+    d <- Container()
     d$set("b", NULL)
     expect_equal(d$get("b"), NULL)
     expect_equal(d$get("a", "default"), "default")
