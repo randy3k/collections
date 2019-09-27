@@ -13,7 +13,6 @@ Depends:
     R (>= 3.4.0)
 NeedsCompilation: yes
 ByteCompile: yes
-Imports: R6
 Suggests: testthat
 LazyData: true
 RoxygenNote: 6.1.1
