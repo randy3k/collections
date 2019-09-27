@@ -213,7 +213,7 @@ test_datastructures_pqueue_push_pop <- function(n) {
 }
 
 test_collections_pqueue_push_pop <- function(n) {
-    q <- collections::PriorityQueue$new()
+    q <- collections::PriorityQueue()
     for (i in 1:n) q$push(rnorm(1), sample.int(n, 1))
     for (i in 1:n) q$pop()
     q
