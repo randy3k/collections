@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="Priority Queue — PriorityQueue" />
 
-<meta property="og:description" content="The PriorityQueue class creates a priority queue (a.k.a heap)." />
+<meta property="og:description" content="The PriorityQueue function creates a priority queue (a.k.a heap)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,27 +117,23 @@
 
     <div class="ref-description">
     
-    <p>The <code>PriorityQueue</code> class creates a priority queue (a.k.a heap).</p>
+    <p>The <code>PriorityQueue</code> function creates a priority queue (a.k.a heap).</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>PriorityQueue</span></pre>
+    <pre class="usage"><span class='fu'>PriorityQueue</span>(<span class='no'>...</span>)</pre>
         
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
-    
     <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
 
     
 
 <pre>
-PriorityQueue$new(items = NULL, priorities = NULL)
-PriorityQueue$push(item, priority = 0)
-PriorityQueue$pop()
-PriorityQueue$clear()
-PriorityQueue$size()
-PriorityQueue$as_list()
+PriorityQueue(items = NULL, priorities = NULL)
+.$push(item, priority = 0)
+.$pop()
+.$clear()
+.$size()
+.$as_list()
 </pre>
 
     
@@ -155,20 +151,18 @@ PriorityQueue$as_list()
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>PriorityQueue</span>$<span class='fu'>new</span>()
+    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>PriorityQueue</span>()
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"not_urgent"</span>)
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"urgent"</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"not_as_urgent"</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># urgent</span></div><div class='output co'>#&gt; [1] "urgent"</div><div class='input'><span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># not_as_urgent</span></div><div class='output co'>#&gt; [1] "not_as_urgent"</div><div class='input'><span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># not_urgent</span></div><div class='output co'>#&gt; [1] "not_urgent"</div><div class='input'>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>PriorityQueue</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"not_urgent"</span>, <span class='st'>"urgent"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>2</span>))
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>PriorityQueue</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"not_urgent"</span>, <span class='st'>"urgent"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>2</span>))
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"not_as_urgent"</span>, <span class='fl'>1</span>)$<span class='fu'>push</span>(<span class='st'>"not_urgent2"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#format">Format</a></li>
-
       <li><a href="#usage">Usage</a></li>
 
       <li><a href="#argument">Argument</a></li>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Double Ended Queue (list based) — DequeL • collections</title>
+<title>Double Ended Queue (R implementation) — DequeL • collections</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,10 +32,10 @@
 
 
 
-<meta property="og:title" content="Double Ended Queue (list based) — DequeL" />
+<meta property="og:title" content="Double Ended Queue (R implementation) — DequeL" />
 
-<meta property="og:description" content="The DequeL class creates a double ended queue with list backend.
-Pure R implementation, mainly for benchmark." />
+<meta property="og:description" content="The DequeL function creates a double ended queue.
+Pure R implementation for benchmarking." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,42 +111,38 @@ Pure R implementation, mainly for benchmark." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Double Ended Queue (list based)</h1>
+    <h1>Double Ended Queue (R implementation)</h1>
     
     <div class="hidden name"><code>DequeL.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The <code>DequeL</code> class creates a double ended queue with list backend.
-Pure R implementation, mainly for benchmark.</p>
+    <p>The <code>DequeL</code> function creates a double ended queue.
+Pure R implementation for benchmarking.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>DequeL</span></pre>
+    <pre class="usage"><span class='fu'>DequeL</span>(<span class='no'>...</span>)</pre>
         
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
-    
     <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
 
     
 
 <pre>
-DequeL$new(items = NULL)
-DequeL$push(item)
-DequeL$pushleft(item)
-DequeL$pop()
-DequeL$popleft()
-DequeL$peek()
-DequeL$peekleft()
-DequeL$extend(q)
-DequeL$extendleft(q)
-DequeL$clear()
-DequeL$remove(item)
-DequeL$size()
-DequeL$as_list()
+DequeL(items = NULL)
+.$push(item)
+.$pushleft(item)
+.$pop()
+.$popleft()
+.$peek()
+.$peekleft()
+.$extend(q)
+.$extendleft(q)
+.$clear()
+.$remove(item)
+.$size()
+.$as_list()
 </pre>
 
     
@@ -167,20 +163,18 @@ DequeL$as_list()
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>DequeL</span>$<span class='fu'>new</span>()
+    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>DequeL</span>()
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"foo"</span>)
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"bar"</span>)
 <span class='no'>q</span>$<span class='fu'>pushleft</span>(<span class='st'>"baz"</span>)
 <span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># bar</span></div><div class='output co'>#&gt; [1] "bar"</div><div class='input'><span class='no'>q</span>$<span class='fu'>popleft</span>()  <span class='co'># baz</span></div><div class='output co'>#&gt; [1] "baz"</div><div class='input'>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>DequeL</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>DequeL</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"baz"</span>)$<span class='fu'>pushleft</span>(<span class='st'>"bla"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#format">Format</a></li>
-
       <li><a href="#usage">Usage</a></li>
 
       <li><a href="#arguments">Arguments</a></li>

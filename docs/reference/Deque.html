@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="Double Ended Queue — Deque" />
 
-<meta property="og:description" content="The Deque class creates a double ended queue with pairlist backend." />
+<meta property="og:description" content="The Deque function creates a double ended queue." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,34 +117,30 @@
 
     <div class="ref-description">
     
-    <p>The <code>Deque</code> class creates a double ended queue with pairlist backend.</p>
+    <p>The <code>Deque</code> function creates a double ended queue.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>Deque</span></pre>
+    <pre class="usage"><span class='fu'>Deque</span>(<span class='no'>...</span>)</pre>
         
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
-    
     <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
 
     
 
 <pre>
-Deque$new(items = NULL)
-Deque$push(item)
-Deque$pushleft(item)
-Deque$pop()
-Deque$popleft()
-Deque$peek()
-Deque$peekleft()
-Deque$extend(q)
-Deque$extendleft(q)
-Deque$remove(item)
-Deque$clear()
-Deque$size()
-Deque$as_list()
+Deque(items = NULL)
+.$push(item)
+.$pushleft(item)
+.$pop()
+.$popleft()
+.$peek()
+.$peekleft()
+.$extend(q)
+.$extendleft(q)
+.$remove(item)
+.$clear()
+.$size()
+.$as_list()
 </pre>
 
     
@@ -165,20 +161,18 @@ Deque$as_list()
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>Deque</span>$<span class='fu'>new</span>()
+    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>Deque</span>()
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"foo"</span>)
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"bar"</span>)
 <span class='no'>q</span>$<span class='fu'>pushleft</span>(<span class='st'>"baz"</span>)
 <span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># bar</span></div><div class='output co'>#&gt; [1] "bar"</div><div class='input'><span class='no'>q</span>$<span class='fu'>popleft</span>()  <span class='co'># baz</span></div><div class='output co'>#&gt; [1] "baz"</div><div class='input'>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='no'>Deque</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>Deque</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"baz"</span>)$<span class='fu'>pushleft</span>(<span class='st'>"bla"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#format">Format</a></li>
-
       <li><a href="#usage">Usage</a></li>
 
       <li><a href="#arguments">Arguments</a></li>

@@ -40,6 +40,6 @@ q$pop()  # urgent
 q$pop()  # not_as_urgent
 q$pop()  # not_urgent
 
-q <- PriorityQueue$(list("not_urgent", "urgent"), c(0, 2))
+q <- PriorityQueue(list("not_urgent", "urgent"), c(0, 2))
 q$push("not_as_urgent", 1)$push("not_urgent2")
 }

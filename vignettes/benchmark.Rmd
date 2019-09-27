@@ -22,6 +22,8 @@ We are comparing these packages with `collections`.
     `r packageDescription("hash")$Version`
 - [hashmap](https://CRAN.R-project.org/package=hashmap)
     `r packageDescription("hashmap")$Version`
+- [fastmap](https://CRAN.R-project.org/package=fastmap)
+    `r packageDescription("fastmap")$Version`
 - base: R native methods implemented by collections
 
 
@@ -159,7 +161,7 @@ test_dequer_deque_push_pop <- function(n) {
     q
 }
 test_collections_deque_l_push_pop <- function(n) {
-    q <- collections::DequeL$new()
+    q <- collections::DequeL()
     for (i in 1:n) q$push(rnorm(1))
     for (i in 1:floor(n / 2)) {
         q$pop()
@@ -168,7 +170,7 @@ test_collections_deque_l_push_pop <- function(n) {
     q
 }
 test_collections_deque_push_pop <- function(n) {
-    q <- collections::Deque$new()
+    q <- collections::Deque()
     for (i in 1:n) q$push(rnorm(1))
     for (i in 1:floor(n / 2)) {
         q$pop()
@@ -252,8 +254,14 @@ test_hashmap_dict_set_get <- function(n) {
     for (i in 1:n) h[[as.character(sample.int(n, 1))]]
     h
 }
+test_fastmap_dict_set_get <- function(n) {
+    h <- fastmap::fastmap()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in 1:n) h$get(as.character(sample.int(n, 1)))
+    h
+}
 test_collections_dict_set_get <- function(n) {
-    h <- collections::Dict$new()
+    h <- collections::Dict()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
     for (i in 1:n) h$get(as.character(sample.int(n, 1)))
     h
@@ -265,7 +273,17 @@ microbenchmark(
     datastructures = test_datastructures_dict_set_get(100),
     hash = test_hash_dict_set_get(100),
     hashmap = test_hashmap_dict_set_get(100),
+    fastmap = test_fastmap_dict_set_get(100),
     collections = test_collections_dict_set_get(100),
+    unit = "relative"
+)
+```
+
+```{r}
+microbenchmark(
+    hash = test_hash_dict_set_get(1000),
+    fastmap = test_fastmap_dict_set_get(1000),
+    collections = test_collections_dict_set_get(1000),
     unit = "relative"
 )
 ```
@@ -274,13 +292,13 @@ microbenchmark(
 
 ```{r, echo = FALSE}
 test_collections_ordered_dict_l_set_get <- function(n) {
-    h <- collections::OrderedDictL$new()
+    h <- collections::OrderedDictL()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
     for (i in sample(1:n)) h$get(as.character(i))
     h
 }
 test_collections_ordered_dict_set_get <- function(n) {
-    h <- collections::OrderedDict$new()
+    h <- collections::OrderedDict()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
     for (i in sample(1:n)) h$get(as.character(i))
     h

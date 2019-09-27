@@ -34,8 +34,7 @@
 
 <meta property="og:title" content="Ordered Dictionary — OrderedDict" />
 
-<meta property="og:description" content="The OrderedDict class creates an ordered dictionary.
-Keys are stored in a double ended queue Deque while items are stored in an R environment." />
+<meta property="og:description" content="The OrderedDict function creates an ordered dictionary." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,35 +117,30 @@ Keys are stored in a double ended queue Deque while items are stored in an R env
 
     <div class="ref-description">
     
-    <p>The <code>OrderedDict</code> class creates an ordered dictionary.
-Keys are stored in a double ended queue <a href='Deque.html'>Deque</a> while items are stored in an R environment.</p>
+    <p>The <code>OrderedDict</code> function creates an ordered dictionary.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>OrderedDict</span></pre>
+    <pre class="usage"><span class='fu'>OrderedDict</span>(<span class='no'>...</span>)</pre>
         
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
-    
     <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
 
     
 
 <pre>
-OrderedDict$new(items = NULL)
-OrderedDict$set(key, value)
-OrderedDict$get(key, default)
-OrderedDict$remove(key)
-OrderedDict$pop(key, default)
-OrderedDict$popitem(last = TRUE)
-OrderedDict$has(key)
-OrderedDict$keys()
-OrderedDict$values()
-OrderedDict$update(d)
-OrderedDict$clear()
-OrderedDict$size()
-OrderedDict$as_list()
+OrderedDict(items = NULL)
+.$set(key, value)
+.$get(key, default)
+.$remove(key)
+.$pop(key, default)
+.$popitem(last = TRUE)
+.$has(key)
+.$keys()
+.$values()
+.$update(d)
+.$clear()
+.$size()
+.$as_list()
 </pre>
 
     
@@ -169,7 +163,7 @@ OrderedDict$as_list()
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='no'>OrderedDict</span>$<span class='fu'>new</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>apple</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>orange</span> <span class='kw'>=</span> <span class='fl'>10</span>))
+    <pre class="examples"><div class='input'><span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>OrderedDict</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>apple</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>orange</span> <span class='kw'>=</span> <span class='fl'>10</span>))
 <span class='no'>d</span>$<span class='fu'>set</span>(<span class='st'>"banana"</span>, <span class='fl'>3</span>)
 <span class='no'>d</span>$<span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"apple"</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>d</span>$<span class='fu'>as_list</span>()  <span class='co'># the order the item is preserved</span></div><div class='output co'>#&gt; $apple
 #&gt; [1] 5
@@ -190,8 +184,6 @@ OrderedDict$as_list()
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#format">Format</a></li>
-
       <li><a href="#usage">Usage</a></li>
 
       <li><a href="#argument">Argument</a></li>
