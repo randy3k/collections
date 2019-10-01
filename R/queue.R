@@ -39,15 +39,15 @@ Queue <- function(...) {
         }
     }
     push <- function(item) {
-        .Call("queue_push", PACKAGE = "collections", self, item)
+        .Call(C_queue_push, self, item)
         invisible(self)
     }
     pop <- function() {
-        .Call("queue_pop", PACKAGE = "collections", self)
+        .Call(C_queue_pop, self)
     }
     peek <- function() {
         if (is.null(q)) stop("queue is empty")
-        .Call("pairlist_car", PACKAGE = "collections", q)
+        .Call(C_pairlist_car, q)
     }
     clear <- function() {
         q <<- NULL

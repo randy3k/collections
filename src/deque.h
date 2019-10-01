@@ -8,14 +8,14 @@ SEXP pairlist_car(SEXP x);
 
 SEXP pairlist_cdr(SEXP x);
 
-SEXP deque_push(SEXP private, SEXP value);
+SEXP deque_push(SEXP self, SEXP value);
 
-SEXP deque_pushleft(SEXP private, SEXP value);
+SEXP deque_pushleft(SEXP self, SEXP value);
 
-SEXP deque_pop(SEXP private);
+SEXP deque_pop(SEXP self);
 
-SEXP deque_popleft(SEXP private);
+SEXP deque_popleft(SEXP self);
 
-SEXP deque_remove(SEXP private, SEXP value);
+SEXP deque_remove(SEXP self, SEXP value);
 
 #endif

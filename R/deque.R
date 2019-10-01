@@ -45,34 +45,34 @@ Deque <- function(...) {
         }
     }
     push <- function(item) {
-        .Call("deque_push", PACKAGE = "collections", self, item)
+        .Call(C_deque_push, self, item)
         invisible(self)
     }
     pushleft <- function(item) {
-        .Call("deque_pushleft", PACKAGE = "collections", self, item)
+        .Call(C_deque_pushleft, self, item)
         invisible(self)
     }
     pop <- function() {
-        .Call("deque_pop", PACKAGE = "collections", self)
+        .Call(C_deque_pop, self)
     }
     popleft <- function() {
-        .Call("deque_popleft", PACKAGE = "collections", self)
+        .Call(C_deque_popleft, self)
     }
     peek <- function() {
         if (is.null(last)) stop("deque is empty")
-        .Call("pairlist_car", PACKAGE = "collections", last)[[2]]
+        .Call(C_pairlist_car, last)[[2]]
     }
     peekleft <- function() {
         if (is.null(q)) stop("deque is empty")
-        .Call("pairlist_car", PACKAGE = "collections", q)[[2]]
+        .Call(C_pairlist_car, q)[[2]]
     }
     extend <- function(deque) {
         !inherits(deque, "Deque") && stop("expect Deque object")
         q <- deque$q
         while (!is.null(q)) {
-            v <- .Call("pairlist_car", PACKAGE = "collections", q)
+            v <- .Call(C_pairlist_car, q)
             push(v[[2]])
-            q <- .Call("pairlist_cdr", PACKAGE = "collections", q)
+            q <- .Call(C_pairlist_cdr, q)
         }
         invisible(self)
     }
@@ -80,9 +80,9 @@ Deque <- function(...) {
         !inherits(deque, "Deque") && stop("expect Deque object")
         q <- deque$q
         while (!is.null(q)) {
-            v <- .Call("pairlist_car", PACKAGE = "collections", q)
+            v <- .Call(C_pairlist_car, q)
             pushleft(v[[2]])
-            q <- .Call("pairlist_cdr", PACKAGE = "collections", q)
+            q <- .Call(C_pairlist_cdr, q)
         }
         invisible(self)
     }
@@ -92,7 +92,7 @@ Deque <- function(...) {
         invisible(self)
     }
     remove <- function(item) {
-        .Call("deque_remove", PACKAGE = "collections", self, item)
+        .Call(C_deque_remove, self, item)
         invisible(self)
     }
     size <- function() length(q)
@@ -101,8 +101,8 @@ Deque <- function(...) {
         ret <- vector("list", n)
         x <- q
         for (i in seq_len(n)) {
-            ret[[i]] <- .Call("pairlist_car", PACKAGE = "collections", x)[[2]]
-            x <- .Call("pairlist_cdr", PACKAGE = "collections", x)
+            ret[[i]] <- .Call(C_pairlist_car, x)[[2]]
+            x <- .Call(C_pairlist_cdr, x)
         }
         ret
     }

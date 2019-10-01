@@ -39,11 +39,11 @@ PriorityQueue <- function(...) {
         }
     }
     push <- function(item, priority = 0) {
-        .Call("heap_push", PACKAGE = "collections", self, item, priority)
+        .Call(C_heap_push, self, item, priority)
         invisible(self)
     }
     pop <- function() {
-        .Call("heap_pop", PACKAGE = "collections", self)
+        .Call(C_heap_pop, self)
     }
     clear <- function() {
         h <<- list()

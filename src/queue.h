@@ -4,8 +4,8 @@
 #include <R.h>
 #include <Rinternals.h>
 
-SEXP queue_push(SEXP private, SEXP value);
+SEXP queue_push(SEXP self, SEXP value);
 
-SEXP queue_pop(SEXP private);
+SEXP queue_pop(SEXP self);
 
 #endif

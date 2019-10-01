@@ -36,15 +36,15 @@ Stack <- function(...) {
         }
     }
     push <- function(item) {
-        .Call("stack_push", PACKAGE = "collections", self, item)
+        .Call(C_stack_push, self, item)
         invisible(self)
     }
     pop <- function() {
-        .Call("stack_pop", PACKAGE = "collections", self)
+        .Call(C_stack_pop, self)
     }
     peek <- function() {
         if (is.null(q)) stop("stack is empty")
-        .Call("pairlist_car", PACKAGE = "collections", q)
+        .Call(C_pairlist_car, q)
     }
     clear <- function() {
         q <<- NULL

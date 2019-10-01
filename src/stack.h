@@ -4,8 +4,8 @@
 #include <R.h>
 #include <Rinternals.h>
 
-SEXP stack_push(SEXP private, SEXP value);
+SEXP stack_push(SEXP self, SEXP value);
 
-SEXP stack_pop(SEXP private);
+SEXP stack_pop(SEXP self);
 
 #endif

@@ -4,10 +4,10 @@
 #include <R.h>
 #include <Rinternals.h>
 
-SEXP heapify(SEXP private);
+SEXP heapify(SEXP self);
 
-SEXP heap_push(SEXP private, SEXP v, SEXP p);
+SEXP heap_push(SEXP self, SEXP v, SEXP p);
 
-SEXP heap_pop(SEXP private);
+SEXP heap_pop(SEXP self);
 
 #endif
