@@ -4,7 +4,8 @@ Title: High Performance Container Data Types
 Version: 0.1.6.9999
 Date: 2019-9-26
 Authors@R: c(
-    person("Randy", "Lai", , "randy.cs.lai@gmail.com", role = c("aut", "cre"))
+    person("Randy", "Lai", , "randy.cs.lai@gmail.com", role = c("aut", "cre")),
+    person("Andrea", "Mazzoleni", role = "cph", comment = "tommy hash table library")
     )
 Description: Provides high performance container data types such as Queue, Stack, Deque, Dict and OrderedDict. Benchmarks <https://randy3k.github.io/collections/articles/benchmark.html> have shown that these containers are asymptotically more efficient than those offered by other packages.
 URL: https://randy3k.github.io/collections

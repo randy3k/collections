@@ -67,7 +67,6 @@ Deque <- function(...) {
         .Call(C_pairlist_car, q)[[2]]
     }
     extend <- function(deque) {
-        !inherits(deque, "Deque") && stop("expect Deque object")
         q <- deque$q
         while (!is.null(q)) {
             v <- .Call(C_pairlist_car, q)
@@ -77,7 +76,6 @@ Deque <- function(...) {
         invisible(self)
     }
     extendleft <- function(deque) {
-        !inherits(deque, "Deque") && stop("expect Deque object")
         q <- deque$q
         while (!is.null(q)) {
             v <- .Call(C_pairlist_car, q)
@@ -197,13 +195,11 @@ DequeL <- function(...) {
         q[[1]]
     }
     extend <- function(deque) {
-        !inherits(deque, "DequeL") && stop("expect DequeL object")
         q <<- c(q, deque$q)
         n <<- length(q)
         invisible(self)
     }
     extendleft <- function(deque) {
-        !inherits(deque, "DequeL") && stop("expect DequeL object")
         q <<- c(rev(deque$q), q)
         n <<- length(q)
         invisible(self)

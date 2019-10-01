@@ -96,7 +96,7 @@ OrderedDict <- function(...) {
         self
     }
     clear <- function() {
-        d <<- DictL()
+        d <<- Dict()
         q <<- Deque()
         invisible(self)
     }
