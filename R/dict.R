@@ -104,10 +104,10 @@ Dict <- function(items = NULL) {
         key %in% ks
     }
     keys <- function() {
-        ks
+        ks[ks != ""]
     }
     values <- function() {
-        vs
+        vs[ks != ""]
     }
     update <- function(d) {
         for (key in d$keys()) {
@@ -128,9 +128,8 @@ Dict <- function(items = NULL) {
     }
     size <- function() n
     as_list <- function() {
-        not_holes <- ks != ""
-        v <- vs[not_holes]
-        names(v) <- ks[not_holes]
+        v <- values()
+        names(v) <- keys()
         v
     }
     print <- function() {

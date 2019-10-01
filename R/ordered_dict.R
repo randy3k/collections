@@ -79,7 +79,7 @@ OrderedDict <- function(...) {
         d$has(key)
     }
     keys <- function() {
-        d$keys()
+        unlist(q$as_list())
     }
     values <- function() {
         ret <- vector("list", size())
