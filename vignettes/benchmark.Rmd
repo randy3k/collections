@@ -298,18 +298,5 @@ tm <- microbenchmark(
     collections = test_collections_ordered_dict_set_get(100),
     unit = "relative"
 )
-autoplot(tm) + ggtitle("set and get 10 times")
-```
-
-Note: `collection::OrderedDictL` uses R environments and may leak memory. It
-is not recommended though it is marginally faster than
-`collection::OrderedDict` when there are only small amount of items.
-
-```{r ordered_dict2, echo = FALSE}
-tm <- microbenchmark(
-    base = test_collections_ordered_dict_l_set_get(1000),
-    collections = test_collections_ordered_dict_set_get(1000),
-    unit = "relative"
-)
-autoplot(tm) + ggtitle("set and get 1000 times")
+autoplot(tm) + ggtitle("set and get 100 times")
 ```
