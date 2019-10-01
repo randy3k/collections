@@ -1,8 +1,8 @@
 Package: collections
 Type: Package
 Title: High Performance Container Data Types
-Version: 0.1.6.9999
-Date: 2019-9-26
+Version: 0.2.0
+Date: 2019-09-30
 Authors@R: c(
     person("Randy", "Lai", , "randy.cs.lai@gmail.com", role = c("aut", "cre")),
     person("Andrea", "Mazzoleni", role = "cph", comment = "tommy hash table library")

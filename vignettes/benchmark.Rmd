@@ -27,9 +27,11 @@ We are comparing these packages with `collections`.
 - base: R native methods implemented by collections
 
 
-```{r, echo = FALSE}
+```{r global_options, include=FALSE}
 library(microbenchmark)
+library(ggplot2)
 options(digits = 3)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
 ## Queue
@@ -71,8 +73,8 @@ test_collections_queue_push_pop <- function(n) {
 }
 ```
 
-```{r}
-microbenchmark(
+```{r, echo = FALSE}
+tm <- microbenchmark(
     dequer = test_dequer_queue_push_pop(100),
     datastructures = test_datastructures_queue_push_pop(100),
     liqueueR = test_liqueueR_queue_push_pop(100),
@@ -80,12 +82,14 @@ microbenchmark(
     collections = test_collections_queue_push_pop(100),
     unit = "relative"
 )
-microbenchmark(
+autoplot(tm) + ggtitle("push and pop 100 times")
+tm <- microbenchmark(
     dequer = test_dequer_queue_push_pop(1000),
     base = test_collections_queue_l_push_pop(1000),
     collections = test_collections_queue_push_pop(1000),
     unit = "relative"
 )
+autoplot(tm) + ggtitle("push and pop 1000 times")
 ```
 
 ## Stack
@@ -128,8 +132,8 @@ test_collections_stack_push_pop <- function(n) {
 }
 ```
 
-```{r}
-microbenchmark(
+```{r, echo = FALSE}
+tm <- microbenchmark(
     dequer = test_dequer_stack_push_pop(100),
     datastructures = test_datastructures_stack_push_pop(100),
     liqueueR = test_liqueueR_stack_push_pop(100),
@@ -137,12 +141,14 @@ microbenchmark(
     collections = test_collections_stack_push_pop(100),
     unit = "relative"
 )
-microbenchmark(
+autoplot(tm) + ggtitle("push and pop 100 times")
+tm <- microbenchmark(
     dequer = test_dequer_stack_push_pop(1000),
     base = test_collections_stack_l_push_pop(1000),
     collections = test_collections_stack_push_pop(1000),
     unit = "relative"
 )
+autoplot(tm) + ggtitle("push and pop 1000 times")
 ```
 
 ## Deque
@@ -180,19 +186,21 @@ test_collections_deque_push_pop <- function(n) {
 }
 ```
 
-```{r}
-microbenchmark(
+```{r, echo = FALSE}
+tm <- microbenchmark(
     dequer = test_dequer_deque_push_pop(100),
     base = test_collections_deque_l_push_pop(100),
     collections = test_collections_deque_push_pop(100),
     unit = "relative"
 )
-microbenchmark(
+autoplot(tm) + ggtitle("push and pop 100 times")
+tm <- microbenchmark(
     dequer = test_dequer_deque_push_pop(1000),
     base = test_collections_deque_l_push_pop(1000),
     collections = test_collections_deque_push_pop(1000),
     unit = "relative"
 )
+autoplot(tm) + ggtitle("push and pop 1000 times")
 ```
 
 ## Priority Queue
@@ -222,13 +230,14 @@ test_collections_pqueue_push_pop <- function(n) {
 }
 ```
 
-```{r}
-microbenchmark(
+```{r, echo = FALSE}
+tm <- microbenchmark(
     liqueueR = test_liqueueR_pqueue_push_pop(100),
     datastructures = test_datastructures_pqueue_push_pop(100),
     collections = test_collections_pqueue_push_pop(100),
     unit = "relative"
 )
+autoplot(tm) + ggtitle("push and pop 100 times")
 ```
 
 
@@ -260,6 +269,12 @@ test_fastmap_dict_set_get <- function(n) {
     for (i in 1:n) h$get(as.character(sample.int(n, 1)))
     h
 }
+test_collections_dictl_set_get <- function(n) {
+    h <- collections::DictL()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in 1:n) h$get(as.character(sample.int(n, 1)))
+    h
+}
 test_collections_dict_set_get <- function(n) {
     h <- collections::Dict()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
@@ -268,24 +283,25 @@ test_collections_dict_set_get <- function(n) {
 }
 ```
 
-```{r}
-microbenchmark(
+```{r, echo = FALSE}
+tm <- microbenchmark(
     datastructures = test_datastructures_dict_set_get(100),
     hash = test_hash_dict_set_get(100),
     hashmap = test_hashmap_dict_set_get(100),
     fastmap = test_fastmap_dict_set_get(100),
+    base = test_collections_dictl_set_get(100),
     collections = test_collections_dict_set_get(100),
     unit = "relative"
 )
-```
+autoplot(tm) + ggtitle("set and get 100 times")
 
-```{r}
-microbenchmark(
+tm <- microbenchmark(
     hash = test_hash_dict_set_get(1000),
     fastmap = test_fastmap_dict_set_get(1000),
     collections = test_collections_dict_set_get(1000),
     unit = "relative"
 )
+autoplot(tm) + ggtitle("set and get 1000 times")
 ```
 
 ## OrderedDict
@@ -305,15 +321,18 @@ test_collections_ordered_dict_set_get <- function(n) {
 }
 ```
 
-```{r}
-microbenchmark(
+```{r, echo = FALSE}
+tm <- microbenchmark(
     base = test_collections_ordered_dict_l_set_get(100),
     collections = test_collections_ordered_dict_set_get(100),
     unit = "relative"
 )
-microbenchmark(
+autoplot(tm) + ggtitle("set and get 100 times")
+tm <- microbenchmark(
     base = test_collections_ordered_dict_l_set_get(1000),
     collections = test_collections_ordered_dict_set_get(1000),
     unit = "relative"
 )
+autoplot(tm) + ggtitle("set and get 1000 times")
+
 ```

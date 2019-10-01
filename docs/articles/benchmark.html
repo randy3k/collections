@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collections</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.9999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -102,155 +102,32 @@
 <div id="queue" class="section level2">
 <h2 class="hasAnchor">
 <a href="#queue" class="anchor"></a>Queue</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_queue_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb1-3"><a href="#cb1-3"></a>    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_queue_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb1-4"><a href="#cb1-4"></a>    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_queue_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb1-5"><a href="#cb1-5"></a>    <span class="dt">base =</span> <span class="kw">test_collections_queue_l_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb1-6"><a href="#cb1-6"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_queue_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb1-7"><a href="#cb1-7"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##            expr   min    lq  mean median    uq    max neval
-##          dequer  1.06  1.06  1.20   1.07  1.05   1.76   100
-##  datastructures  8.19  8.09 28.87   8.12  7.51 284.01   100
-##        liqueueR 16.85 16.66 16.44  16.85 17.40   7.90   100
-##            base  1.27  1.27  1.65   1.30  1.34   5.11   100
-##     collections  1.00  1.00  1.00   1.00  1.00   1.00   100</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb3-2"><a href="#cb3-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_queue_push_pop</span>(<span class="dv">1000</span>),</span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="dt">base =</span> <span class="kw">test_collections_queue_l_push_pop</span>(<span class="dv">1000</span>),</span>
-<span id="cb3-4"><a href="#cb3-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_queue_push_pop</span>(<span class="dv">1000</span>),</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##         expr  min   lq mean median   uq  max neval
-##       dequer 1.77 1.74 1.71   1.74 1.68 1.33   100
-##         base 2.09 2.08 2.39   2.12 2.76 1.69   100
-##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-2-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
 </div>
 <div id="stack" class="section level2">
 <h2 class="hasAnchor">
 <a href="#stack" class="anchor"></a>Stack</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb5-2"><a href="#cb5-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_stack_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb5-3"><a href="#cb5-3"></a>    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_stack_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb5-4"><a href="#cb5-4"></a>    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_stack_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb5-5"><a href="#cb5-5"></a>    <span class="dt">base =</span> <span class="kw">test_collections_stack_l_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb5-6"><a href="#cb5-6"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_stack_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb5-7"><a href="#cb5-7"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##            expr   min    lq  mean median    uq  max neval
-##          dequer  1.09  1.08  1.08   1.08  1.08 1.08   100
-##  datastructures  8.14  8.08  7.99   8.07  8.08 2.36   100
-##        liqueueR 16.62 16.34 16.53  16.28 17.06 4.25   100
-##            base  1.34  1.31  1.31   1.31  1.31 1.04   100
-##     collections  1.00  1.00  1.00   1.00  1.00 1.00   100</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb7-2"><a href="#cb7-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_stack_push_pop</span>(<span class="dv">1000</span>),</span>
-<span id="cb7-3"><a href="#cb7-3"></a>    <span class="dt">base =</span> <span class="kw">test_collections_stack_l_push_pop</span>(<span class="dv">1000</span>),</span>
-<span id="cb7-4"><a href="#cb7-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_stack_push_pop</span>(<span class="dv">1000</span>),</span>
-<span id="cb7-5"><a href="#cb7-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##         expr  min   lq mean median   uq  max neval
-##       dequer 1.73 1.75 1.67   1.76 1.76 1.13   100
-##         base 2.92 2.91 3.29   2.93 4.50 3.83   100
-##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-4-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
 <div id="deque" class="section level2">
 <h2 class="hasAnchor">
 <a href="#deque" class="anchor"></a>Deque</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb9-2"><a href="#cb9-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_deque_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb9-3"><a href="#cb9-3"></a>    <span class="dt">base =</span> <span class="kw">test_collections_deque_l_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb9-4"><a href="#cb9-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_deque_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb9-5"><a href="#cb9-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##         expr   min   lq mean median    uq  max neval
-##       dequer 1.000 1.00 1.00   1.00 1.000 1.00   100
-##         base 1.487 1.48 1.53   1.49 1.516 1.23   100
-##  collections 0.995 1.00 1.13   1.00 0.981 1.79   100</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb11-2"><a href="#cb11-2"></a>    <span class="dt">dequer =</span> <span class="kw">test_dequer_deque_push_pop</span>(<span class="dv">1000</span>),</span>
-<span id="cb11-3"><a href="#cb11-3"></a>    <span class="dt">base =</span> <span class="kw">test_collections_deque_l_push_pop</span>(<span class="dv">1000</span>),</span>
-<span id="cb11-4"><a href="#cb11-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_deque_push_pop</span>(<span class="dv">1000</span>),</span>
-<span id="cb11-5"><a href="#cb11-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb11-6"><a href="#cb11-6"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##         expr  min   lq mean median   uq  max neval
-##       dequer 1.34 1.32 1.36   1.32 1.34 1.25   100
-##         base 2.25 2.26 2.51   2.28 2.61 1.33   100
-##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-6-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 </div>
 <div id="priority-queue" class="section level2">
 <h2 class="hasAnchor">
 <a href="#priority-queue" class="anchor"></a>Priority Queue</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb13-2"><a href="#cb13-2"></a>    <span class="dt">liqueueR =</span> <span class="kw">test_liqueueR_pqueue_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb13-3"><a href="#cb13-3"></a>    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_pqueue_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb13-4"><a href="#cb13-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_pqueue_push_pop</span>(<span class="dv">100</span>),</span>
-<span id="cb13-5"><a href="#cb13-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##            expr   min    lq  mean median   uq  max neval
-##        liqueueR 25.09 24.82 23.87  25.42 26.4 7.47   100
-##  datastructures  6.17  6.14  5.93   6.14  6.1 2.59   100
-##     collections  1.00  1.00  1.00   1.00  1.0 1.00   100</code></pre>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div id="dict-hashmap" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dict-hashmap" class="anchor"></a>Dict / hashmap</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb15-2"><a href="#cb15-2"></a>    <span class="dt">datastructures =</span> <span class="kw">test_datastructures_dict_set_get</span>(<span class="dv">100</span>),</span>
-<span id="cb15-3"><a href="#cb15-3"></a>    <span class="dt">hash =</span> <span class="kw">test_hash_dict_set_get</span>(<span class="dv">100</span>),</span>
-<span id="cb15-4"><a href="#cb15-4"></a>    <span class="dt">hashmap =</span> <span class="kw">test_hashmap_dict_set_get</span>(<span class="dv">100</span>),</span>
-<span id="cb15-5"><a href="#cb15-5"></a>    <span class="dt">fastmap =</span> <span class="kw">test_fastmap_dict_set_get</span>(<span class="dv">100</span>),</span>
-<span id="cb15-6"><a href="#cb15-6"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_dict_set_get</span>(<span class="dv">100</span>),</span>
-<span id="cb15-7"><a href="#cb15-7"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##            expr  min   lq mean median   uq   max neval
-##  datastructures 7.08 7.06 7.10   7.07 7.52  2.84   100
-##            hash 1.21 1.21 1.52   1.22 1.23  4.07   100
-##         hashmap 3.43 3.41 4.76   3.42 3.41 27.29   100
-##         fastmap 1.06 1.06 1.12   1.06 1.05  2.18   100
-##     collections 1.00 1.00 1.00   1.00 1.00  1.00   100</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb17-2"><a href="#cb17-2"></a>    <span class="dt">hash =</span> <span class="kw">test_hash_dict_set_get</span>(<span class="dv">1000</span>),</span>
-<span id="cb17-3"><a href="#cb17-3"></a>    <span class="dt">fastmap =</span> <span class="kw">test_fastmap_dict_set_get</span>(<span class="dv">1000</span>),</span>
-<span id="cb17-4"><a href="#cb17-4"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_dict_set_get</span>(<span class="dv">1000</span>),</span>
-<span id="cb17-5"><a href="#cb17-5"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb17-6"><a href="#cb17-6"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##         expr  min   lq mean median   uq  max neval
-##         hash 1.20 1.19 1.18   1.19 1.26 1.19   100
-##      fastmap 1.05 1.04 1.01   1.04 1.04 1.05   100
-##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-10-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
 </div>
 <div id="ordereddict" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ordereddict" class="anchor"></a>OrderedDict</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb19-2"><a href="#cb19-2"></a>    <span class="dt">base =</span> <span class="kw">test_collections_ordered_dict_l_set_get</span>(<span class="dv">100</span>),</span>
-<span id="cb19-3"><a href="#cb19-3"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_ordered_dict_set_get</span>(<span class="dv">100</span>),</span>
-<span id="cb19-4"><a href="#cb19-4"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb19-5"><a href="#cb19-5"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##         expr  min   lq  mean median   uq   max neval
-##         base 1.02 1.02 0.983   1.03 1.06 0.857   100
-##  collections 1.00 1.00 1.000   1.00 1.00 1.000   100</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">microbenchmark</span>(</span>
-<span id="cb21-2"><a href="#cb21-2"></a>    <span class="dt">base =</span> <span class="kw">test_collections_ordered_dict_l_set_get</span>(<span class="dv">1000</span>),</span>
-<span id="cb21-3"><a href="#cb21-3"></a>    <span class="dt">collections =</span> <span class="kw">test_collections_ordered_dict_set_get</span>(<span class="dv">1000</span>),</span>
-<span id="cb21-4"><a href="#cb21-4"></a>    <span class="dt">unit =</span> <span class="st">"relative"</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a>)</span></code></pre></div>
-<pre><code>## Unit: relative
-##         expr  min   lq mean median   uq  max neval
-##         base 2.23 2.23 2.13   2.23 2.22 1.33   100
-##  collections 1.00 1.00 1.00   1.00 1.00 1.00   100</code></pre>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-12-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-12-2.png" width="700"></p>
 </div>
   </div>
 

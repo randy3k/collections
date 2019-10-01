@@ -18,4 +18,9 @@ Useful links:
 \author{
 \strong{Maintainer}: Randy Lai \email{randy.cs.lai@gmail.com}
 
+Other contributors:
+\itemize{
+  \item Andrea Mazzoleni (tommy hash table library) [copyright holder]
+}
+
 }

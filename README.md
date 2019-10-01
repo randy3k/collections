@@ -24,13 +24,22 @@ ended queues and it supports arbitary R objects. However, it uses
 for long queues.
 
 [datastructures](https://CRAN.R-project.org/package=datastructures) uses
-‘Boost’ and ‘STL’ data types to implement queues and hashmaps.
+‘Boost’ and ‘STL’ data types to implement queues and hashmaps. For some
+reasons, it is often slow as shown in the benchmark.
 
 [liqueueR](https://CRAN.R-project.org/package=liqueueR) implements
-queues using R lists.
+queues in pure R code.
 
-[hash](https://CRAN.R-project.org/package=hash) uses `new.env( hash =
-TRUE)` to create hash tables.
+[hash](https://CRAN.R-project.org/package=hash) uses R environment to 
+create hash tables. As indicated by the author of 
+[fastmap](https://CRAN.R-project.org/package=fastmap),
+a small amount of memory may be leaked.
 
-[hashmap](https://CRAN.R-project.org/package=hashmap) provides fast
-hashmap for atomic vectors.
+[hashmap](https://CRAN.R-project.org/package=hashmap) provides
+hashmap for atomic vectors using boost library.
+
+[fastmap](https://CRAN.R-project.org/package=fastmap) provides hashmap
+which doesn not leak memory. The current implementation of collection::Dict
+is actually inspired by it. However, a more
+efficient hash table library [tommy](https://github.com/amadvance/tommyds/)
+is used.

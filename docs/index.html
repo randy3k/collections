@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">collections</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6.9999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -82,10 +82,11 @@
 <h2 class="hasAnchor">
 <a href="#related-r-packages" class="anchor"></a>Related R packages</h2>
 <p><a href="https://CRAN.R-project.org/package=dequer">dequer</a> implements double ended queues and it supports arbitary R objects. However, it uses <code>R_PreserveObject</code> and <code>R_ReleaseObject</code> heavily which could be an issue for long queues.</p>
-<p><a href="https://CRAN.R-project.org/package=datastructures">datastructures</a> uses ‘Boost’ and ‘STL’ data types to implement queues and hashmaps.</p>
-<p><a href="https://CRAN.R-project.org/package=liqueueR">liqueueR</a> implements queues using R lists.</p>
-<p><a href="https://CRAN.R-project.org/package=hash">hash</a> uses <code><a href="https://rdrr.io/r/base/environment.html">new.env( hash = TRUE)</a></code> to create hash tables.</p>
-<p><a href="https://CRAN.R-project.org/package=hashmap">hashmap</a> provides fast hashmap for atomic vectors.</p>
+<p><a href="https://CRAN.R-project.org/package=datastructures">datastructures</a> uses ‘Boost’ and ‘STL’ data types to implement queues and hashmaps. For some reasons, it is often slow as shown in the benchmark.</p>
+<p><a href="https://CRAN.R-project.org/package=liqueueR">liqueueR</a> implements queues in pure R code.</p>
+<p><a href="https://CRAN.R-project.org/package=hash">hash</a> uses R environment to create hash tables. As indicated by the author of <a href="https://CRAN.R-project.org/package=fastmap">fastmap</a>, a small amount of memory may be leaked.</p>
+<p><a href="https://CRAN.R-project.org/package=hashmap">hashmap</a> provides hashmap for atomic vectors using boost library.</p>
+<p><a href="https://CRAN.R-project.org/package=fastmap">fastmap</a> provides hashmap which doesn not leak memory. The current implementation of collection::Dict is actually inspired by it. However, a more efficient hash table library <a href="https://github.com/amadvance/tommyds/">tommy</a> is used.</p>
 </div>
 </div>
   </div>
@@ -110,6 +111,7 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Randy Lai <br><small class="roles"> Author, maintainer </small>  </li>
+<li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
