@@ -4,8 +4,11 @@
 #include <R.h>
 #include <Rinternals.h>
 
-SEXP missing_arg();
 
-SEXP dict_get(SEXP e, SEXP key, SEXP _default);
+SEXP dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key);
+
+SEXP dict_index_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value);
+
+SEXP dict_index_remove(SEXP self, SEXP ht_xptr, SEXP _key);
 
 #endif

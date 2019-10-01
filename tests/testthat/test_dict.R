@@ -1,7 +1,11 @@
-context("Dict")
+for (container in c("Dict", "DictL")) {
+
+context(container)
+
+Container <- eval(as.name(container))
 
 test_that("push and pop", {
-    d <- Dict()
+    d <- Container()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
@@ -21,18 +25,22 @@ test_that("push and pop", {
     expect_equal(d$pop("c"), 5)
 })
 
+
 test_that("clear", {
-    d <- Dict()
+    d <- Container()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
+
     d$clear()
     expect_equal(d$size(), 0)
 })
 
 test_that("NULL and default", {
-    d <- Dict()
+    d <- Container()
     d$set("b", NULL)
     expect_equal(d$get("b"), NULL)
     expect_equal(d$get("a", "default"), "default")
 })
+
+}

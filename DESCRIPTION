@@ -11,6 +11,8 @@ URL: https://randy3k.github.io/collections
 License: MIT + file LICENSE
 Depends:
     R (>= 3.4.0)
+Imports:
+    xptr
 NeedsCompilation: yes
 ByteCompile: yes
 Suggests: testthat

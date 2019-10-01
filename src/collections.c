@@ -6,6 +6,11 @@
 #include "dict.h"
 #include "priority_queue.h"
 
+
+SEXP missing_arg() {
+    return R_MissingArg;
+}
+
 static const R_CallMethodDef CallEntries[] = {
     {"queue_push", (DL_FUNC) &queue_push, 2},
     {"queue_pop", (DL_FUNC) &queue_pop, 1},
@@ -18,11 +23,13 @@ static const R_CallMethodDef CallEntries[] = {
     {"deque_pop", (DL_FUNC) &deque_pop, 1},
     {"deque_popleft", (DL_FUNC) &deque_popleft, 1},
     {"deque_remove", (DL_FUNC) &deque_remove, 2},
-    {"missing_arg", (DL_FUNC) &missing_arg, 0},
-    {"dict_get", (DL_FUNC) &dict_get, 3},
+    {"dict_index_get", (DL_FUNC) &dict_index_get, 3},
+    {"dict_index_set", (DL_FUNC) &dict_index_set, 4},
+    {"dict_index_remove", (DL_FUNC) &dict_index_remove, 3},
     {"heapify", (DL_FUNC) &heapify, 1},
     {"heap_push", (DL_FUNC) &heap_push, 3},
     {"heap_pop", (DL_FUNC) &heap_pop, 1},
+    {"missing_arg", (DL_FUNC) &missing_arg, 0},
     {NULL, NULL, 0}
 };
 

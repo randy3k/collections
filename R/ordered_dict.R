@@ -35,7 +35,7 @@
 #' @export
 OrderedDict <- function(...) {
     self <- environment()
-    e <- NULL
+    d <- NULL
     q <- NULL
 
     initialize <- function(items = NULL) {
@@ -46,19 +46,21 @@ OrderedDict <- function(...) {
     }
     set <- function(key, value) {
         q$push(key)
-        assign(key, value, envir = e)
+        d$set(key, value)
         invisible(self)
     }
-    get <- function(key, default = missing_arg()) {
-        .Call("dict_get", PACKAGE = "collections", e, key, default)
+    get <- function(key, default) {
+        d$get(key, default)
     }
     remove <- function(key) {
-        result <- try(q$remove(key), silent = TRUE)
-        inherits(result, "try-error") && stop("key not found")
-        .Internal(remove(key, e, FALSE))
+        tryCatch(
+            q$remove(key),
+            error = function(e) stop("key not found")
+        )
+        d$remove(key)
         invisible(self)
     }
-    pop <- function(key, default = missing_arg()) {
+    pop <- function(key, default) {
         v <- get(key, default)
         remove(key)
         v
@@ -70,14 +72,14 @@ OrderedDict <- function(...) {
             key <- q$popleft()
         }
         v <- get(key)
-        .Internal(remove(key, e, FALSE))
+        d$remove(key)
         list(key = key, value = v)
     }
     has <- function(key) {
-        key %in% ls(e)
+        d$has(key)
     }
     keys <- function() {
-        as.character(q$as_list())
+        d$keys()
     }
     values <- function() {
         ret <- vector("list", size())
@@ -87,18 +89,18 @@ OrderedDict <- function(...) {
         }
         ret
     }
-    update <- function(d) {
-        for (key in d$keys()) {
-            set(key, d$get(key))
+    update <- function(t) {
+        for (key in t$keys()) {
+            set(key, t$get(key))
         }
         self
     }
     clear <- function() {
-        e <<- new.env(hash = TRUE)
+        d <<- DictL()
         q <<- Deque()
         invisible(self)
     }
-    size <- function() length(ls(e))
+    size <- function() d$size()
     as_list <- function() {
         ret <- vector("list", size())
         keys <- keys()
