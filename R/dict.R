@@ -1,9 +1,10 @@
 #' @title Dictionary
 #' @description
 #' The `Dict` function creates an ordinary (unordered) dictionary (a.k.a. hash).
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' Dict(items = NULL)
 #' .$set(key, value)
 #' .$get(key, default)
 #' .$remove(key)
@@ -15,9 +16,8 @@
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Usage:
-#' * `items`: initialization list
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
@@ -31,6 +31,7 @@
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [OrderedDict] and [OrderedDictL]
 #' @importFrom xptr null_xptr
+#' @importFrom utils hasName
 #' @export
 Dict <- function(items = NULL) {
     self <- environment()
@@ -152,9 +153,10 @@ Dict <- function(items = NULL) {
 #' @description
 #' The `DictL` function creates an ordinary (unordered) dictionary (a.k.a. hash).
 #' The implementation is based on R environment.
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' DictL(items = NULL)
 #' .$set(key, value)
 #' .$get(key, default)
 #' .$remove(key)
@@ -166,9 +168,8 @@ Dict <- function(items = NULL) {
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Usage:
-#' * `items`: initialization list
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
@@ -182,9 +183,10 @@ Dict <- function(items = NULL) {
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [OrderedDict] and [OrderedDictL]
 #' @export
-DictL <- function(...) {
+DictL <- function(items = NULL) {
     self <- environment()
     e <- NULL
+    n <- NULL
 
     initialize <- function(items = NULL) {
         clear()
@@ -193,7 +195,9 @@ DictL <- function(...) {
         }
     }
     set <- function(key, value) {
+        had_name <- has(key)
         assign(key, value, envir = e)
+        if (!had_name) n <<- n + 1
         invisible(self)
     }
     get <- function(key, default) {
@@ -210,6 +214,7 @@ DictL <- function(...) {
             .Internal(remove(key, e, FALSE)),
             warning = function(w) stop("key not found")
         )
+        n <<- n - 1
         invisible(self)
     }
     pop <- function(key, default) {
@@ -218,7 +223,7 @@ DictL <- function(...) {
         v
     }
     has <- function(key) {
-        key %in% ls(e)
+        hasName(e, key)
     }
     keys <- function() {
         ls(e)
@@ -236,15 +241,15 @@ DictL <- function(...) {
     }
     clear <- function() {
         e <<- new.env(hash = TRUE)
+        n <<- 0
         invisible(self)
     }
-    size <- function() length(ls(e))
+    size <- function() n
     as_list <- function() as.list(e)
     print <- function() {
-        n <- size()
         cat("DictL object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items)
     self
 }

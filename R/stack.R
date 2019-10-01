@@ -1,18 +1,18 @@
 #' @title Stack
 #' @description
 #' The `Stack` function creates a stack.
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' Stack(items = NULL)
 #' .$push(item)
 #' .$pop()
 #' .$peek()
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Argument:
-#' * `items`: initialization list
 #' * `item`: any R object
 #' @examples
 #' s <- Stack()
@@ -25,7 +25,7 @@
 #' s$push("baz")$push("bla")
 #' @seealso [StackL]
 #' @export
-Stack <- function(...) {
+Stack <- function(items = NULL) {
     self <- environment()
     q <- NULL
 
@@ -57,7 +57,7 @@ Stack <- function(...) {
         cat("Stack object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items)
     self
 }
 
@@ -66,18 +66,18 @@ Stack <- function(...) {
 #' @description
 #' The `StackL` function creates a stack.
 #' Pure R implementation for benchmarking.
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' StackL(items = NULL)
 #' .$push(item)
 #' .$pop()
 #' .$peek()
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Argument:
-#' * `items`: initialization list
 #' * `item`: any R object
 #' @examples
 #' s <- StackL()
@@ -86,11 +86,11 @@ Stack <- function(...) {
 #' s$pop()  # second
 #' s$pop()  # first
 #'
-#' s <- stack(list("foo", "bar"))
+#' s <- StackL(list("foo", "bar"))
 #' s$push("baz")$push("bla")
 #' @seealso [Stack]
 #' @export
-StackL <- function(...) {
+StackL <- function(items = NULL) {
     self <- environment()
 
     q <- NULL
@@ -130,6 +130,6 @@ StackL <- function(...) {
         cat("StackL object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items)
     self
 }

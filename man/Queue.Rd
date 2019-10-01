@@ -4,32 +4,29 @@
 \alias{Queue}
 \title{Queue}
 \usage{
-Queue(...)
+Queue(items = NULL)
+}
+\arguments{
+\item{items}{a list of items}
 }
 \description{
 The \code{Queue} function creates a queue.
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-Queue(items = NULL)
 .$push(item)
 .$pop()
 .$peek()
 .$clear()
 .$size()
 .$as_list()
+.$print()
 }
-}
-
-\section{Argument}{
-
 \itemize{
-\item \code{items}: initialization list
 \item \code{item}: any R object
 }
 }
-
 \examples{
 q <- Queue()
 q$push("first")

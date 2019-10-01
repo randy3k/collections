@@ -1,9 +1,10 @@
 #' @title Double Ended Queue
 #' @description
 #' The `Deque` function creates a double ended queue.
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' Deque(items = NULL)
 #' .$push(item)
 #' .$pushleft(item)
 #' .$pop()
@@ -16,9 +17,8 @@
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Arguments:
-#' * `items`: initialization list
 #' * `item`: any R object
 #' * `q`: a Deque object
 #' @examples
@@ -33,7 +33,7 @@
 #' q$push("baz")$pushleft("bla")
 #' @seealso [DequeL]
 #' @export
-Deque <- function(...) {
+Deque <- function(items = NULL) {
     self <- environment()
     q <- NULL
     last <- NULL
@@ -109,7 +109,7 @@ Deque <- function(...) {
         cat("Deque object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items)
     self
 }
 
@@ -119,9 +119,10 @@ Deque <- function(...) {
 #' @description
 #' The `DequeL` function creates a double ended queue.
 #' Pure R implementation for benchmarking.
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' DequeL(items = NULL)
 #' .$push(item)
 #' .$pushleft(item)
 #' .$pop()
@@ -134,9 +135,8 @@ Deque <- function(...) {
 #' .$remove(item)
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Arguments:
-#' * `items`: initialization list
 #' * `item`: any R object
 #' * `q`: a DequeL object
 #' @examples
@@ -151,7 +151,7 @@ Deque <- function(...) {
 #' q$push("baz")$pushleft("bla")
 #' @seealso [Deque]
 #' @export
-DequeL <- function(...) {
+DequeL <- function(items = NULL) {
     self <- environment()
     q <- NULL
     n <- NULL
@@ -223,6 +223,6 @@ DequeL <- function(...) {
         cat("DequeL object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items)
     self
 }

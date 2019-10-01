@@ -4,15 +4,17 @@
 \alias{OrderedDict}
 \title{Ordered Dictionary}
 \usage{
-OrderedDict(...)
+OrderedDict(items = NULL)
+}
+\arguments{
+\item{items}{a list of items}
 }
 \description{
 The \code{OrderedDict} function creates an ordered dictionary.
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-OrderedDict(items = NULL)
 .$set(key, value)
 .$get(key, default)
 .$remove(key)
@@ -25,20 +27,15 @@ OrderedDict(items = NULL)
 .$clear()
 .$size()
 .$as_list()
+.$print()
 }
-}
-
-\section{Argument}{
-
 \itemize{
-\item \code{items}: initialization list
 \item \code{key}: any R object, key of the item
 \item \code{value}: any R object, value of the item
 \item \code{default}: optinal, the default value of an item if the key is not found
 \item \code{d}: an OrderedDict or OrderedDictL
 }
 }
-
 \examples{
 d <- OrderedDict(list(apple = 5, orange = 10))
 d$set("banana", 3)

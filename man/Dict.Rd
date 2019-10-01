@@ -6,13 +6,15 @@
 \usage{
 Dict(items = NULL)
 }
+\arguments{
+\item{items}{a list of items}
+}
 \description{
 The \code{Dict} function creates an ordinary (unordered) dictionary (a.k.a. hash).
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-Dict(items = NULL)
 .$set(key, value)
 .$get(key, default)
 .$remove(key)
@@ -24,17 +26,14 @@ Dict(items = NULL)
 .$clear()
 .$size()
 .$as_list()
+.$print()
 }
-
-
 \itemize{
-\item \code{items}: initialization list
 \item \code{key}: any R object, key of the item
 \item \code{value}: any R object, value of the item
 \item \code{default}: optional, the default value of an item if the key is not found
 }
 }
-
 \examples{
 d <- Dict(list(apple = 5, orange = 10))
 d$set("banana", 3)

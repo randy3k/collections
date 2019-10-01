@@ -4,18 +4,18 @@
 #' @title Queue
 #' @description
 #' The `Queue` function creates a queue.
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' Queue(items = NULL)
 #' .$push(item)
 #' .$pop()
 #' .$peek()
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Argument:
-#' * `items`: initialization list
 #' * `item`: any R object
 #' @examples
 #' q <- Queue()
@@ -28,7 +28,7 @@
 #' q$push("baz")$push("bla")
 #' @seealso [QueueL]
 #' @export
-Queue <- function(...) {
+Queue <- function(items = NULL) {
     self <- environment()
     q <- NULL
     last <- NULL
@@ -61,7 +61,7 @@ Queue <- function(...) {
         cat("Queue object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items)
     self
 }
 
@@ -70,18 +70,18 @@ Queue <- function(...) {
 #' @description
 #' The `QueueL` function creates a queue.
 #' Pure R implementation for benchmarking.
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' QueueL(items = NULL)
 #' .$push(item)
 #' .$pop()
 #' .$peek()
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Argument:
-#' * `items`: initialization list
 #' * `item`: any R object
 #' @examples
 #' q <- QueueL()
@@ -94,7 +94,7 @@ Queue <- function(...) {
 #' q$push("baz")$push("bla")
 #' @seealso [Queue]
 #' @export
-QueueL <- function(...) {
+QueueL <- function(items = NULL) {
     self <- environment()
     q <- NULL
     n <- NULL
@@ -133,6 +133,6 @@ QueueL <- function(...) {
         cat("QueueL object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items)
     self
 }

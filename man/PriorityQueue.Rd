@@ -4,33 +4,31 @@
 \alias{PriorityQueue}
 \title{Priority Queue}
 \usage{
-PriorityQueue(...)
+PriorityQueue(items = NULL, priorities = rep(0, length(items)))
+}
+\arguments{
+\item{items}{a list of items}
+
+\item{priorities}{a vector of interger valued priorities}
 }
 \description{
 The \code{PriorityQueue} function creates a priority queue (a.k.a heap).
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-PriorityQueue(items = NULL, priorities = NULL)
 .$push(item, priority = 0)
 .$pop()
 .$clear()
 .$size()
 .$as_list()
+.$print()
 }
-}
-
-\section{Argument}{
-
 \itemize{
-\item \code{items}: initialization list
-\item \code{priorities}: a vector of priorities of the same length of \code{items}
 \item \code{item}: any R object
 \item \code{priority}: a real number, item with larger priority pops first
 }
 }
-
 \examples{
 q <- PriorityQueue()
 q$push("not_urgent")

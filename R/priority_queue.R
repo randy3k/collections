@@ -1,18 +1,18 @@
 #' @title Priority Queue
 #' @description
 #' The `PriorityQueue` function creates a priority queue (a.k.a heap).
-#' @section Usage:
+#' @param items a list of items
+#' @param priorities a vector of interger valued priorities
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' PriorityQueue(items = NULL, priorities = NULL)
 #' .$push(item, priority = 0)
 #' .$pop()
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Argument:
-#' * `items`: initialization list
-#' * `priorities`: a vector of priorities of the same length of `items`
 #' * `item`: any R object
 #' * `priority`: a real number, item with larger priority pops first
 #' @examples
@@ -27,12 +27,12 @@
 #' q <- PriorityQueue(list("not_urgent", "urgent"), c(0, 2))
 #' q$push("not_as_urgent", 1)$push("not_urgent2")
 #' @export
-PriorityQueue <- function(...) {
+PriorityQueue <- function(items = NULL, priorities = rep(0, length(items))) {
     self <- environment()
     h <- NULL
     n <- NULL
 
-    initialize <- function(items = NULL, priorities = rep(0, length(items))) {
+    initialize <- function(items, priorities) {
         clear()
         for (i in seq_along(items)) {
             push(items[[i]], priorities[i])
@@ -65,6 +65,6 @@ PriorityQueue <- function(...) {
         cat("PriorityQueue object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items, priorities)
     self
 }

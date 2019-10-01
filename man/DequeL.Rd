@@ -4,16 +4,18 @@
 \alias{DequeL}
 \title{Double Ended Queue (R implementation)}
 \usage{
-DequeL(...)
+DequeL(items = NULL)
+}
+\arguments{
+\item{items}{a list of items}
 }
 \description{
 The \code{DequeL} function creates a double ended queue.
 Pure R implementation for benchmarking.
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-DequeL(items = NULL)
 .$push(item)
 .$pushleft(item)
 .$pop()
@@ -26,18 +28,13 @@ DequeL(items = NULL)
 .$remove(item)
 .$size()
 .$as_list()
+.$print()
 }
-}
-
-\section{Arguments}{
-
 \itemize{
-\item \code{items}: initialization list
 \item \code{item}: any R object
 \item \code{q}: a DequeL object
 }
 }
-
 \examples{
 q <- DequeL()
 q$push("foo")

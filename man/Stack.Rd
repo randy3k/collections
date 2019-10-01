@@ -4,32 +4,29 @@
 \alias{Stack}
 \title{Stack}
 \usage{
-Stack(...)
+Stack(items = NULL)
+}
+\arguments{
+\item{items}{a list of items}
 }
 \description{
 The \code{Stack} function creates a stack.
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-Stack(items = NULL)
 .$push(item)
 .$pop()
 .$peek()
 .$clear()
 .$size()
 .$as_list()
+.$print()
 }
-}
-
-\section{Argument}{
-
 \itemize{
-\item \code{items}: initialization list
 \item \code{item}: any R object
 }
 }
-
 \examples{
 s <- Stack()
 s$push("first")

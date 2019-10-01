@@ -4,33 +4,30 @@
 \alias{StackL}
 \title{StackL (R implementation)}
 \usage{
-StackL(...)
+StackL(items = NULL)
+}
+\arguments{
+\item{items}{a list of items}
 }
 \description{
 The \code{StackL} function creates a stack.
 Pure R implementation for benchmarking.
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-StackL(items = NULL)
 .$push(item)
 .$pop()
 .$peek()
 .$clear()
 .$size()
 .$as_list()
+.$print()
 }
-}
-
-\section{Argument}{
-
 \itemize{
-\item \code{items}: initialization list
 \item \code{item}: any R object
 }
 }
-
 \examples{
 s <- StackL()
 s$push("first")
@@ -38,7 +35,7 @@ s$push("second")
 s$pop()  # second
 s$pop()  # first
 
-s <- stack(list("foo", "bar"))
+s <- StackL(list("foo", "bar"))
 s$push("baz")$push("bla")
 }
 \seealso{

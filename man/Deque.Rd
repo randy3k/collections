@@ -4,15 +4,17 @@
 \alias{Deque}
 \title{Double Ended Queue}
 \usage{
-Deque(...)
+Deque(items = NULL)
+}
+\arguments{
+\item{items}{a list of items}
 }
 \description{
 The \code{Deque} function creates a double ended queue.
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-Deque(items = NULL)
 .$push(item)
 .$pushleft(item)
 .$pop()
@@ -25,18 +27,13 @@ Deque(items = NULL)
 .$clear()
 .$size()
 .$as_list()
+.$print()
 }
-}
-
-\section{Arguments}{
-
 \itemize{
-\item \code{items}: initialization list
 \item \code{item}: any R object
 \item \code{q}: a Deque object
 }
 }
-
 \examples{
 q <- Deque()
 q$push("foo")

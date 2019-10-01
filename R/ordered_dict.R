@@ -1,9 +1,10 @@
 #' @title Ordered Dictionary
 #' @description
 #' The `OrderedDict` function creates an ordered dictionary.
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' OrderedDict(items = NULL)
 #' .$set(key, value)
 #' .$get(key, default)
 #' .$remove(key)
@@ -16,9 +17,8 @@
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Argument:
-#' * `items`: initialization list
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
 #' * `default`: optinal, the default value of an item if the key is not found
@@ -33,7 +33,7 @@
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [Dict] and [OrderedDictL]
 #' @export
-OrderedDict <- function(...) {
+OrderedDict <- function(items = NULL) {
     self <- environment()
     d <- NULL
     q <- NULL
@@ -115,7 +115,7 @@ OrderedDict <- function(...) {
         cat("OrderedDict object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items)
     self
 }
 
@@ -125,9 +125,10 @@ OrderedDict <- function(...) {
 #' @description
 #' The `OrderedDictL` function creates an ordered dictionary.
 #' Pure R implementation for benchmarking.
-#' @section Usage:
+#' @param items a list of items
+#' @details
+#' Following methods are exposed:
 #' \preformatted{
-#' OrderedDictL(items = NULL)
 #' .$set(key, value)
 #' .$get(key, default)
 #' .$remove(key)
@@ -140,9 +141,8 @@ OrderedDict <- function(...) {
 #' .$clear()
 #' .$size()
 #' .$as_list()
+#' .$print()
 #' }
-#' @section Argument:
-#' * `items`: initialization list
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
 #' * `default`: optinal, the default value of an item if the key is not found
@@ -157,7 +157,7 @@ OrderedDict <- function(...) {
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [Dict] and [OrderedDict]
 #' @export
-OrderedDictL <- function(...) {
+OrderedDictL <- function(items = NULL) {
     self <- environment()
     e <- NULL
 
@@ -233,6 +233,6 @@ OrderedDictL <- function(...) {
         cat("OrderedDictL object with", n, "item(s)\n")
     }
 
-    initialize(...)
+    initialize(items)
     self
 }

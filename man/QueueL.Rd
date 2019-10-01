@@ -4,33 +4,30 @@
 \alias{QueueL}
 \title{QueueL (R implementation)}
 \usage{
-QueueL(...)
+QueueL(items = NULL)
+}
+\arguments{
+\item{items}{a list of items}
 }
 \description{
 The \code{QueueL} function creates a queue.
 Pure R implementation for benchmarking.
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-QueueL(items = NULL)
 .$push(item)
 .$pop()
 .$peek()
 .$clear()
 .$size()
 .$as_list()
+.$print()
 }
-}
-
-\section{Argument}{
-
 \itemize{
-\item \code{items}: initialization list
 \item \code{item}: any R object
 }
 }
-
 \examples{
 q <- QueueL()
 q$push("first")

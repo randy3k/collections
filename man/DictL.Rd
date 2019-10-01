@@ -4,16 +4,18 @@
 \alias{DictL}
 \title{Dictionary}
 \usage{
-DictL(...)
+DictL(items = NULL)
+}
+\arguments{
+\item{items}{a list of items}
 }
 \description{
 The \code{DictL} function creates an ordinary (unordered) dictionary (a.k.a. hash).
 The implementation is based on R environment.
 }
-\section{Usage}{
-
+\details{
+Following methods are exposed:
 \preformatted{
-DictL(items = NULL)
 .$set(key, value)
 .$get(key, default)
 .$remove(key)
@@ -25,17 +27,14 @@ DictL(items = NULL)
 .$clear()
 .$size()
 .$as_list()
+.$print()
 }
-
-
 \itemize{
-\item \code{items}: initialization list
 \item \code{key}: any R object, key of the item
 \item \code{value}: any R object, value of the item
 \item \code{default}: optional, the default value of an item if the key is not found
 }
 }
-
 \examples{
 d <- DictL(list(apple = 5, orange = 10))
 d$set("banana", 3)
