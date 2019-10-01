@@ -241,6 +241,10 @@ DictL <- function(...) {
     }
     size <- function() length(ls(e))
     as_list <- function() as.list(e)
+    print <- function() {
+        n <- size()
+        cat("DictL object with", n, "item(s)\n")
+    }
 
     initialize(...)
     self

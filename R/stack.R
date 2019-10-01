@@ -52,18 +52,13 @@ Stack <- function(...) {
     }
     size <- function() length(q)
     as_list <- function() as.list(q)
+    print <- function() {
+        n <- size()
+        cat("Stack object with", n, "item(s)\n")
+    }
 
     initialize(...)
-    class(self) <- "Stack"
     self
-}
-
-
-#' @method print Stack
-#' @export
-print.Stack <- function(self) {
-    n <- self$size()
-    cat("Stack object with", n, "item(s)\n")
 }
 
 
@@ -130,16 +125,11 @@ StackL <- function(...) {
     }
     size <- function() n
     as_list <- function() q
+    print <- function() {
+        n <- size()
+        cat("StackL object with", n, "item(s)\n")
+    }
 
     initialize(...)
-    class(self) <- "StackL"
     self
-}
-
-
-#' @method print StackL
-#' @export
-print.StackL <- function(self) {
-    n <- self$size()
-    cat("StackL object with", n, "item(s)\n")
 }

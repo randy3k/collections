@@ -110,18 +110,15 @@ OrderedDict <- function(...) {
         }
         ret
     }
+    print <- function() {
+        n <- size()
+        cat("OrderedDict object with", n, "item(s)\n")
+    }
 
     initialize(...)
-    class(self) <- "OrderedDict"
     self
 }
 
-#' @method print OrderedDict
-#' @export
-print.OrderedDict <- function(self) {
-    n <- self$size()
-    cat("OrderedDict object with", n, "item(s)\n")
-}
 
 
 #' @title Ordered Dictionary (R implementation)
@@ -231,15 +228,11 @@ OrderedDictL <- function(...) {
     }
     size <- function() length(e)
     as_list <- function() e
+    print <- function() {
+        n <- size()
+        cat("OrderedDictL object with", n, "item(s)\n")
+    }
 
     initialize(...)
-    class(self) <- "OrderedDictL"
     self
-}
-
-#' @method print OrderedDictL
-#' @export
-print.OrderedDictL <- function(self) {
-    n <- self$size()
-    cat("OrderedDictL object with", n, "item(s)\n")
 }

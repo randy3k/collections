@@ -60,16 +60,11 @@ PriorityQueue <- function(...) {
         }
         ret
     }
+    print <- function() {
+        n <- size()
+        cat("PriorityQueue object with", n, "item(s)\n")
+    }
 
     initialize(...)
-    class(self) <- "PriorityQueue"
     self
-}
-
-
-#' @method print PriorityQueue
-#' @export
-print.PriorityQueue <- function(self) {
-    n <- self$size()
-    cat("PriorityQueue object with", n, "item(s)\n")
 }

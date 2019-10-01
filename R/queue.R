@@ -56,18 +56,13 @@ Queue <- function(...) {
     }
     size <- function() length(q)
     as_list <- function() as.list(q)
+    print <- function() {
+        n <- size()
+        cat("Queue object with", n, "item(s)\n")
+    }
 
     initialize(...)
-    class(self) <- "Queue"
     self
-}
-
-
-#' @method print Queue
-#' @export
-print.Queue <- function(self) {
-    n <- self$size()
-    cat("Queue object with", n, "item(s)\n")
 }
 
 
@@ -133,15 +128,11 @@ QueueL <- function(...) {
     }
     size <- function() n
     as_list <- function() q
+    print <- function() {
+        n <- size()
+        cat("QueueL object with", n, "item(s)\n")
+    }
 
     initialize(...)
-    class(self) <- "QueueL"
     self
-}
-
-#' @method print QueueL
-#' @export
-print.QueueL <- function(self) {
-    n <- self$size()
-    cat("QueueL object with", n, "item(s)\n")
 }

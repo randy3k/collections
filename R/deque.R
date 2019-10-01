@@ -106,18 +106,15 @@ Deque <- function(...) {
         }
         ret
     }
+    print <- function() {
+        n <- size()
+        cat("Deque object with", n, "item(s)\n")
+    }
 
     initialize(...)
-    class(self) <- "Deque"
     self
 }
 
-#' @method print Deque
-#' @export
-print.Deque <- function(self) {
-    n <- self$size()
-    cat("Deque object with", n, "item(s)\n")
-}
 
 
 #' @title Double Ended Queue (R implementation)
@@ -225,15 +222,11 @@ DequeL <- function(...) {
     }
     size <- function() length(q)
     as_list <- function() q
+    print <- function() {
+        n <- size()
+        cat("DequeL object with", n, "item(s)\n")
+    }
 
     initialize(...)
-    class(self) <- "DequeL"
     self
-}
-
-#' @method print DequeL
-#' @export
-print.DequeL <- function(self) {
-    n <- self$size()
-    cat("DequeL object with", n, "item(s)\n")
 }
