@@ -20,19 +20,19 @@ static void free_ht(SEXP ht_xptr) {
     }
 }
 
-const char* validate_key(SEXP key) {
+static const char* validate_key(SEXP key) {
     if (TYPEOF(key) != STRSXP || Rf_length(key) != 1) {
         Rf_error("expect scalar character");
     }
-    SEXP C = Rf_asChar(key);
-    if (Rf_StringBlank(C) || C == R_NaString) {
+    SEXP c = Rf_asChar(key);
+    if (Rf_StringBlank(c) || c == R_NaString) {
         Rf_error("invalid key");
     }
     return R_CHAR(Rf_asChar(key));
 }
 
 
-tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
+static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
     tommy_hashlin* ht;
     ht = malloc(sizeof(tommy_hashlin));
     tommy_hashlin_init(ht);
@@ -47,10 +47,12 @@ tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
     if (n > 0) {
         const char* key;
         SEXP ks = get_value(self, "ks");
+        SEXP c;
         R_len_t nks = Rf_length(ks);
         for (i = 0; i < nks; i++) {
-            key = R_CHAR(STRING_ELT(ks, i));
-            if (strcmp(key, "") == 0) continue;
+            c = STRING_ELT(ks, i);
+            if (c == R_NaString) continue;
+            key = R_CHAR(c);
             hashed_key = tommy_strhash_u32(0, key);
             s = (item*) malloc(sizeof(item));
             s->key = key;
@@ -63,7 +65,7 @@ tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
 }
 
 
-int compare(const void* arg, const void* obj) {
+static int compare(const void* arg, const void* obj) {
     return strcmp(arg, ((item*) obj)->key);
 }
 
@@ -116,6 +118,9 @@ SEXP dict_index_remove(SEXP self, SEXP ht_xptr, SEXP _key) {
     int index;
 
     ht = R_ExternalPtrAddr(ht_xptr);
+    if (ht == NULL) {
+        ht = init_hashlin(self, ht_xptr);
+    }
     key = validate_key(_key);
     tommy_hash_t hashed_key = tommy_strhash_u32(0, key);
     s = tommy_hashlin_remove(ht, compare, key, hashed_key);

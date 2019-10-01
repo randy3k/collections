@@ -1,5 +1,10 @@
 #include "priority_queue.h"
 
+#define INITIAL_SIZE 16
+#define GROW_FACTOR 1.5
+#define SHRINK_FACTOR 0.15
+
+
 static void swap(SEXP h, int a, int b) {
     SEXP temp = PROTECT(VECTOR_ELT(h, a));
     SET_VECTOR_ELT(h, a, VECTOR_ELT(h, b));
@@ -15,17 +20,34 @@ static int cmp(SEXP h, int a, int b) {
     return x < y;
 }
 
-static void ensure_capacity(SEXP self, int n) {
+static void grow(SEXP self, int n) {
     SEXP h = PROTECT(Rf_findVarInFrame(self, Rf_install("h")));
     int m = Rf_length(h);
     int i;
     SEXP h2;
     if (m == 0) {
-        h = PROTECT(Rf_allocVector(VECSXP, 16));
+        h = PROTECT(Rf_allocVector(VECSXP, INITIAL_SIZE));
         Rf_defineVar(Rf_install("h"), h, self);
         UNPROTECT(1);
     } else if (m < n + 1) {
-        h2 = PROTECT(Rf_allocVector(VECSXP, 2 * m));
+        h2 = PROTECT(Rf_allocVector(VECSXP, (int) ceil(GROW_FACTOR * m)));
+        for (i = 0; i < n; i++) {
+            SET_VECTOR_ELT(h2, i, VECTOR_ELT(h, i));
+        }
+        Rf_defineVar(Rf_install("h"), h2, self);
+        UNPROTECT(1);
+    }
+    UNPROTECT(1);
+}
+
+static void shrink(SEXP self, int n) {
+    SEXP h = PROTECT(Rf_findVarInFrame(self, Rf_install("h")));
+    int m = Rf_length(h);
+    int m1 = ceil(SHRINK_FACTOR * m);
+    int i;
+    SEXP h2;
+    if (n < m1 && m1 > INITIAL_SIZE) {
+        h2 = PROTECT(Rf_allocVector(VECSXP, m1));
         for (i = 0; i < n; i++) {
             SET_VECTOR_ELT(h2, i, VECTOR_ELT(h, i));
         }
@@ -79,7 +101,7 @@ SEXP heap_push(SEXP self, SEXP v, SEXP p) {
     PROTECT(p);
     SEXP _n = Rf_findVarInFrame(self, Rf_install("n"));
     int n = Rf_asInteger(_n);
-    ensure_capacity(self, n);
+    grow(self, n);
     SEXP h = PROTECT(Rf_findVarInFrame(self, Rf_install("h")));
     SEXP x = PROTECT(Rf_allocVector(VECSXP, 2));
     SET_VECTOR_ELT(x, 0, p);
@@ -102,6 +124,7 @@ SEXP heap_pop(SEXP self) {
     sift_down(h, 0, n - 2);
     _n = PROTECT(Rf_ScalarInteger(n - 1));
     Rf_defineVar(Rf_install("n"), _n, self);
+    shrink(self, n);
     UNPROTECT(4);
     return VECTOR_ELT(x, 1);
 }

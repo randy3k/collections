@@ -38,9 +38,11 @@ Dict <- function(items = NULL) {
 
     INITIAL_SIZE <- 16L
     GROW_FACTOR <- 1.5
+    SHRINK_FACTOR <- 0.15
+
     n <- NULL
     m <- NULL
-    holes <- NULL
+    holes <- Stack()
     nholes <- NULL
     vs <- NULL
     ks <- NULL
@@ -63,7 +65,12 @@ Dict <- function(items = NULL) {
                 n <<- n + 1L
                 index <- n
             }
-            if (index > m) .grow()
+            if (index > m) {
+                # grow storage
+                m <<- ceiling(m * GROW_FACTOR)
+                ks[m] <<- NA_character_
+                vs[m] <<- list(NULL)
+            }
             .Call(C_dict_index_set, self, ht_xptr, key, index)
             ks[index] <<- key
         }
@@ -90,10 +97,21 @@ Dict <- function(items = NULL) {
             stop("key not found")
         }
         n <<- n - 1L
-        ks[index] <<- ""
+        ks[index] <<- NA_character_
         vs[index] <<- list(NULL)
         holes$push(index)
         nholes <<- nholes + 1L
+        m1 <- ceiling(SHRINK_FACTOR * m)
+        if (n < m1 && m1 > INITIAL_SIZE) {
+            # shrink storage
+            not_holes <- !is.na(ks)
+            vs <<- vs[not_holes][1:n]
+            ks <<- ks[not_holes][1:n]
+            ht_xptr <<- null_xptr()
+            holes$clear()
+            nholes <<- 0
+            m <<- m1
+        }
         invisible(self)
     }
     pop <- function(key, default) {
@@ -105,10 +123,10 @@ Dict <- function(items = NULL) {
         key %in% ks
     }
     keys <- function() {
-        ks[ks != ""]
+        ks[!is.na(ks)]
     }
     values <- function() {
-        vs[ks != ""]
+        vs[!is.na(ks)]
     }
     update <- function(d) {
         for (key in d$keys()) {
@@ -120,10 +138,10 @@ Dict <- function(items = NULL) {
         n <<- 0L
         m <<- INITIAL_SIZE
         vs <<- vector("list", INITIAL_SIZE)
-        ks <<- vector("character", INITIAL_SIZE)
+        ks <<- rep(NA_character_, INITIAL_SIZE)
         # new("externalptr") doesn't work because it returns a static pointer
         ht_xptr <<- null_xptr()
-        holes <<- Queue()
+        holes$clear()
         nholes <<- 0L
         invisible(self)
     }
@@ -136,11 +154,6 @@ Dict <- function(items = NULL) {
     print <- function() {
         n <- size()
         cat("Dict object with", n, "item(s)\n")
-    }
-    .grow <- function() {
-        m <<- ceiling(m * GROW_FACTOR)
-        ks[m] <<- NA_character_
-        vs[m] <<- list(NULL)
     }
 
     initialize(items)
