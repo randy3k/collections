@@ -73,7 +73,7 @@ test_collections_queue_push_pop <- function(n) {
 }
 ```
 
-```{r, echo = FALSE}
+```{r queue, echo = FALSE}
 tm <- microbenchmark(
     dequer = test_dequer_queue_push_pop(100),
     datastructures = test_datastructures_queue_push_pop(100),
@@ -83,13 +83,6 @@ tm <- microbenchmark(
     unit = "relative"
 )
 autoplot(tm) + ggtitle("push and pop 100 times")
-tm <- microbenchmark(
-    dequer = test_dequer_queue_push_pop(1000),
-    base = test_collections_queue_l_push_pop(1000),
-    collections = test_collections_queue_push_pop(1000),
-    unit = "relative"
-)
-autoplot(tm) + ggtitle("push and pop 1000 times")
 ```
 
 ## Stack
@@ -132,7 +125,7 @@ test_collections_stack_push_pop <- function(n) {
 }
 ```
 
-```{r, echo = FALSE}
+```{r stack, echo = FALSE}
 tm <- microbenchmark(
     dequer = test_dequer_stack_push_pop(100),
     datastructures = test_datastructures_stack_push_pop(100),
@@ -142,13 +135,6 @@ tm <- microbenchmark(
     unit = "relative"
 )
 autoplot(tm) + ggtitle("push and pop 100 times")
-tm <- microbenchmark(
-    dequer = test_dequer_stack_push_pop(1000),
-    base = test_collections_stack_l_push_pop(1000),
-    collections = test_collections_stack_push_pop(1000),
-    unit = "relative"
-)
-autoplot(tm) + ggtitle("push and pop 1000 times")
 ```
 
 ## Deque
@@ -186,7 +172,7 @@ test_collections_deque_push_pop <- function(n) {
 }
 ```
 
-```{r, echo = FALSE}
+```{r deque, echo = FALSE}
 tm <- microbenchmark(
     dequer = test_dequer_deque_push_pop(100),
     base = test_collections_deque_l_push_pop(100),
@@ -194,13 +180,6 @@ tm <- microbenchmark(
     unit = "relative"
 )
 autoplot(tm) + ggtitle("push and pop 100 times")
-tm <- microbenchmark(
-    dequer = test_dequer_deque_push_pop(1000),
-    base = test_collections_deque_l_push_pop(1000),
-    collections = test_collections_deque_push_pop(1000),
-    unit = "relative"
-)
-autoplot(tm) + ggtitle("push and pop 1000 times")
 ```
 
 ## Priority Queue
@@ -230,7 +209,7 @@ test_collections_pqueue_push_pop <- function(n) {
 }
 ```
 
-```{r, echo = FALSE}
+```{r pqueue, echo = FALSE}
 tm <- microbenchmark(
     liqueueR = test_liqueueR_pqueue_push_pop(100),
     datastructures = test_datastructures_pqueue_push_pop(100),
@@ -283,7 +262,7 @@ test_collections_dict_set_get <- function(n) {
 }
 ```
 
-```{r, echo = FALSE}
+```{r dict, echo = FALSE}
 tm <- microbenchmark(
     datastructures = test_datastructures_dict_set_get(100),
     hash = test_hash_dict_set_get(100),
@@ -294,14 +273,6 @@ tm <- microbenchmark(
     unit = "relative"
 )
 autoplot(tm) + ggtitle("set and get 100 times")
-
-tm <- microbenchmark(
-    hash = test_hash_dict_set_get(1000),
-    fastmap = test_fastmap_dict_set_get(1000),
-    collections = test_collections_dict_set_get(1000),
-    unit = "relative"
-)
-autoplot(tm) + ggtitle("set and get 1000 times")
 ```
 
 ## OrderedDict
@@ -321,18 +292,24 @@ test_collections_ordered_dict_set_get <- function(n) {
 }
 ```
 
-```{r, echo = FALSE}
+```{r ordered_dict, echo = FALSE}
 tm <- microbenchmark(
     base = test_collections_ordered_dict_l_set_get(100),
     collections = test_collections_ordered_dict_set_get(100),
     unit = "relative"
 )
-autoplot(tm) + ggtitle("set and get 100 times")
+autoplot(tm) + ggtitle("set and get 10 times")
+```
+
+Note: `collection::OrderedDictL` uses R environments and may leak memory. It
+is not recommended though it is marginally faster than
+`collection::OrderedDict` when there are only small amount of items.
+
+```{r ordered_dict2, echo = FALSE}
 tm <- microbenchmark(
     base = test_collections_ordered_dict_l_set_get(1000),
     collections = test_collections_ordered_dict_set_get(1000),
     unit = "relative"
 )
 autoplot(tm) + ggtitle("set and get 1000 times")
-
 ```

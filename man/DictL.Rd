@@ -2,7 +2,7 @@
 % Please edit documentation in R/dict.R
 \name{DictL}
 \alias{DictL}
-\title{Dictionary}
+\title{Dictionary (R implementation)}
 \usage{
 DictL(items = NULL)
 }

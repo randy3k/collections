@@ -123,14 +123,20 @@ Pure R implementation for benchmarking.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>OrderedDictL</span>(<span class='no'>...</span>)</pre>
-        
-    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
-
+    <pre class="usage"><span class='fu'>OrderedDictL</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>items</th>
+      <td><p>a list of items</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-<pre>
-OrderedDictL(items = NULL)
+    <p>Following methods are exposed:</p><pre>
 .$set(key, value)
 .$get(key, default)
 .$remove(key)
@@ -143,15 +149,9 @@ OrderedDictL(items = NULL)
 .$clear()
 .$size()
 .$as_list()
+.$print()
 </pre>
-
-    
-    <h2 class="hasAnchor" id="argument"><a class="anchor" href="#argument"></a>Argument</h2>
-
-    
-
 <ul>
-<li><p><code>items</code>: initialization list</p></li>
 <li><p><code>key</code>: any R object, key of the item</p></li>
 <li><p><code>value</code>: any R object, value of the item</p></li>
 <li><p><code>default</code>: optinal, the default value of an item if the key is not found</p></li>
@@ -185,10 +185,9 @@ OrderedDictL(items = NULL)
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#usage">Usage</a></li>
-
-      <li><a href="#argument">Argument</a></li>
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

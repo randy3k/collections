@@ -123,14 +123,20 @@ Pure R implementation for benchmarking.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>DequeL</span>(<span class='no'>...</span>)</pre>
-        
-    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
-
+    <pre class="usage"><span class='fu'>DequeL</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>items</th>
+      <td><p>a list of items</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-<pre>
-DequeL(items = NULL)
+    <p>Following methods are exposed:</p><pre>
 .$push(item)
 .$pushleft(item)
 .$pop()
@@ -143,15 +149,9 @@ DequeL(items = NULL)
 .$remove(item)
 .$size()
 .$as_list()
+.$print()
 </pre>
-
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-
-    
-
 <ul>
-<li><p><code>items</code>: initialization list</p></li>
 <li><p><code>item</code>: any R object</p></li>
 <li><p><code>q</code>: a DequeL object</p></li>
 </ul>
@@ -174,10 +174,9 @@ DequeL(items = NULL)
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#usage">Usage</a></li>
-
       <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
