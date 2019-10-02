@@ -9,3 +9,4 @@ README.Rmd
 Makefile
 vignettes
 ^cran-comments\.md$
+.*\.o
