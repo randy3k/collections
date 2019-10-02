@@ -163,12 +163,16 @@ DequeL <- function(items = NULL) {
         }
     }
     push <- function(item) {
-        q[[n + 1]] <<- item
+        if (is.null(item)) {
+            q[n + 1] <<- list(item)
+        } else {
+            q[[n + 1]] <<- item
+        }
         n <<- self$n + 1
         invisible(self)
     }
     pushleft <- function(item) {
-        q <<- c(item, q)
+        q <<- c(list(item), q)
         n <<- n + 1
         invisible(self)
     }

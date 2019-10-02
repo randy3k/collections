@@ -105,4 +105,18 @@ test_that("clear", {
     expect_equal(q$size(), 0)
 })
 
+test_that("push NULL", {
+    q <- Container()
+    q$push(NULL)$push(NULL)
+    expect_null(q$pop())
+    expect_equal(q$size(), 1)
+})
+
+test_that("pushleft NULL", {
+    q <- Container()
+    q$pushleft(NULL)$pushleft(NULL)
+    expect_null(q$popleft())
+    expect_equal(q$size(), 1)
+})
+
 }

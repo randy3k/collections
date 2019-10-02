@@ -43,4 +43,29 @@ test_that("NULL and default", {
     expect_equal(d$get("a", "default"), "default")
 })
 
+if (container == "Dict") {
+    test_that("grow and shrink", {
+        d <- Dict()
+        for (i in 1:100) d$set(paste0("key", i), i)
+        len <- d$size()
+        expect_gt(length(d$ks), len)
+        for (i in 1:99) d$remove(paste0("key", i))
+        expect_lt(length(d$ks), len)
+    })
+}
+
+test_that("serialize and unserialized", {
+    d <- Container()
+    d$set("b", 2)
+    d$set("a", 1)
+    d$set("c", 3)
+    d$remove("c")
+    d2 <- unserialize(serialize(d, NULL))
+    expect_equal(d2$get("a"), 1)
+
+    d$remove("a")
+    d2 <- unserialize(serialize(d, NULL))
+    expect_error(d2$get("a"), "not found")
+})
+
 }

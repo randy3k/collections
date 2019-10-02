@@ -28,4 +28,11 @@ test_that("clear", {
     expect_equal(s$size(), 0)
 })
 
+test_that("push NULL", {
+    q <- Container()
+    q$push(NULL)$push(NULL)
+    expect_null(q$pop())
+    expect_equal(q$size(), 1)
+})
+
 }

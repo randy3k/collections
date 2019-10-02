@@ -103,7 +103,7 @@ StackL <- function(items = NULL) {
         }
     }
     push <- function(item) {
-        q <<- c(item, q)
+        q <<- c(list(item), q)
         n <<- n + 1
         invisible(self)
     }

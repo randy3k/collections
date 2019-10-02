@@ -106,7 +106,11 @@ QueueL <- function(items = NULL) {
         }
     }
     push <- function(item) {
-        q[[n + 1]] <<- item
+        if (is.null(item)) {
+            q[n + 1] <<- list(item)
+        } else {
+            q[[n + 1]] <<- item
+        }
         n <<- n + 1
         invisible(self)
     }

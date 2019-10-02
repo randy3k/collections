@@ -33,3 +33,20 @@ test_that("clear", {
     q$clear()
     expect_equal(q$size(), 0)
 })
+
+test_that("push NULL", {
+    q <- PriorityQueue()
+    q$push(NULL)$push(NULL)
+    expect_null(q$pop())
+    expect_equal(q$size(), 1)
+})
+
+
+test_that("grow and shrink", {
+    q <- PriorityQueue()
+    for (i in 1:100) q$push(i)
+    len <- q$size()
+    expect_gt(length(q$h), len)
+    for (i in 1:99) q$pop()
+    expect_lt(length(q$h), len)
+})
