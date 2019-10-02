@@ -31,7 +31,6 @@
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [OrderedDict] and [OrderedDictL]
 #' @importFrom xptr null_xptr
-#' @importFrom utils hasName
 #' @export
 Dict <- function(items = NULL) {
     self <- environment()
@@ -195,6 +194,7 @@ Dict <- function(items = NULL) {
 #' d$as_list()  # "orange" is removed
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [OrderedDict] and [OrderedDictL]
+#' @importFrom utils hasName
 #' @export
 DictL <- function(items = NULL) {
     self <- environment()

@@ -156,6 +156,7 @@ OrderedDict <- function(items = NULL) {
 #' d$as_list()  # "orange" is removed
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [Dict] and [OrderedDict]
+#' @importFrom utils hasName
 #' @export
 OrderedDictL <- function(items = NULL) {
     self <- environment()
@@ -203,7 +204,7 @@ OrderedDictL <- function(items = NULL) {
         list(key = key, vlaue = v)
     }
     has <- function(key) {
-        key %in% keys()
+        hasName(e, key)
     }
     keys <- function() {
         as.character(names(e))
