@@ -35,6 +35,17 @@ test_that("clear", {
 })
 
 
+test_that("set a key twice", {
+    d <- Container()
+    d$set("a", 1)
+    d$set("b", 2)
+    d$set("a", 3)
+    expect_equal(d$get("a"), 3)
+    expect_length(d$keys(), 2)
+    expect_length(d$values(), 2)
+})
+
+
 test_that("NULL and default", {
     d <- Container()
     d$set("b", NULL)

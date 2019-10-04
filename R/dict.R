@@ -119,7 +119,7 @@ Dict <- function(items = NULL) {
         v
     }
     has <- function(key) {
-        key %in% ks
+        .Call(C_dict_index_get, self, ht_xptr, key) > 0
     }
     keys <- function() {
         ks[!is.na(ks)]

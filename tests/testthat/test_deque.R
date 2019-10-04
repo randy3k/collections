@@ -86,6 +86,13 @@ test_that("remove", {
     expect_equal(q$pop(), 2)
 })
 
+test_that("remove the first occurance of two identical items", {
+    q <- Container()
+    q$push("a")$push("b")$push("a")$push("c")
+    q$remove("a")
+    expect_equal(q$size(), 3)
+})
+
 
 test_that("extend", {
     q <- Container()

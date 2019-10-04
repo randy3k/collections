@@ -45,7 +45,9 @@ OrderedDict <- function(items = NULL) {
         }
     }
     set <- function(key, value) {
-        q$push(key)
+        if (!d$has(key)) {
+            q$push(key)
+        }
         d$set(key, value)
         invisible(self)
     }
