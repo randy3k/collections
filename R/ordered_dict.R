@@ -45,12 +45,9 @@ OrderedDict <- function(items = NULL) {
         }
     }
     set <- function(key, value) {
-        force(value)
-        index <- d$.get_index(key)
-        if (index == -1) {
+        if (d$.set(key, value) == -1) {
             q$push(key)
         }
-        d$.set_index(key, value, index)
         invisible(self)
     }
     get <- function(key, default) {

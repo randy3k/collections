@@ -7,8 +7,8 @@
 
 SEXP dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key);
 
-SEXP dict_index_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value);
+SEXP dict_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value);
 
-SEXP dict_index_remove(SEXP self, SEXP ht_xptr, SEXP _key);
+SEXP dict_remove(SEXP self, SEXP ht_xptr, SEXP _key);
 
 #endif

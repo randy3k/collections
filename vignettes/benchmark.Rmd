@@ -300,14 +300,3 @@ tm <- microbenchmark(
 )
 autoplot(tm) + ggtitle("set and get 100 times")
 ```
-
-`collections::OrderedDict` would outperform `collections::OrderedDictL` if there are more than hundreds of items.
-
-```{r ordered_dict2, echo = FALSE}
-tm <- microbenchmark(
-    base = test_collections_ordered_dict_l_set_get(500),
-    collections = test_collections_ordered_dict_set_get(500),
-    unit = "relative"
-)
-autoplot(tm) + ggtitle("set and get 500 times")
-```

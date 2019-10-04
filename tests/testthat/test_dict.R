@@ -51,6 +51,7 @@ if (container == "Dict") {
         expect_gt(length(d$ks), len)
         for (i in 1:99) d$remove(paste0("key", i))
         expect_lt(length(d$ks), len)
+        expect_equal(sum(!is.na(d$ks)), 1)
     })
 }
 
