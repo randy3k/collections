@@ -170,7 +170,11 @@ OrderedDictL <- function(items = NULL) {
         }
     }
     set <- function(key, value) {
-        e[key] <<- list(value)
+        if (is.null(value)) {
+            e[key] <<- list(value)
+        } else  {
+            e[[key]] <<- value
+        }
         invisible(self)
     }
     get <- function(key, default) {
