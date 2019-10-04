@@ -26,15 +26,15 @@ static void free_ht(SEXP ht_xptr) {
 
 
 inline int holes_pop(SEXP self) {
-    SEXP holes = get_value(self, "holes");
-    SEXP pop = get_value(holes, "pop");
+    SEXP holes = get_sexp_value(self, "holes");
+    SEXP pop = get_sexp_value(holes, "pop");
     return Rf_asInteger(Rf_eval(Rf_lang1(pop), holes));
 }
 
 
 inline void holes_push(SEXP self, int index) {
-    SEXP holes = get_value(self, "holes");
-    SEXP push = get_value(holes, "push");
+    SEXP holes = get_sexp_value(self, "holes");
+    SEXP push = get_sexp_value(holes, "push");
     SEXP x = PROTECT(Rf_ScalarInteger(index));
     SEXP l = PROTECT(Rf_lang2(push, x));
     Rf_eval(l, holes);
@@ -43,8 +43,8 @@ inline void holes_push(SEXP self, int index) {
 
 
 inline void holes_clear(SEXP self) {
-    SEXP holes = get_value(self, "holes");
-    SEXP clear = get_value(holes, "clear");
+    SEXP holes = get_sexp_value(self, "holes");
+    SEXP clear = get_sexp_value(holes, "clear");
     SEXP l = PROTECT(Rf_lang1(clear));
     Rf_eval(l, holes);
     UNPROTECT(1);
@@ -77,7 +77,7 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
     int n = get_int_value(self, "n");
     if (n > 0) {
         const char* key;
-        SEXP ks = get_value(self, "ks");
+        SEXP ks = get_sexp_value(self, "ks");
         SEXP c;
         R_len_t nks = Rf_length(ks);
         for (i = 0; i < nks; i++) {
@@ -129,8 +129,8 @@ SEXP dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key) {
 
 
 static void grow(SEXP self, int m) {
-    SEXP ks = PROTECT(Rf_findVarInFrame(self, Rf_install("ks")));
-    SEXP vs = PROTECT(Rf_findVarInFrame(self, Rf_install("vs")));
+    SEXP ks = PROTECT(get_sexp_value(self, "ks"));
+    SEXP vs = PROTECT(get_sexp_value(self, "vs"));
     SEXP ks2 = PROTECT(Rf_allocVector(STRSXP, m));
     SEXP vs2 = PROTECT(Rf_allocVector(VECSXP, m));
     int i;
@@ -146,15 +146,15 @@ static void grow(SEXP self, int m) {
         SET_STRING_ELT(ks2, i, R_NaString);
         SET_VECTOR_ELT(vs2, i, R_NilValue);
     }
-    Rf_defineVar(Rf_install("ks"), ks2, self);
-    Rf_defineVar(Rf_install("vs"), vs2, self);
+    set_sexp_value(self, "ks", ks2);
+    set_sexp_value(self, "vs", vs2);
     UNPROTECT(4);
 }
 
 
 static void shrink(SEXP self, int m) {
-    SEXP ks = PROTECT(Rf_findVarInFrame(self, Rf_install("ks")));
-    SEXP vs = PROTECT(Rf_findVarInFrame(self, Rf_install("vs")));
+    SEXP ks = PROTECT(get_sexp_value(self, "ks"));
+    SEXP vs = PROTECT(get_sexp_value(self, "vs"));
     SEXP ks2 = PROTECT(Rf_allocVector(STRSXP, m));
     SEXP vs2 = PROTECT(Rf_allocVector(VECSXP, m));
     int i;
@@ -172,8 +172,8 @@ static void shrink(SEXP self, int m) {
         SET_STRING_ELT(ks2, i, R_NaString);
         SET_VECTOR_ELT(vs2, i, R_NilValue);
     }
-    Rf_defineVar(Rf_install("ks"), ks2, self);
-    Rf_defineVar(Rf_install("vs"), vs2, self);
+    set_sexp_value(self, "ks", ks2);
+    set_sexp_value(self, "vs", vs2);
     UNPROTECT(4);
 }
 
@@ -211,17 +211,17 @@ SEXP dict_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value) {
         if (index > m) {
             int m2 = (int) ceil(GROW_FACTOR * m);
             grow(self, m2);
-            Rf_defineVar(Rf_install("m"), Rf_ScalarInteger(m2), self);
+            set_int_value(self, "m", m2);
         }
         _dict_index_set(self, ht_xptr, _key, index);
 
-        SEXP ks = PROTECT(Rf_findVarInFrame(self, Rf_install("ks")));
+        SEXP ks = PROTECT(get_sexp_value(self, "ks"));
         SET_STRING_ELT(ks, index - 1, Rf_asChar(_key));
         UNPROTECT(1);
     } else {
         index = idx;
     }
-    SEXP vs = PROTECT(Rf_findVarInFrame(self, Rf_install("vs")));
+    SEXP vs = PROTECT(get_sexp_value(self, "vs"));
     SET_VECTOR_ELT(vs, index - 1, value);
     UNPROTECT(1);
     return Rf_ScalarInteger(idx);
@@ -249,8 +249,8 @@ SEXP dict_remove(SEXP self, SEXP ht_xptr, SEXP _key) {
     free(s);
 
     int n = add_int_value(self, "n", -1);
-    SEXP ks = PROTECT(Rf_findVarInFrame(self, Rf_install("ks")));
-    SEXP vs = PROTECT(Rf_findVarInFrame(self, Rf_install("vs")));
+    SEXP ks = PROTECT(get_sexp_value(self, "ks"));
+    SEXP vs = PROTECT(get_sexp_value(self, "vs"));
     SET_STRING_ELT(ks, index - 1, R_NaString);
     SET_VECTOR_ELT(vs, index - 1, R_NilValue);
     UNPROTECT(2);
@@ -260,13 +260,10 @@ SEXP dict_remove(SEXP self, SEXP ht_xptr, SEXP _key) {
     int m2 = ceil(m * SHRINK_FACTOR);
     if (n < m2 && m2 > INITIAL_SIZE) {
         shrink(self, m2);
-        Rf_defineVar(Rf_install("m"), Rf_ScalarInteger(m2), self);
+        set_int_value(self, "m", m2);
         holes_clear(self);
-        Rf_defineVar(Rf_install("nholes"), Rf_ScalarInteger(0), self);
-        Rf_defineVar(
-            Rf_install("ht_xptr"),
-            R_MakeExternalPtr(NULL, R_NilValue, R_NilValue),
-            self);
+        set_int_value(self, "nholes", 0);
+        set_sexp_value(self, "ht_xptr", R_MakeExternalPtr(NULL, R_NilValue, R_NilValue));
     }
     return R_NilValue;
 }

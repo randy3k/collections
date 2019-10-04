@@ -6,9 +6,13 @@
 #include <Rinternals.h>
 
 
-SEXP get_value(SEXP env, const char* name);
+SEXP get_sexp_value(SEXP env, const char* name);
+
+void set_sexp_value(SEXP env, const char* name, SEXP value);
 
 int get_int_value(SEXP env, const char* name);
+
+void set_int_value(SEXP env, const char* name, int v);
 
 int add_int_value(SEXP env, const char* name, int v);
 
