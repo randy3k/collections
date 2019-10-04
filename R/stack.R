@@ -103,20 +103,24 @@ StackL <- function(items = NULL) {
         }
     }
     push <- function(item) {
-        q <<- c(list(item), q)
+        if (is.null(item)) {
+            q[n + 1] <<- list(item)
+        } else {
+            q[[n + 1]] <<- item
+        }
         n <<- n + 1
         invisible(self)
     }
     pop <- function() {
         if (n == 0) stop("stack is empty")
-        v <- q[[1]]
-        q <<- q[-1]
+        v <- q[[n]]
+        q <<- q[-n]
         n <<- n - 1
         v
     }
     peek <- function() {
         if (n == 0) stop("stack is empty")
-        q[[1]]
+        q[[n]]
     }
     clear <- function() {
         q <<- list()
