@@ -53,9 +53,10 @@ Dict <- function(items = NULL) {
             set(argname, items[[argname]])
         }
     }
-    set <- function(key, value) {
-        force(value)
-        index <- .Call(C_dict_index_get, self, ht_xptr, key)
+    .get_index <- function(key) {
+        .Call(C_dict_index_get, self, ht_xptr, key)
+    }
+    .set_index <- function(key, value, index) {
         if (index == -1L) {
             if (nholes) {
                 nholes <<- nholes - 1L
@@ -78,10 +79,15 @@ Dict <- function(items = NULL) {
         } else {
             vs[[index]] <<- value
         }
+    }
+    set <- function(key, value) {
+        force(value)
+        index <- .get_index(key)
+        .set_index(key, value, index)
         invisible(self)
     }
     get <- function(key, default) {
-        index <- .Call(C_dict_index_get, self, ht_xptr, key)
+        index <- .get_index(key)
         if (index > 0L) {
             vs[[index]]
         } else if (missing(default)) {
@@ -119,7 +125,7 @@ Dict <- function(items = NULL) {
         v
     }
     has <- function(key) {
-        .Call(C_dict_index_get, self, ht_xptr, key) > 0
+        .get_index(key) > 0
     }
     keys <- function() {
         ks[!is.na(ks)]
