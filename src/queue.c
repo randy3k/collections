@@ -1,19 +1,21 @@
 #include "queue.h"
+#include "utils.h"
+
 
 SEXP queue_push(SEXP self, SEXP value) {
     PROTECT(value);
-    SEXP q = Rf_findVarInFrame(self, Rf_install("q"));
+    SEXP q = get_sexp_value(self, "q");
     SEXP last;
     SEXP v;
     if (q == R_NilValue) {
         v = PROTECT(Rf_cons(value, R_NilValue));
-        Rf_defineVar(Rf_install("q"), v, self);
-        Rf_defineVar(Rf_install("last"), v, self);
+        set_sexp_value(self, "q", v);
+        set_sexp_value(self, "last", v);
     } else {
-        last = PROTECT(Rf_findVarInFrame(self, Rf_install("last")));
+        last = PROTECT(get_sexp_value(self, "last"));
         v = PROTECT(Rf_cons(value, R_NilValue));
         SETCDR(last, v);
-        Rf_defineVar(Rf_install("last"), v, self);
+        set_sexp_value(self, "last", v);
         UNPROTECT(1);  // last
     }
     UNPROTECT(2);
@@ -21,9 +23,9 @@ SEXP queue_push(SEXP self, SEXP value) {
 }
 
 SEXP queue_pop(SEXP self) {
-    SEXP q = PROTECT(Rf_findVarInFrame(self, Rf_install("q")));
+    SEXP q = PROTECT(get_sexp_value(self, "q"));
     if (q == R_NilValue) Rf_error("queue is empty");
-    Rf_defineVar(Rf_install("q"), CDR(q), self);
+    set_sexp_value(self, "q", CDR(q));
     UNPROTECT(1);
     return CAR(q);
 }
