@@ -6,6 +6,14 @@
 #define GROW_FACTOR 1.5
 #define SHRINK_FACTOR 0.15
 
+#if !defined(static_inline)
+#if defined(_MSC_VER) || defined(__GNUC__)
+#define static_inline static __inline
+#else
+#define static_inline static
+#endif
+#endif
+
 
 typedef struct item {
     const char* key;
@@ -25,14 +33,14 @@ static void free_ht(SEXP ht_xptr) {
 }
 
 
-inline int holes_pop(SEXP self) {
+static_inline int holes_pop(SEXP self) {
     SEXP holes = get_sexp_value(self, "holes");
     SEXP pop = get_sexp_value(holes, "pop");
     return Rf_asInteger(Rf_eval(Rf_lang1(pop), holes));
 }
 
 
-inline void holes_push(SEXP self, int index) {
+static_inline void holes_push(SEXP self, int index) {
     SEXP holes = get_sexp_value(self, "holes");
     SEXP push = get_sexp_value(holes, "push");
     SEXP x = PROTECT(Rf_ScalarInteger(index));
@@ -42,7 +50,7 @@ inline void holes_push(SEXP self, int index) {
 }
 
 
-inline void holes_clear(SEXP self) {
+static_inline void holes_clear(SEXP self) {
     SEXP holes = get_sexp_value(self, "holes");
     SEXP clear = get_sexp_value(holes, "clear");
     SEXP l = PROTECT(Rf_lang1(clear));
