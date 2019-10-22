@@ -11,7 +11,7 @@ DictL(items = NULL)
 }
 \description{
 The \code{DictL} function creates an ordinary (unordered) dictionary (a.k.a. hash).
-The implementation is based on R environment.
+Pure R implementation for benchmarking.
 }
 \details{
 Following methods are exposed:

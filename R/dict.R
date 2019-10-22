@@ -129,7 +129,7 @@ Dict <- function(items = NULL) {
 #' @title Dictionary (R implementation)
 #' @description
 #' The `DictL` function creates an ordinary (unordered) dictionary (a.k.a. hash).
-#' The implementation is based on R environment.
+#' Pure R implementation for benchmarking.
 #' @param items a list of items
 #' @details
 #' Following methods are exposed:
