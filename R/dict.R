@@ -168,8 +168,9 @@ DictL <- function(items = NULL) {
 
     initialize <- function(items = NULL) {
         clear()
-        for (argname in names(items)) {
-            set(argname, items[[argname]])
+        keys <- names(items)
+        for (i in seq_along(items)) {
+            set(keys[i], items[[i]])
         }
     }
     set <- function(key, value) {
