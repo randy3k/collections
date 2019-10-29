@@ -34,28 +34,30 @@ static void free_ht(SEXP ht_xptr) {
 
 
 static_inline int holes_pop(SEXP self) {
-    SEXP holes = get_sexp_value(self, "holes");
-    SEXP pop = get_sexp_value(holes, "pop");
-    return Rf_asInteger(Rf_eval(Rf_lang1(pop), holes));
+    SEXP holes = PROTECT(get_sexp_value(self, "holes"));
+    SEXP pop = PROTECT(get_sexp_value(holes, "pop"));
+    int n = Rf_asInteger(Rf_eval(Rf_lang1(pop), holes));
+    UNPROTECT(2);
+    return n;
 }
 
 
 static_inline void holes_push(SEXP self, int index) {
-    SEXP holes = get_sexp_value(self, "holes");
-    SEXP push = get_sexp_value(holes, "push");
+    SEXP holes = PROTECT(get_sexp_value(self, "holes"));
+    SEXP push = PROTECT(get_sexp_value(holes, "push"));
     SEXP x = PROTECT(Rf_ScalarInteger(index));
     SEXP l = PROTECT(Rf_lang2(push, x));
     Rf_eval(l, holes);
-    UNPROTECT(2);
+    UNPROTECT(4);
 }
 
 
 static_inline void holes_clear(SEXP self) {
-    SEXP holes = get_sexp_value(self, "holes");
-    SEXP clear = get_sexp_value(holes, "clear");
+    SEXP holes = PROTECT(get_sexp_value(self, "holes"));
+    SEXP clear = PROTECT(get_sexp_value(holes, "clear"));
     SEXP l = PROTECT(Rf_lang1(clear));
     Rf_eval(l, holes);
-    UNPROTECT(1);
+    UNPROTECT(3);
 }
 
 
