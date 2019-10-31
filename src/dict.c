@@ -213,6 +213,7 @@ SEXP dict_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value) {
         int nholes = get_int_value(self, "nholes");
         if (nholes > 0) {
             add_int_value(self, "nholes", -1);
+            add_int_value(self, "n", 1);
             index = holes_pop(self);
         } else {
             index = add_int_value(self, "n", 1);
