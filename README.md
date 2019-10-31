@@ -3,7 +3,9 @@
 
 # High Performance Container Data Types
 
+[![Github Action](https://github.com/randy3k/collections/workflows/build/badge.svg?branch=master)](https://github.com/randy3k/collections/actions)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/collections)](https://cran.r-project.org/package=collections)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/collections)](https://cran.r-project.org/package=collections)
 
 Github: <https://github.com/randy3k/collections>
 
