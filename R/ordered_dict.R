@@ -21,7 +21,7 @@
 #' }
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
-#' * `default`: optinal, the default value of an item if the key is not found
+#' * `default`: optional, the default value of an item if the key is not found
 #' * `d`: an OrderedDict or OrderedDictL
 #' @examples
 #' d <- OrderedDict(list(apple = 5, orange = 10))
@@ -147,7 +147,7 @@ OrderedDict <- function(items = NULL) {
 #' }
 #' * `key`: any R object, key of the item
 #' * `value`: any R object, value of the item
-#' * `default`: optinal, the default value of an item if the key is not found
+#' * `default`: optional, the default value of an item if the key is not found
 #' * `d`: an OrderedDict or OrderedDictL
 #' @examples
 #' d <- OrderedDictL(list(apple = 5, orange = 10))

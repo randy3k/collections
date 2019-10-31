@@ -21,7 +21,7 @@ offered by other packages.
 ## Related R packages
 
 [dequer](https://CRAN.R-project.org/package=dequer) implements double
-ended queues and it supports arbitary R objects. However, it uses
+ended queues and it supports arbitrary R objects. However, it uses
 `R_PreserveObject` and `R_ReleaseObject` heavily which could be an issue
 for long queues.
 
@@ -41,7 +41,7 @@ memory may be leaked.
 for atomic vectors using boost library.
 
 [fastmap](https://CRAN.R-project.org/package=fastmap) provides hashmap
-which doesn not leak memory. The current implementation of
+which doesn't not leak memory. The current implementation of
 collection::Dict is actually inspired by it. However, a more efficient
 hash table library [tommy](https://github.com/amadvance/tommyds/) is
 used.
