@@ -30,7 +30,7 @@ jobs:
           cat packages/lib/collections/libs/collections.so.maacheck
           FAIL=1
         fi
-        [ -n "$FAIL" ] && [ "$FAIL" -eq 1 ] && exit 1
+        [ -z "$FAIL" ] || exit 1
       shell:
         bash
 
