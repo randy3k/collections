@@ -92,7 +92,7 @@ SEXP heapify(SEXP self) {
         sift_down(h, start, n - 1);
         start = start - 1;
     }
-    UNPROTECT(2);
+    UNPROTECT(1);
     return h;
 }
 

@@ -36,8 +36,9 @@ static void free_ht(SEXP ht_xptr) {
 static_inline int holes_pop(SEXP self) {
     SEXP holes = PROTECT(get_sexp_value(self, "holes"));
     SEXP pop = PROTECT(get_sexp_value(holes, "pop"));
-    int n = Rf_asInteger(Rf_eval(Rf_lang1(pop), holes));
-    UNPROTECT(2);
+    SEXP l = PROTECT(Rf_lang1(pop));
+    int n = Rf_asInteger(Rf_eval(l, holes));
+    UNPROTECT(3);
     return n;
 }
 
