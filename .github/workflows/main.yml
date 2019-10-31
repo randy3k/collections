@@ -34,6 +34,23 @@ jobs:
       shell:
         bash
 
+  ubsan:
+    runs-on: ubuntu-latest
+    container: rocker/r-devel-ubsan-clang
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install package
+      run: |
+        R --slave -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
+        R --slave -e "remotes::install_deps(dependencies = TRUE)"
+      shell:
+        bash
+    - name: Running Tests
+      run: |
+        R --slave -e "rcmdcheck::rcmdcheck(args = c('--as-cran'))"
+      shell:
+        bash
+
   linux:
     strategy:
       matrix:

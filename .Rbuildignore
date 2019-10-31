@@ -10,3 +10,4 @@ Makefile
 vignettes
 ^cran-comments\.md$
 .*\.o
+^.github$
