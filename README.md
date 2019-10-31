@@ -3,11 +3,10 @@
 
 # High Performance Container Data Types
 
-[![Github Action](https://github.com/randy3k/collections/workflows/build/badge.svg?branch=master)](https://github.com/randy3k/collections/actions)
+[![Github
+Action](https://github.com/randy3k/collections/workflows/build/badge.svg?branch=master)](https://github.com/randy3k/collections)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/collections)](https://cran.r-project.org/package=collections)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/collections)](https://cran.r-project.org/package=collections)
-
-Github: <https://github.com/randy3k/collections>
 
 Documentation:
 [http://randy3k.github.io/collections](https://randy3k.github.io/collections)
@@ -41,7 +40,7 @@ memory may be leaked.
 for atomic vectors using boost library.
 
 [fastmap](https://CRAN.R-project.org/package=fastmap) provides hashmap
-which doesn't not leak memory. The current implementation of
+which does not leak memory. The current implementation of
 collection::Dict is actually inspired by it. However, a more efficient
 hash table library [tommy](https://github.com/amadvance/tommyds/) is
 used.
