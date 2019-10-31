@@ -34,6 +34,19 @@ test_that("clear", {
     expect_equal(d$size(), 0)
 })
 
+test_that("size is correctly calculated after remove", {
+    d <- Container()
+    for (l in LETTERS) {
+        d$set(l, 1)
+    }
+    expect_equal(d$size(), 26)
+    for (l in LETTERS) {
+        d$remove(l)
+    }
+    expect_equal(d$size(), 0)
+    d$set("A", 1)
+    expect_equal(d$size(), 1)
+})
 
 test_that("set a key twice", {
     d <- Container()

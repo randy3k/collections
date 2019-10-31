@@ -43,6 +43,30 @@ test_that("NULL and default", {
     expect_equal(d$get("a", "default"), "default")
 })
 
+test_that("size is correctly calculated after remove", {
+    d <- Container()
+    for (l in LETTERS) {
+        d$set(l, 1)
+    }
+    expect_equal(d$size(), 26)
+    for (l in LETTERS) {
+        d$remove(l)
+    }
+    expect_equal(d$size(), 0)
+    d$set("A", 1)
+    expect_equal(d$size(), 1)
+})
+
+test_that("set a key twice", {
+    d <- Container()
+    d$set("a", 1)
+    d$set("b", 2)
+    d$set("a", 3)
+    expect_equal(d$get("a"), 3)
+    expect_length(d$keys(), 2)
+    expect_length(d$values(), 2)
+})
+
 if (container == "Dict") {
     test_that("grow and shrink", {
         d <- Dict()
