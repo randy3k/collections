@@ -5,35 +5,9 @@ on: [push]
 jobs:
   rchk:
     runs-on: ubuntu-latest
-    container: rhub/ubuntu-rchk
     steps:
     - uses: actions/checkout@v1
-    - name: Install dependencies
-      run: |
-        cd /opt/R-svn/
-        . /opt/rchk/scripts/cmpconfig.inc
-        cd -
-        R --slave -e "install.packages('remotes', repos = 'https://cloud.r-project.org')"
-        R --slave -e "remotes::install_local(repos = 'https://cloud.r-project.org', upgrade = 'never')"
-      shell:
-        bash
-    - name: Running Tests
-      run: |
-        PACKAGE=$(echo ${GITHUB_REPOSITORY#*/})
-        cd /opt/R-svn/
-        . /opt/rchk/scripts/cmpconfig.inc
-        /opt/rchk/scripts/check_package.sh $PACKAGE
-        if [ $(cat packages/lib/$PACKAGE/libs/$PACKAGE.so.bcheck | wc -l) -gt 1 ]; then
-          cat packages/lib/$PACKAGE/libs/$PACKAGE.so.bcheck
-          FAIL=1
-        fi
-        if [ $(cat packages/lib/$PACKAGE/libs/$PACKAGE.so.maacheck | wc -l) -gt 1 ]; then
-          cat packages/lib/$PACKAGE/libs/$PACKAGE.so.maacheck
-          FAIL=1
-        fi
-        [ -z "$FAIL" ] || exit 1
-      shell:
-        bash
+    - uses: randy3k/github-action-rchk@master
 
   ubsan:
     runs-on: ubuntu-latest
