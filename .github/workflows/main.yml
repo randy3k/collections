@@ -39,10 +39,6 @@ jobs:
     container: rocker/tidyverse:${{ matrix.r }}
     steps:
     - uses: actions/checkout@v1
-    - name: Install apt-get dependencies
-      run: |
-        apt-get update
-        apt-get install git ssh curl bzip2 libffi6 libffi-dev -y
     - name: Install dependencies
       run: |
         Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
