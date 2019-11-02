@@ -18,13 +18,13 @@ jobs:
     - uses: actions/checkout@v1
     - name: Install dependencies
       run: |
-        R --slave -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
-        R --slave -e "remotes::install_deps(dependencies = TRUE)"
+        Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
+        Rscript -e "remotes::install_deps(dependencies = TRUE)"
       shell:
         bash
     - name: Running Tests
       run: |
-        R --slave -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
+        Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
       env:
         NOT_CRAN: true
       shell:
@@ -45,13 +45,13 @@ jobs:
         apt-get install git ssh curl bzip2 libffi6 libffi-dev -y
     - name: Install dependencies
       run: |
-        R --slave -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
-        R --slave -e "remotes::install_deps(dependencies = TRUE)"
+        Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
+        Rscript -e "remotes::install_deps(dependencies = TRUE)"
       shell:
         bash
     - name: Running Tests
       run: |
-        R --slave -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
+        Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
       env:
         NOT_CRAN: true
       shell:
@@ -79,13 +79,13 @@ jobs:
         sudo installer -pkg ~/R.pkg -target /
     - name: Install dependencies
       run: |
-        R --slave -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'mac.binary.el-capitan')"
-        R --slave -e "remotes::install_deps(dependencies = TRUE, type = 'mac.binary.el-capitan')"
+        Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'mac.binary.el-capitan')"
+        Rscript -e "remotes::install_deps(dependencies = TRUE, type = 'mac.binary.el-capitan')"
       shell:
         bash
     - name: Running Tests
       run: |
-        R --slave -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
+        Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
       env:
         NOT_CRAN: true
       shell:
@@ -117,17 +117,18 @@ jobs:
       run: |
         Start-Process -FilePath "C:\R-binary.exe" -Wait -ArgumentList "/VERYSILENT /DIR=C:\R"
         Start-Process -FilePath "C:\Rtools35.exe" -Wait -ArgumentList "/VERYSILENT"
+        Write-Host "::add-path::C:\R\bin\"
       shell:
         pwsh
     - name: Install dependencies
       run: |
-        C:\R\bin\R --slave -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'win.binary')"
-        C:\R\bin\R --slave -e "remotes::install_deps(dependencies = TRUE, type = 'win.binary')"
+        Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'win.binary')"
+        Rscript -e "remotes::install_deps(dependencies = TRUE, type = 'win.binary')"
       shell:
         pwsh
     - name: Running Tests
       run: |
-        C:\R\bin\R --slave -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
+        Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
       env:
         NOT_CRAN: true
       shell:
