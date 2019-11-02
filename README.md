@@ -6,6 +6,7 @@
 [![Github
 Action](https://github.com/randy3k/collections/workflows/build/badge.svg?branch=master)](https://github.com/randy3k/collections)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/collections)](https://cran.r-project.org/package=collections)
+[![codecov](https://codecov.io/gh/randy3k/collections/branch/master/graph/badge.svg)](https://codecov.io/gh/randy3k/collections)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/collections)](https://cran.r-project.org/package=collections)
 
 Documentation:
