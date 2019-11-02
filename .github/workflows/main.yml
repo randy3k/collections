@@ -56,6 +56,12 @@ jobs:
         NOT_CRAN: true
       shell:
         bash
+    - name: Codecov
+      run: Rscript -e "covr::codecov()"
+      env:
+        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+      shell:
+        bash
 
   macos:
     strategy:
@@ -88,6 +94,12 @@ jobs:
         Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
       env:
         NOT_CRAN: true
+      shell:
+        bash
+    - name: Codecov
+      run: Rscript -e "covr::codecov()"
+      env:
+        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
       shell:
         bash
 
@@ -131,5 +143,11 @@ jobs:
         Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
       env:
         NOT_CRAN: true
+      shell:
+        pwsh
+    - name: Codecov
+      run: Rscript -e "covr::codecov()"
+      env:
+        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
       shell:
         pwsh

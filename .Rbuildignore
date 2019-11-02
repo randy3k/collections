@@ -11,3 +11,4 @@ vignettes
 ^cran-comments\.md$
 .*\.o
 ^.github$
+^.covrignore$

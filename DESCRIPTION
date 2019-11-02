@@ -24,6 +24,7 @@ Depends:
 Imports:
     xptr
 Suggests: 
+    covr,
     testthat
 ByteCompile: yes
 Encoding: UTF-8
