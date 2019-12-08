@@ -10,7 +10,8 @@ jobs:
       NOT_CRAN: true
     steps:
       - uses: actions/checkout@v1
-      - uses: r-lib/actions/run-rchk@master
+      # - uses: r-lib/actions/run-rchk@master
+      - uses: randy3k/actions/run-rchk@rchk
 
   ubsan:
     if: contains(github.event.head_commit.message, '[ci skip]') == false
