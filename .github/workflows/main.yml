@@ -9,8 +9,8 @@ jobs:
     env:
       NOT_CRAN: true
     steps:
-    - uses: actions/checkout@v1
-    - uses: randy3k/github-action-rchk@master
+      - uses: actions/checkout@v1
+      - uses: r-lib/actions/run-rchk@master
 
   ubsan:
     if: contains(github.event.head_commit.message, '[ci skip]') == false
@@ -19,18 +19,14 @@ jobs:
     env:
       NOT_CRAN: true
     steps:
-    - uses: actions/checkout@v1
-    - name: Install dependencies
-      run: |
-        Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
-        Rscript -e "remotes::install_deps(dependencies = TRUE)"
-      shell:
-        bash
-    - name: Running Tests
-      run: |
-        Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
-      shell:
-        bash
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: |
+          Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
+          Rscript -e "remotes::install_deps(dependencies = TRUE)"
+      - name: Running Tests
+        run: |
+          Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
 
   linux:
     if: contains(github.event.head_commit.message, '[ci skip]') == false
@@ -43,24 +39,18 @@ jobs:
     env:
       NOT_CRAN: true
     steps:
-    - uses: actions/checkout@v1
-    - name: Install dependencies
-      run: |
-        Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
-        Rscript -e "remotes::install_deps(dependencies = TRUE)"
-      shell:
-        bash
-    - name: Running Tests
-      run: |
-        Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
-      shell:
-        bash
-    - name: Codecov
-      run: Rscript -e "covr::codecov()"
-      env:
-        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
-      shell:
-        bash
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: |
+          Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
+          Rscript -e "remotes::install_deps(dependencies = TRUE)"
+      - name: Running Tests
+        run: |
+          Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
+      - name: Codecov
+        run: Rscript -e "covr::codecov()"
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
 
   macos:
     if: contains(github.event.head_commit.message, '[ci skip]') == false
@@ -72,27 +62,21 @@ jobs:
     env:
       NOT_CRAN: true
     steps:
-    - uses: actions/checkout@v1
-    - uses: r-lib/actions/setup-r@v1
-      with:
-        r-version: ${{ matrix.r }}
-    - name: Install dependencies
-      run: |
-        Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'mac.binary.el-capitan')"
-        Rscript -e "remotes::install_deps(dependencies = TRUE, type = 'mac.binary.el-capitan')"
-      shell:
-        bash
-    - name: Running Tests
-      run: |
-        Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
-      shell:
-        bash
-    - name: Codecov
-      run: Rscript -e "covr::codecov()"
-      env:
-        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
-      shell:
-        bash
+      - uses: actions/checkout@v1
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: ${{ matrix.r }}
+      - name: Install dependencies
+        run: |
+          Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'mac.binary.el-capitan')"
+          Rscript -e "remotes::install_deps(dependencies = TRUE, type = 'mac.binary.el-capitan')"
+      - name: Running Tests
+        run: |
+          Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
+      - name: Codecov
+        run: Rscript -e "covr::codecov()"
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
 
   windows:
     if: contains(github.event.head_commit.message, '[ci skip]') == false
@@ -104,24 +88,18 @@ jobs:
     env:
       NOT_CRAN: true
     steps:
-    - uses: actions/checkout@v1
-    - uses: r-lib/actions/setup-r@v1
-      with:
-        r-version: ${{ matrix.r }}
-    - name: Install dependencies
-      run: |
-        Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'win.binary')"
-        Rscript -e "remotes::install_deps(dependencies = TRUE, type = 'win.binary')"
-      shell:
-        pwsh
-    - name: Running Tests
-      run: |
-        Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
-      shell:
-        pwsh
-    - name: Codecov
-      run: Rscript -e "covr::codecov()"
-      env:
-        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
-      shell:
-        pwsh
+      - uses: actions/checkout@v1
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: ${{ matrix.r }}
+      - name: Install dependencies
+        run: |
+          Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'win.binary')"
+          Rscript -e "remotes::install_deps(dependencies = TRUE, type = 'win.binary')"
+      - name: Running Tests
+        run: |
+          Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
+      - name: Codecov
+        run: Rscript -e "covr::codecov()"
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
