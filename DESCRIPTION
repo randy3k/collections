@@ -1,8 +1,8 @@
 Type: Package
 Package: collections
 Title: High Performance Container Data Types
-Version: 0.2.3.9999
-Date: 2019-10-31
+Version: 0.2.4
+Date: 2020-02-06
 Authors@R: 
     c(person(given = "Randy",
              family = "Lai",
@@ -12,8 +12,8 @@ Authors@R:
              family = "Mazzoleni",
              role = "cph",
              comment = "tommy hash table library"))
-Description: Provides high performance container data types such as Queue,
-    Stack, Deque, Dict and OrderedDict. Benchmarks
+Description: Provides high performance container data types such
+    as Queue, Stack, Deque, Dict and OrderedDict. Benchmarks
     <https://randy3k.github.io/collections/articles/benchmark.html> have
     shown that these containers are asymptotically more efficient than
     those offered by other packages.
@@ -22,13 +22,13 @@ URL: https://randy3k.github.io/collections
 Depends:
     R (>= 3.4.0)
 Imports:
-    xptr
+    xptr (>= 1.1.2)
 Suggests: 
-    covr,
-    testthat
+    covr (>= 3.4.0),
+    testthat (>= 2.3.1)
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
