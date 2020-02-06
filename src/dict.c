@@ -189,16 +189,14 @@ static void shrink(SEXP self, int m) {
 }
 
 
-void _dict_index_set(SEXP self, SEXP ht_xptr, SEXP _key, int index) {
+void _dict_index_set(SEXP self, SEXP ht_xptr, const char* key, int index) {
     tommy_hashlin* ht;
     item *s;
-    const char* key;
 
     ht = R_ExternalPtrAddr(ht_xptr);
     if (ht == NULL) {
         ht = init_hashlin(self, ht_xptr);
     }
-    key = validate_key(_key);
     tommy_hash_t hashed_key = tommy_strhash_u32(0, key);
     s = (item*) malloc(sizeof(item));
     s->key = key;
@@ -210,6 +208,8 @@ void _dict_index_set(SEXP self, SEXP ht_xptr, SEXP _key, int index) {
 SEXP dict_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value) {
     int idx = _dict_index_get(self, ht_xptr, _key);
     int index;
+    const char* key;
+
     if (idx == -1) {
         int nholes = get_int_value(self, "nholes");
         if (nholes > 0) {
@@ -225,10 +225,12 @@ SEXP dict_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value) {
             grow(self, m2);
             set_int_value(self, "m", m2);
         }
-        _dict_index_set(self, ht_xptr, _key, index);
+
+        key = validate_key(_key);
+        _dict_index_set(self, ht_xptr, key, index);
 
         SEXP ks = PROTECT(get_sexp_value(self, "ks"));
-        SET_STRING_ELT(ks, index - 1, Rf_asChar(_key));
+        SET_STRING_ELT(ks, index - 1, Rf_mkCharCE(key, CE_UTF8));
         UNPROTECT(1);
     } else {
         index = idx;
