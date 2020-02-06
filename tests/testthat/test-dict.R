@@ -68,6 +68,20 @@ test_that("set a key twice", {
 })
 
 if (container == "Dict") {
+    test_that("hole is not popped if key error", {
+        d <- Container()
+        d$set("a", 1)$set("b", 2)$set("c", 3)
+        d$remove("b")
+        expect_equal(d$size(), 2)
+        expect_equal(tryCatch(
+            d$set("", 2),
+            error = function(e) NULL
+        ), NULL)
+        expect_equal(d$size(), 2)
+        d$set("b", 2)
+        expect_equal(d$vs[[2]], 2L)
+    })
+
     test_that("grow and shrink", {
         d <- Dict()
         for (i in 1:100) d$set(paste0("key", i), i)
