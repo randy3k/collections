@@ -70,7 +70,7 @@ static const char* validate_key(SEXP key) {
     if (Rf_StringBlank(c) || c == R_NaString) {
         Rf_error("invalid key");
     }
-    return R_CHAR(Rf_asChar(key));
+    return Rf_translateCharUTF8(c);
 }
 
 
