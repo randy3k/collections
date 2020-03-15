@@ -121,7 +121,7 @@
     <p>The <code>OrderedDict</code> function creates an ordered dictionary.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>OrderedDict</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>OrderedDict</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keys</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -129,6 +129,10 @@
     <tr>
       <th>items</th>
       <td><p>a list of items</p></td>
+    </tr>
+    <tr>
+      <th>keys</th>
+      <td><p>a list of keys, use <code><a href='https://rdrr.io/r/base/names.html'>names(items)</a></code> if <code>NULL</code></p></td>
     </tr>
     </table>
 

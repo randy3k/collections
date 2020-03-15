@@ -4,10 +4,12 @@
 \alias{DictL}
 \title{Dictionary (R implementation)}
 \usage{
-DictL(items = NULL)
+DictL(items = NULL, keys = NULL)
 }
 \arguments{
 \item{items}{a list of items}
+
+\item{keys}{a list of keys, use \code{names(items)} if \code{NULL}}
 }
 \description{
 The \code{DictL} function creates an ordinary (unordered) dictionary (a.k.a. hash).

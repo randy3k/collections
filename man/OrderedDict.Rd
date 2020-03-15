@@ -4,10 +4,12 @@
 \alias{OrderedDict}
 \title{Ordered Dictionary}
 \usage{
-OrderedDict(items = NULL)
+OrderedDict(items = NULL, keys = NULL)
 }
 \arguments{
 \item{items}{a list of items}
+
+\item{keys}{a list of keys, use \code{names(items)} if \code{NULL}}
 }
 \description{
 The \code{OrderedDict} function creates an ordered dictionary.

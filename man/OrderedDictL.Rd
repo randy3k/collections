@@ -4,10 +4,12 @@
 \alias{OrderedDictL}
 \title{Ordered Dictionary (R implementation)}
 \usage{
-OrderedDictL(items = NULL)
+OrderedDictL(items = NULL, keys = NULL)
 }
 \arguments{
 \item{items}{a list of items}
+
+\item{keys}{a list of keys, use \code{names(items)} if \code{NULL}}
 }
 \description{
 The \code{OrderedDictL} function creates an ordered dictionary.

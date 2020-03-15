@@ -4,10 +4,12 @@
 \alias{Dict}
 \title{Dictionary}
 \usage{
-Dict(items = NULL)
+Dict(items = NULL, keys = NULL)
 }
 \arguments{
 \item{items}{a list of items}
+
+\item{keys}{a list of keys, use \code{names(items)} if \code{NULL}}
 }
 \description{
 The \code{Dict} function creates an ordinary (unordered) dictionary (a.k.a. hash).
