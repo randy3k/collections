@@ -108,7 +108,7 @@ OrderedDict <- function(items = NULL) {
         keys <- keys()
         names(ret) <- keys
         for (i in seq_along(keys)) {
-            ret[[i]] <- get(keys[i])
+            ret[[i]] <- get(keys[[i]])
         }
         ret
     }
@@ -202,9 +202,9 @@ OrderedDictL <- function(items = NULL) {
     popitem <- function(last = TRUE) {
         if (last) {
             keys <- keys()
-            key <- key[length(keys)]
+            key <- key[[length(keys)]]
         } else {
-            keys <- keys()[1]
+            keys <- keys()[[1]]
         }
         v <- get(key)
         remove(key)

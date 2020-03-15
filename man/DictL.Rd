@@ -30,7 +30,7 @@ Following methods are exposed:
 .$print()
 }
 \itemize{
-\item \code{key}: any R object, key of the item
+\item \code{key}: scalar character
 \item \code{value}: any R object, value of the item
 \item \code{default}: optional, the default value of an item if the key is not found
 }
