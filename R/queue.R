@@ -62,6 +62,7 @@ Queue <- function(items = NULL) {
     }
 
     initialize(items)
+    items <- NULL
     self
 }
 
@@ -138,5 +139,6 @@ QueueL <- function(items = NULL) {
     }
 
     initialize(items)
+    items <- NULL
     self
 }

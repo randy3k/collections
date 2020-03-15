@@ -58,6 +58,7 @@ Stack <- function(items = NULL) {
     }
 
     initialize(items)
+    items <- NULL
     self
 }
 
@@ -135,5 +136,6 @@ StackL <- function(items = NULL) {
     }
 
     initialize(items)
+    items <- NULL
     self
 }

@@ -110,6 +110,7 @@ Deque <- function(items = NULL) {
     }
 
     initialize(items)
+    items <- NULL
     self
 }
 
@@ -228,5 +229,6 @@ DequeL <- function(items = NULL) {
     }
 
     initialize(items)
+    items <- NULL
     self
 }

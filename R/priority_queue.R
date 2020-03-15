@@ -66,5 +66,7 @@ PriorityQueue <- function(items = NULL, priorities = rep(0, length(items))) {
     }
 
     initialize(items, priorities)
+    items <- NULL
+    priorities <- NULL
     self
 }

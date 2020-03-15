@@ -2,6 +2,7 @@
 #' @description
 #' The `Dict` function creates an ordinary (unordered) dictionary (a.k.a. hash).
 #' @param items a list of items
+#' @param keys a list of keys, use \code{names(items)} if \code{NULL}
 #' @details
 #' Following methods are exposed:
 #' \preformatted{
@@ -32,7 +33,7 @@
 #' @seealso [OrderedDict] and [OrderedDictL]
 #' @importFrom xptr null_xptr
 #' @export
-Dict <- function(items = NULL) {
+Dict <- function(items = NULL, keys = NULL) {
     self <- environment()
 
     INITIAL_SIZE <- 16L
@@ -46,10 +47,15 @@ Dict <- function(items = NULL) {
     vs <- NULL
     ks <- NULL
     ht_xptr <- NULL
+    # we will define the keys function
+    keys0 <- keys
 
-    initialize <- function(items = NULL) {
+    initialize <- function(items, keys) {
         clear()
-        keys <- names(items)
+        if (is.null(keys)) {
+            keys <- names(items)
+        }
+        if (length(items) != length(keys)) stop("items and keys should have the same length")
         for (i in seq_along(items)) {
             set(keys[i], items[[i]])
         }
@@ -120,7 +126,9 @@ Dict <- function(items = NULL) {
         cat("Dict object with", n, "item(s)\n")
     }
 
-    initialize(items)
+    initialize(items, keys0)
+    items <- NULL
+    keys0 <- NULL
     self
 }
 
@@ -131,6 +139,7 @@ Dict <- function(items = NULL) {
 #' The `DictL` function creates an ordinary (unordered) dictionary (a.k.a. hash).
 #' Pure R implementation for benchmarking.
 #' @param items a list of items
+#' @param keys a list of keys, use \code{names(items)} if \code{NULL}
 #' @details
 #' Following methods are exposed:
 #' \preformatted{
@@ -161,14 +170,18 @@ Dict <- function(items = NULL) {
 #' @seealso [OrderedDict] and [OrderedDictL]
 #' @importFrom utils hasName
 #' @export
-DictL <- function(items = NULL) {
+DictL <- function(items = NULL, keys = NULL) {
     self <- environment()
     e <- NULL
     n <- NULL
+    keys0 <- keys
 
-    initialize <- function(items = NULL) {
+    initialize <- function(items, keys) {
         clear()
-        keys <- names(items)
+        if (is.null(keys)) {
+            keys <- names(items)
+        }
+        if (length(items) != length(keys)) stop("items and keys should have the same length")
         for (i in seq_along(items)) {
             set(keys[i], items[[i]])
         }
@@ -229,6 +242,8 @@ DictL <- function(items = NULL) {
         cat("DictL object with", n, "item(s)\n")
     }
 
-    initialize(items)
+    initialize(items, keys0)
+    items <- NULL
+    keys0 <- NULL
     self
 }
