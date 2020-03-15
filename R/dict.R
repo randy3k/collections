@@ -54,10 +54,18 @@ Dict <- function(items = NULL, keys = NULL) {
         clear()
         if (is.null(keys)) {
             keys <- names(items)
-        }
-        if (length(items) != length(keys)) stop("items and keys should have the same length")
-        for (i in seq_along(items)) {
-            set(keys[i], items[[i]])
+            for (i in seq_along(items)) {
+                set(keys[i], items[[i]])
+            }
+        } else if (is.character(keys)) {
+            for (i in seq_along(items)) {
+                set(keys[i], items[[i]])
+            }
+        } else {
+            if (length(items) != length(keys)) stop("items and keys should have the same length")
+            for (i in seq_along(items)) {
+                set(keys[[i]], items[[i]])
+            }
         }
     }
     .get_index <- function(key) {
@@ -180,10 +188,18 @@ DictL <- function(items = NULL, keys = NULL) {
         clear()
         if (is.null(keys)) {
             keys <- names(items)
-        }
-        if (length(items) != length(keys)) stop("items and keys should have the same length")
-        for (i in seq_along(items)) {
-            set(keys[i], items[[i]])
+            for (i in seq_along(items)) {
+                set(keys[i], items[[i]])
+            }
+        } else if (is.character(keys)) {
+            for (i in seq_along(items)) {
+                set(keys[i], items[[i]])
+            }
+        } else {
+            if (length(items) != length(keys)) stop("items and keys should have the same length")
+            for (i in seq_along(items)) {
+                set(keys[[i]], items[[i]])
+            }
         }
     }
     set <- function(key, value) {

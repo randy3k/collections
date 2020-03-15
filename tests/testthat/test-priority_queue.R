@@ -15,6 +15,20 @@ test_that("push and pop", {
     expect_error(q$pop(), "empty")
 })
 
+test_that("push and pop with items", {
+    q <- PriorityQueue(list("a", "b", "c"), c(2, 3, 1))
+    expect_equal(q$size(), 3)
+    expect_equal(q$pop(), "b")
+    expect_equal(q$size(), 2)
+    q$push("d", 5)
+    expect_equal(q$size(), 3)
+    expect_equal(q$pop(), "d")
+    expect_equal(q$pop(), "a")
+    expect_equal(q$pop(), "c")
+    expect_equal(q$size(), 0)
+    expect_error(q$pop(), "empty")
+})
+
 test_that("as_list", {
     q <- PriorityQueue()
     q$push("a", 2)$push("b", 3)$push("c", 1)

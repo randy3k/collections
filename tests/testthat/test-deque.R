@@ -22,8 +22,19 @@ test_that("push, peek and pop", {
     expect_error(q$pop(), "empty")
 })
 
+test_that("push, peek and pop with items", {
+    q <- Container(list(1, 3))
+    expect_equal(q$size(), 2)
+    expect_equal(q$peek(), 3)
+    expect_equal(q$pop(), 3)
+    expect_equal(q$peek(), 1)
+    expect_equal(q$pop(), 1)
+    expect_equal(q$size(), 0)
+    expect_error(q$peek(), "empty")
+    expect_error(q$pop(), "empty")
+})
 
-test_that("push, peek and pop", {
+test_that("pushleft, peekleft and popleft", {
     q <- Container()
     q$pushleft(1)$pushleft(2)
     expect_equal(q$size(), 2)
