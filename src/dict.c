@@ -92,7 +92,7 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
     int n = get_int_value(self, "n");
     if (n > 0) {
         const char* key;
-        SEXP ks = get_sexp_value(self, "ks");
+        SEXP ks = PROTECT(get_sexp_value(self, "ks"));
         SEXP c;
         R_len_t nks = Rf_length(ks);
         for (i = 0; i < nks; i++) {
@@ -105,8 +105,8 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
             s->value = i + 1;
             tommy_hashlin_insert(ht, &s->node, s, hashed_key);
         }
+        UNPROTECT(1);
     }
-
     return ht;
 }
 
