@@ -19,7 +19,7 @@
 #' .$as_list()
 #' .$print()
 #' }
-#' * `key`: any R object, key of the item
+#' * `key`: scalar character or non atomic object
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
 #' * `d`: an OrderedDict or OrderedDictL
@@ -81,13 +81,13 @@ OrderedDict <- function(items = NULL) {
         d$has(key)
     }
     keys <- function() {
-        unlist(q$as_list())
+        q$as_list()
     }
     values <- function() {
         ret <- vector("list", size())
         keys <- keys()
         for (i in seq_along(keys)) {
-            ret[[i]] <- get(keys[i])
+            ret[[i]] <- get(keys[[i]])
         }
         ret
     }
@@ -214,13 +214,13 @@ OrderedDictL <- function(items = NULL) {
         hasName(e, key)
     }
     keys <- function() {
-        as.character(names(e))
+        as.list(as.character(names(e)))
     }
     values <- function() {
         ret <- vector("list", size())
         keys <- keys()
         for (i in seq_along(keys)) {
-            ret[[i]] <- get(keys[i])
+            ret[[i]] <- get(keys[[i]])
         }
         ret
     }

@@ -63,11 +63,15 @@ static_inline void holes_clear(SEXP self) {
 
 
 static const char* validate_key(SEXP key) {
-    if (TYPEOF(key) != STRSXP || Rf_length(key) != 1) {
-        Rf_error("expect scalar character");
+    if (!Rf_isVectorAtomic(key) && !Rf_isNull(key)) {
+        const char* buf = R_alloc(sizeof(char), 30);
+        sprintf((char*) buf, "\xef\x80\x80\x30%p", key);
+        return buf;
+    } else if (TYPEOF(key) != STRSXP || Rf_length(key) != 1) {
+        Rf_error("expect scalar character or non atomic object");
     }
     SEXP c = Rf_asChar(key);
-    if (Rf_StringBlank(c) || c == R_NaString) {
+    if (Rf_StringBlank(c) || Rf_isNull(c)) {
         Rf_error("invalid key");
     }
     return Rf_translateCharUTF8(c);
@@ -92,9 +96,9 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
         SEXP c;
         R_len_t nks = Rf_length(ks);
         for (i = 0; i < nks; i++) {
-            c = STRING_ELT(ks, i);
-            if (c == R_NaString) continue;
-            key = R_CHAR(c);
+            c = VECTOR_ELT(ks, i);
+            if (Rf_isNull(c)) continue;
+            key = validate_key(c);
             hashed_key = tommy_strhash_u32(0, key);
             s = (item*) malloc(sizeof(item));
             s->key = key;
@@ -140,19 +144,19 @@ SEXP dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key) {
 static void grow(SEXP self, int m) {
     SEXP ks = PROTECT(get_sexp_value(self, "ks"));
     SEXP vs = PROTECT(get_sexp_value(self, "vs"));
-    SEXP ks2 = PROTECT(Rf_allocVector(STRSXP, m));
+    SEXP ks2 = PROTECT(Rf_allocVector(VECSXP, m));
     SEXP vs2 = PROTECT(Rf_allocVector(VECSXP, m));
     int i;
     SEXP c;
     R_len_t nks = Rf_length(ks);
     for (i = 0; i < nks; i++) {
-        c = STRING_ELT(ks, i);
-        if (c == R_NaString) continue;
-        SET_STRING_ELT(ks2, i, STRING_ELT(ks, i));
+        c = VECTOR_ELT(ks, i);
+        if (Rf_isNull(c)) continue;
+        SET_VECTOR_ELT(ks2, i, VECTOR_ELT(ks, i));
         SET_VECTOR_ELT(vs2, i, VECTOR_ELT(vs, i));
     }
     for(i = nks; i < m; i++) {
-        SET_STRING_ELT(ks2, i, R_NaString);
+        SET_VECTOR_ELT(ks2, i, R_NilValue);
         SET_VECTOR_ELT(vs2, i, R_NilValue);
     }
     set_sexp_value(self, "ks", ks2);
@@ -164,21 +168,21 @@ static void grow(SEXP self, int m) {
 static void shrink(SEXP self, int m) {
     SEXP ks = PROTECT(get_sexp_value(self, "ks"));
     SEXP vs = PROTECT(get_sexp_value(self, "vs"));
-    SEXP ks2 = PROTECT(Rf_allocVector(STRSXP, m));
+    SEXP ks2 = PROTECT(Rf_allocVector(VECSXP, m));
     SEXP vs2 = PROTECT(Rf_allocVector(VECSXP, m));
     int i;
     SEXP c;
     R_len_t nks = Rf_length(ks);
     int j = 0;
     for (i = 0; i < nks; i++) {
-        c = STRING_ELT(ks, i);
-        if (c == R_NaString) continue;
-        SET_STRING_ELT(ks2, j, STRING_ELT(ks, i));
+        c = VECTOR_ELT(ks, i);
+        if (Rf_isNull(c)) continue;
+        SET_VECTOR_ELT(ks2, j, VECTOR_ELT(ks, i));
         SET_VECTOR_ELT(vs2, j, VECTOR_ELT(vs, i));
         j++;
     }
     for(i = j; i < m; i++) {
-        SET_STRING_ELT(ks2, i, R_NaString);
+        SET_VECTOR_ELT(ks2, i, R_NilValue);
         SET_VECTOR_ELT(vs2, i, R_NilValue);
     }
     set_sexp_value(self, "ks", ks2);
@@ -226,7 +230,11 @@ SEXP dict_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value) {
         _dict_index_set(self, ht_xptr, key, index);
 
         SEXP ks = PROTECT(get_sexp_value(self, "ks"));
-        SET_STRING_ELT(ks, index - 1, Rf_mkCharCE(key, CE_UTF8));
+        if (TYPEOF(_key) == STRSXP) {
+            SET_VECTOR_ELT(ks, index - 1, Rf_ScalarString(Rf_mkCharCE(key, CE_UTF8)));
+        } else  {
+            SET_VECTOR_ELT(ks, index - 1, _key);
+        }
         UNPROTECT(1);
     } else {
         index = idx;
@@ -261,7 +269,7 @@ SEXP dict_remove(SEXP self, SEXP ht_xptr, SEXP _key) {
     int n = add_int_value(self, "n", -1);
     SEXP ks = PROTECT(get_sexp_value(self, "ks"));
     SEXP vs = PROTECT(get_sexp_value(self, "vs"));
-    SET_STRING_ELT(ks, index - 1, R_NaString);
+    SET_VECTOR_ELT(ks, index - 1, R_NilValue);
     SET_VECTOR_ELT(vs, index - 1, R_NilValue);
     UNPROTECT(2);
     holes_push(self, index);
@@ -276,4 +284,42 @@ SEXP dict_remove(SEXP self, SEXP ht_xptr, SEXP _key) {
         set_sexp_value(self, "ht_xptr", R_MakeExternalPtr(NULL, R_NilValue, R_NilValue));
     }
     return R_NilValue;
+}
+
+SEXP dict_keys(SEXP self) {
+    SEXP ks = PROTECT(get_sexp_value(self, "ks"));
+    int n = get_int_value(self, "n");
+    SEXP keys = PROTECT(Rf_allocVector(VECSXP, n));
+    SEXP key;
+    int i, j;
+    j = 0;
+    for (i = 0; i < Rf_length(ks); i++) {
+        key = VECTOR_ELT(ks, i);
+        if (!Rf_isNull(key)) {
+            SET_VECTOR_ELT(keys, j, key);
+            j++;
+        }
+    }
+    UNPROTECT(2);
+    return keys;
+}
+
+
+SEXP dict_values(SEXP self) {
+    SEXP ks = PROTECT(get_sexp_value(self, "ks"));
+    SEXP vs = PROTECT(get_sexp_value(self, "vs"));
+    int n = get_int_value(self, "n");
+    SEXP values = PROTECT(Rf_allocVector(VECSXP, n));
+    SEXP key;
+    int i, j;
+    j = 0;
+    for (i = 0; i < Rf_length(ks); i++) {
+        key = VECTOR_ELT(ks, i);
+        if (!Rf_isNull(key)) {
+            SET_VECTOR_ELT(values, j, VECTOR_ELT(vs, i));
+            j++;
+        }
+    }
+    UNPROTECT(3);
+    return values;
 }

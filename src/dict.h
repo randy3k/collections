@@ -11,4 +11,8 @@ SEXP dict_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value);
 
 SEXP dict_remove(SEXP self, SEXP ht_xptr, SEXP _key);
 
+SEXP dict_keys(SEXP self);
+
+SEXP dict_values(SEXP self);
+
 #endif

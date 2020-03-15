@@ -67,32 +67,6 @@ test_that("set a key twice", {
     expect_length(d$values(), 2)
 })
 
-if (container == "Dict") {
-    test_that("hole is not popped if key error", {
-        d <- Container()
-        d$set("a", 1)$set("b", 2)$set("c", 3)
-        d$remove("b")
-        expect_equal(d$size(), 2)
-        expect_equal(tryCatch(
-            d$set("", 2),
-            error = function(e) NULL
-        ), NULL)
-        expect_equal(d$size(), 2)
-        d$set("b", 2)
-        expect_equal(d$vs[[2]], 2L)
-    })
-
-    test_that("grow and shrink", {
-        d <- Dict()
-        for (i in 1:100) d$set(paste0("key", i), i)
-        len <- d$size()
-        expect_gt(length(d$ks), len)
-        for (i in 1:99) d$remove(paste0("key", i))
-        expect_lt(length(d$ks), len)
-        expect_equal(sum(!is.na(d$ks)), 1)
-    })
-}
-
 test_that("serialize and unserialized", {
     d <- Container()
     d$set("b", 2)
@@ -108,3 +82,42 @@ test_that("serialize and unserialized", {
 })
 
 }
+
+test_that("hole is not popped if key error", {
+    d <- Dict()
+    d$set("a", 1)$set("b", 2)$set("c", 3)
+    d$remove("b")
+    expect_equal(d$size(), 2)
+    expect_equal(tryCatch(
+        d$set("", 2),
+        error = function(e) NULL
+    ), NULL)
+    expect_equal(d$size(), 2)
+    d$set("b", 2)
+    expect_equal(d$vs[[2]], 2L)
+})
+
+test_that("grow and shrink", {
+    d <- Dict()
+    for (i in 1:100) d$set(paste0("key", i), i)
+    len <- d$size()
+    expect_gt(length(d$ks), len)
+    for (i in 1:99) d$remove(paste0("key", i))
+    expect_lt(length(d$ks), len)
+    expect_length(d$keys(), 1)
+})
+
+test_that("object indexing works", {
+    d <- Dict()
+    s <- Stack()
+    q <- Queue()
+    f <- function() {
+        NULL
+    }
+    d$set(s, 1)$set(q, 2)$set(f, 3)
+    expect_equal(d$size(), 3)
+    expect_equal(d$get(s), 1)
+    expect_equal(d$get(q), 2)
+    expect_equal(d$get(f), 3)
+    expect_equal(d$keys(), list(s, q, f))
+})

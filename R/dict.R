@@ -18,7 +18,7 @@
 #' .$as_list()
 #' .$print()
 #' }
-#' * `key`: any R object, key of the item
+#' * `key`: scalar character or non atomic object
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
 #' @examples
@@ -87,10 +87,10 @@ Dict <- function(items = NULL) {
         .get_index(key) != -1
     }
     keys <- function() {
-        ks[!is.na(ks)]
+        .Call(C_dict_keys, self)
     }
     values <- function() {
-        vs[!is.na(ks)]
+        .Call(C_dict_values, self)
     }
     update <- function(d) {
         for (key in d$keys()) {
@@ -102,7 +102,7 @@ Dict <- function(items = NULL) {
         n <<- 0L
         m <<- INITIAL_SIZE
         vs <<- vector("list", INITIAL_SIZE)
-        ks <<- rep(NA_character_, INITIAL_SIZE)
+        ks <<- vector("list", INITIAL_SIZE)
         # new("externalptr") doesn't work because it returns a static pointer
         ht_xptr <<- null_xptr()
         holes$clear()
@@ -147,7 +147,7 @@ Dict <- function(items = NULL) {
 #' .$as_list()
 #' .$print()
 #' }
-#' * `key`: any R object, key of the item
+#' * `key`: scalar character
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
 #' @examples
@@ -205,7 +205,7 @@ DictL <- function(items = NULL) {
         hasName(e, key)
     }
     keys <- function() {
-        ls(e)
+        as.list(ls(e))
     }
     values <- function() {
         ret <- as_list()
