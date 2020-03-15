@@ -19,7 +19,7 @@
 #' .$as_list()
 #' .$print()
 #' }
-#' * `key`: scalar character or non atomic object
+#' * `key`: scalar character, environment or function
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
 #' * `d`: an OrderedDict or OrderedDictL

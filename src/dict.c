@@ -63,12 +63,12 @@ static_inline void holes_clear(SEXP self) {
 
 
 static const char* validate_key(SEXP key) {
-    if (!Rf_isVectorAtomic(key) && !Rf_isNull(key)) {
+    if (!Rf_isVector(key) && !Rf_isNull(key)) {
         const char* buf = R_alloc(sizeof(char), 30);
         sprintf((char*) buf, "\xef\x80\x80\x30%p", key);
         return buf;
     } else if (TYPEOF(key) != STRSXP || Rf_length(key) != 1) {
-        Rf_error("expect scalar character or non atomic object");
+        Rf_error("expect scalar character, environment or function");
     }
     SEXP c = Rf_asChar(key);
     if (Rf_StringBlank(c) || Rf_isNull(c)) {

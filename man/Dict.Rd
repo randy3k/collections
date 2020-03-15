@@ -29,7 +29,7 @@ Following methods are exposed:
 .$print()
 }
 \itemize{
-\item \code{key}: scalar character or non atomic object
+\item \code{key}: scalar character, environment or function
 \item \code{value}: any R object, value of the item
 \item \code{default}: optional, the default value of an item if the key is not found
 }
