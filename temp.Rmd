@@ -1,0 +1,237 @@
+
+## Stack
+
+
+```{r, echo = FALSE}
+test_dequer_stack_push_pop <- function(n) {
+    q <- dequer::stack()
+    push <- dequer::push
+    pop <- dequer::pop
+    for (i in 1:n) push(q, rnorm(1))
+    for (i in 1:n) pop(q)
+    q
+}
+test_datastructures_stack_push_pop <- function(n) {
+    q <- datastructures::stack()
+    insert <- datastructures::insert
+    pop <- datastructures::pop
+    for (i in 1:n) insert(q, rnorm(1))
+    for (i in 1:n) pop(q)
+    q
+}
+test_liqueueR_stack_push_pop <- function(n) {
+    q <- liqueueR::Stack$new()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
+test_collections_stack_l_push_pop <- function(n) {
+    q <- collections::StackL()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
+test_collections_stack_push_pop <- function(n) {
+    q <- collections::Stack()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:n) q$pop()
+    q
+}
+```
+
+```{r stack, echo = FALSE}
+tm <- microbenchmark(
+    `dequer::stack` = test_dequer_stack_push_pop(100),
+    `datastructures::stack` = test_datastructures_stack_push_pop(100),
+    `liqueueR::Stack` = test_liqueueR_stack_push_pop(100),
+    `collections::StackL` = test_collections_stack_l_push_pop(100),
+    `collections::Stack` = test_collections_stack_push_pop(100),
+    unit = "relative"
+)
+autoplot(tm) + ggtitle("push and pop 100 times")
+```
+
+## Deque
+
+```{r, echo = FALSE}
+test_dequer_deque_push_pop <- function(n) {
+    q <- dequer::deque()
+    push <- dequer::push
+    pop <- dequer::pop
+    popback <- dequer::popback
+    for (i in 1:n) push(q, rnorm(1))
+    for (i in 1:floor(n / 2)) {
+        pop(q)
+        popback(q)
+    }
+    q
+}
+test_collections_deque_l_push_pop <- function(n) {
+    q <- collections::DequeL()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:floor(n / 2)) {
+        q$pop()
+        q$popleft()
+    }
+    q
+}
+test_collections_deque_push_pop <- function(n) {
+    q <- collections::Deque()
+    for (i in 1:n) q$push(rnorm(1))
+    for (i in 1:floor(n / 2)) {
+        q$pop()
+        q$popleft()
+    }
+    q
+}
+```
+
+```{r deque, echo = FALSE}
+tm <- microbenchmark(
+    `dequer::deque` = test_dequer_deque_push_pop(100),
+    `collections::DequeL` = test_collections_deque_l_push_pop(100),
+    `collections::Deque` = test_collections_deque_push_pop(100),
+    unit = "relative"
+)
+autoplot(tm) + ggtitle("push and pop 100 times")
+```
+
+## Priority Queue
+
+```{r, echo = FALSE}
+test_liqueueR_pqueue_push_pop <- function(n) {
+    q <- liqueueR::PriorityQueue$new()
+    for (i in 1:n) q$push(rnorm(1), sample.int(n, 1))
+    for (i in 1:n) q$pop()
+    q
+}
+
+test_datastructures_pqueue_push_pop <- function(n) {
+    q <- datastructures::binomial_heap(key.class = "integer")
+    insert <- datastructures::insert
+    pop <- datastructures::pop
+    for (i in 1:n) insert(q, sample.int(n, 1), rnorm(1))
+    for (i in 1:n) pop(q)
+    q
+}
+
+test_collections_pqueue_push_pop <- function(n) {
+    q <- collections::PriorityQueue()
+    for (i in 1:n) q$push(rnorm(1), sample.int(n, 1))
+    for (i in 1:n) q$pop()
+    q
+}
+```
+
+```{r pqueue, echo = FALSE}
+tm <- microbenchmark(
+    `liqueueR::PriorityQueue` = test_liqueueR_pqueue_push_pop(100),
+    `datastructures::binomial_heap` = test_datastructures_pqueue_push_pop(100),
+    `collections::PriorityQueue` = test_collections_pqueue_push_pop(100),
+    unit = "relative"
+)
+autoplot(tm) + ggtitle("push and pop 100 times")
+```
+
+
+## Dict / hashmap
+
+```{r, echo = FALSE}
+test_datastructures_dict_set_get <- function(n) {
+    h <- datastructures::hashmap()
+    insert <- datastructures::insert
+    for (i in 1:n) insert(h, as.character(i), rnorm(1))
+    for (i in sample(1:n)) h[as.character(i)]
+    h
+}
+test_hash_dict_set_get <- function(n) {
+    h <- hash::hash()
+    for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
+    for (i in sample(1:n)) h[[as.character(i)]]
+    h
+}
+test_hashmap_dict_set_get <- function(n) {
+    h <- hashmap::hashmap(keys = character(0), values = numeric(0))
+    for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
+    for (i in sample(1:n)) h[[as.character(i)]]
+    h
+}
+test_fastmap_dict_set_get <- function(n) {
+    h <- fastmap::fastmap()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in sample(1:n)) h$get(as.character(i))
+    h
+}
+test_collections_dictl_set_get <- function(n) {
+    h <- collections::DictL()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in sample(1:n)) h$get(as.character(i))
+    h
+}
+test_collections_dict_set_get <- function(n) {
+    h <- collections::Dict()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in sample(1:n)) h$get(as.character(i))
+    h
+}
+```
+
+```{r dict, echo = FALSE}
+tm <- microbenchmark(
+    `datastructures::hashmap` = test_datastructures_dict_set_get(100),
+    `hash::hash` = test_hash_dict_set_get(100),
+    `hashmap::hashmap` = test_hashmap_dict_set_get(100),
+    `fastmap::fastmap` = test_fastmap_dict_set_get(100),
+    `collections::DictL` = test_collections_dictl_set_get(100),
+    `collections::Dict` = test_collections_dict_set_get(100),
+    unit = "relative"
+)
+autoplot(tm) + ggtitle("set and get 100 times")
+```
+
+## OrderedDict
+
+```{r, echo = FALSE}
+test_collections_ordered_dict_l_set_get <- function(n) {
+    h <- collections::OrderedDictL()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in sample(1:n)) h$get(as.character(i))
+    h
+}
+test_collections_ordered_dict_set_get <- function(n) {
+    h <- collections::OrderedDict()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in sample(1:n)) h$get(as.character(i))
+    h
+}
+```
+
+```{r ordered_dict, echo = FALSE}
+tm <- microbenchmark(
+    `collections::OrderedDictL` = test_collections_ordered_dict_l_set_get(100),
+    `collections::OrderedDict` = test_collections_ordered_dict_set_get(100),
+    unit = "relative"
+)
+autoplot(tm) + ggtitle("set and get 100 times")
+```
+
+### OrderedDict vs Dict
+
+```{r, echo = FALSE}
+test_collections_expiring_dict_set_get <- function(n) {
+    h <- collections::ExpiringDict()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in sample(1:n)) h$get(as.character(i))
+    h
+}
+```
+
+```{r ordered_dict_vs_dict, echo = FALSE}
+tm <- microbenchmark(
+    `collections::Dict` = test_collections_dict_set_get(1000),
+    `collections::OrderedDict` = test_collections_ordered_dict_set_get(1000),
+    `collections::ExpiringDict` = test_collections_expiring_dict_set_get(1000),
+    unit = "relative"
+)
+autoplot(tm) + ggtitle("set and get 100 times")
+```

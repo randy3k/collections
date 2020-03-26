@@ -1,4 +1,4 @@
-DequeL <- function(items = NULL) {
+Deque <- function(items = NULL) {
     self <- environment()
     q <- NULL
     n <- NULL
@@ -79,7 +79,8 @@ DequeL <- function(items = NULL) {
     self
 }
 
-DictL <- function(items = NULL, keys = NULL) {
+
+Dict <- function(items = NULL, keys = NULL) {
     self <- environment()
     e <- NULL
     n <- NULL
@@ -166,7 +167,7 @@ DictL <- function(items = NULL, keys = NULL) {
 }
 
 
-OrderedDictL <- function(items = NULL, keys = NULL) {
+OrderedDict <- function(items = NULL, keys = NULL) {
     self <- environment()
     e <- NULL
     keys0 <- keys
@@ -266,7 +267,7 @@ OrderedDictL <- function(items = NULL, keys = NULL) {
 }
 
 
-QueueL <- function(items = NULL) {
+Queue <- function(items = NULL) {
     self <- environment()
     q <- NULL
     n <- NULL
@@ -315,7 +316,7 @@ QueueL <- function(items = NULL) {
 }
 
 
-StackL <- function(items = NULL) {
+Stack <- function(items = NULL) {
     self <- environment()
 
     q <- NULL

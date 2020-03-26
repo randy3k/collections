@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collections</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.9.9999</span>
       </span>
     </div>
 
@@ -97,36 +97,39 @@
 <a href="https://CRAN.R-project.org/package=hashmap">hashmap</a> 0.2.2</li>
 <li>
 <a href="https://CRAN.R-project.org/package=fastmap">fastmap</a> 1.0.1</li>
+<li>Base R <a href="https://github.com/randy3k/collections/blob/master/vignettes/baseR.Rmd">implementation</a>
+</li>
 </ul>
 <div id="queue" class="section level2">
 <h2 class="hasAnchor">
 <a href="#queue" class="anchor"></a>Queue</h2>
 <p><img src="benchmark_files/figure-html/queue-1.png" width="700"></p>
 </div>
-<div id="stack" class="section level2">
-<h2 class="hasAnchor">
-<a href="#stack" class="anchor"></a>Stack</h2>
+<div id="stack" class="section level1">
+<h1 class="hasAnchor">
+<a href="#stack" class="anchor"></a>Stack</h1>
 <p><img src="benchmark_files/figure-html/stack-1.png" width="700"></p>
 </div>
-<div id="deque" class="section level2">
-<h2 class="hasAnchor">
-<a href="#deque" class="anchor"></a>Deque</h2>
+<div id="deque" class="section level1">
+<h1 class="hasAnchor">
+<a href="#deque" class="anchor"></a>Deque</h1>
 <p><img src="benchmark_files/figure-html/deque-1.png" width="700"></p>
 </div>
-<div id="priority-queue" class="section level2">
-<h2 class="hasAnchor">
-<a href="#priority-queue" class="anchor"></a>Priority Queue</h2>
-<p><img src="benchmark_files/figure-html/pqueue-1.png" width="700"></p>
-</div>
+<div id="priority-queue" class="section level1">
+<h1 class="hasAnchor">
+<a href="#priority-queue" class="anchor"></a>Priority Queue</h1>
+<p><img src="benchmark_files/figure-html/priority_queue-1.png" width="700"></p>
 <div id="dict-hashmap" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dict-hashmap" class="anchor"></a>Dict / hashmap</h2>
 <p><img src="benchmark_files/figure-html/dict-1.png" width="700"></p>
 </div>
-<div id="ordereddict" class="section level2">
+<div id="ordered-dict" class="section level2">
 <h2 class="hasAnchor">
-<a href="#ordereddict" class="anchor"></a>OrderedDict</h2>
+<a href="#ordered-dict" class="anchor"></a>Ordered Dict</h2>
+<p>It is not a fair benchmark as OrderedDict is built on top of Dict. We are interested in the extra over head in OrderedDict.</p>
 <p><img src="benchmark_files/figure-html/ordered_dict-1.png" width="700"></p>
+</div>
 </div>
   </div>
 
@@ -139,9 +142,13 @@
 <li><a href="#queue">Queue</a></li>
       <li><a href="#stack">Stack</a></li>
       <li><a href="#deque">Deque</a></li>
-      <li><a href="#priority-queue">Priority Queue</a></li>
-      <li><a href="#dict-hashmap">Dict / hashmap</a></li>
-      <li><a href="#ordereddict">OrderedDict</a></li>
+      <li>
+<a href="#priority-queue">Priority Queue</a>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#dict-hashmap">Dict / hashmap</a></li>
+      <li><a href="#ordered-dict">Ordered Dict</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>

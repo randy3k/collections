@@ -3,3 +3,4 @@
 *.o
 *.so
 CRAN-RELEASE
+/vignettes/benchmark_cache/
