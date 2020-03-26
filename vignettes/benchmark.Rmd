@@ -24,7 +24,7 @@ We are comparing these packages with `collections`.
     `r packageDescription("hashmap")$Version`
 - [fastmap](https://CRAN.R-project.org/package=fastmap)
     `r packageDescription("fastmap")$Version`
-- Base R [implementation](https://github.com/randy3k/collections/blob/master/vignettes/baseR.Rmd)
+- Base R [implementation](https://github.com/randy3k/collections/blob/master/vignettes/baseR.R)
 
 
 ```{r global_options, include=FALSE}
