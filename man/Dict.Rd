@@ -46,5 +46,5 @@ d$as_list()  # "orange" is removed
 d$set("orange", 3)$set("pear", 7)  # chain methods
 }
 \seealso{
-\link{OrderedDict} and \link{OrderedDictL}
+\link{OrderedDict}
 }

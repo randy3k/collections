@@ -1,11 +1,7 @@
-for (container in c("Stack", "StackL")) {
-
-context(container)
-
-Container <- eval(as.name(container))
+context("Stack")
 
 test_that("push, peek and pop", {
-    s <- Container()
+    s <- Stack()
     s$push(1)$push(2)
     expect_equal(s$size(), 2)
     expect_equal(s$peek(), 2)
@@ -22,7 +18,7 @@ test_that("push, peek and pop", {
 })
 
 test_that("push, peek and pop with items", {
-    q <- Container(list(1, 3))
+    q <- Stack(list(1, 3))
     expect_equal(q$size(), 2)
     expect_equal(q$peek(), 3)
     expect_equal(q$pop(), 3)
@@ -34,17 +30,15 @@ test_that("push, peek and pop with items", {
 })
 
 test_that("clear", {
-    s <- Container()
+    s <- Stack()
     s$push("a")$push("b")$push("c")
     s$clear()
     expect_equal(s$size(), 0)
 })
 
 test_that("push NULL", {
-    q <- Container()
+    q <- Stack()
     q$push(NULL)$push(NULL)
     expect_null(q$pop())
     expect_equal(q$size(), 1)
 })
-
-}

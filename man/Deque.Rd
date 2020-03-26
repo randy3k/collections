@@ -46,5 +46,5 @@ q <- Deque(list("foo", "bar"))
 q$push("baz")$pushleft("bla")
 }
 \seealso{
-\link{DequeL}
+\link{Queue} and \link{Stack}
 }

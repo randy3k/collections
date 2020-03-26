@@ -226,37 +226,37 @@ test_datastructures_dict_set_get <- function(n) {
     h <- datastructures::hashmap()
     insert <- datastructures::insert
     for (i in 1:n) insert(h, as.character(i), rnorm(1))
-    for (i in 1:n) h[as.character(sample.int(n, 1))]
+    for (i in sample(1:n)) h[as.character(i)]
     h
 }
 test_hash_dict_set_get <- function(n) {
     h <- hash::hash()
     for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
-    for (i in 1:n) h[[as.character(sample.int(n, 1))]]
+    for (i in sample(1:n)) h[[as.character(i)]]
     h
 }
 test_hashmap_dict_set_get <- function(n) {
     h <- hashmap::hashmap(keys = character(0), values = numeric(0))
     for (i in 1:n) h[[as.character(i)]] <- rnorm(1)
-    for (i in 1:n) h[[as.character(sample.int(n, 1))]]
+    for (i in sample(1:n)) h[[as.character(i)]]
     h
 }
 test_fastmap_dict_set_get <- function(n) {
     h <- fastmap::fastmap()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
-    for (i in 1:n) h$get(as.character(sample.int(n, 1)))
+    for (i in sample(1:n)) h$get(as.character(i))
     h
 }
 test_collections_dictl_set_get <- function(n) {
     h <- collections::DictL()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
-    for (i in 1:n) h$get(as.character(sample.int(n, 1)))
+    for (i in sample(1:n)) h$get(as.character(i))
     h
 }
 test_collections_dict_set_get <- function(n) {
     h <- collections::Dict()
     for (i in 1:n) h$set(as.character(i), rnorm(1))
-    for (i in 1:n) h$get(as.character(sample.int(n, 1)))
+    for (i in sample(1:n)) h$get(as.character(i))
     h
 }
 ```
@@ -295,6 +295,27 @@ test_collections_ordered_dict_set_get <- function(n) {
 tm <- microbenchmark(
     `collections::OrderedDictL` = test_collections_ordered_dict_l_set_get(100),
     `collections::OrderedDict` = test_collections_ordered_dict_set_get(100),
+    unit = "relative"
+)
+autoplot(tm) + ggtitle("set and get 100 times")
+```
+
+### OrderedDict vs Dict
+
+```{r, echo = FALSE}
+test_collections_expiring_dict_set_get <- function(n) {
+    h <- collections::ExpiringDict()
+    for (i in 1:n) h$set(as.character(i), rnorm(1))
+    for (i in sample(1:n)) h$get(as.character(i))
+    h
+}
+```
+
+```{r ordered_dict_vs_dict, echo = FALSE}
+tm <- microbenchmark(
+    `collections::Dict` = test_collections_dict_set_get(1000),
+    `collections::OrderedDict` = test_collections_ordered_dict_set_get(1000),
+    `collections::ExpiringDict` = test_collections_expiring_dict_set_get(1000),
     unit = "relative"
 )
 autoplot(tm) + ggtitle("set and get 100 times")

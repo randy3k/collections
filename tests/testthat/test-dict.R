@@ -1,11 +1,8 @@
-for (container in c("Dict", "DictL")) {
 
-context(container)
-
-Container <- eval(as.name(container))
+context("Dict")
 
 test_that("push and pop", {
-    d <- Container()
+    d <- Dict()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
@@ -26,7 +23,7 @@ test_that("push and pop", {
 })
 
 test_that("push and pop with items", {
-    d <- Container(list(b = 2, a = 1, c = 3))
+    d <- Dict(list(b = 2, a = 1, c = 3))
     expect_equal(d$size(), 3)
     expect_equal(d$get("b"), 2)
     expect_equal(d$get("a"), 1)
@@ -44,7 +41,7 @@ test_that("push and pop with items", {
 })
 
 test_that("push and pop with items and keys", {
-    d <- Container(list(2, 1, 3), list("b", "a", "c"))
+    d <- Dict(list(2, 1, 3), list("b", "a", "c"))
     expect_equal(d$size(), 3)
     expect_equal(d$get("b"), 2)
     expect_equal(d$get("a"), 1)
@@ -62,7 +59,7 @@ test_that("push and pop with items and keys", {
 })
 
 test_that("clear", {
-    d <- Container()
+    d <- Dict()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
@@ -72,14 +69,14 @@ test_that("clear", {
 })
 
 test_that("NULL and default", {
-    d <- Container()
+    d <- Dict()
     d$set("b", NULL)
     expect_equal(d$get("b"), NULL)
     expect_equal(d$get("a", "default"), "default")
 })
 
 test_that("size is correctly calculated after remove", {
-    d <- Container()
+    d <- Dict()
     for (l in LETTERS) {
         d$set(l, 1)
     }
@@ -93,7 +90,7 @@ test_that("size is correctly calculated after remove", {
 })
 
 test_that("set a key twice", {
-    d <- Container()
+    d <- Dict()
     d$set("a", 1)
     d$set("b", 2)
     d$set("a", 3)
@@ -103,7 +100,7 @@ test_that("set a key twice", {
 })
 
 test_that("serialize and unserialized", {
-    d <- Container()
+    d <- Dict()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
@@ -116,7 +113,6 @@ test_that("serialize and unserialized", {
     expect_error(d2$get("a"), "not found")
 })
 
-}
 
 test_that("hole is not popped if key error", {
     d <- Dict()

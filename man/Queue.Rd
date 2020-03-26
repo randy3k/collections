@@ -38,5 +38,5 @@ q <- Queue(list("foo", "bar"))
 q$push("baz")$push("bla")
 }
 \seealso{
-\link{QueueL}
+\link{Stack} and \link{Deque}
 }
