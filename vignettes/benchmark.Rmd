@@ -8,9 +8,6 @@ vignette: >
 ---
 
 The goal of this document is to compare the performances of some of the existing packages.
-See [benchmark.Rmd](https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd) for the details.
-
-We are comparing these packages with `collections`.
 
 - [dequer](https://CRAN.R-project.org/package=dequer)
     `r packageDescription("dequer")$Version`
@@ -24,7 +21,7 @@ We are comparing these packages with `collections`.
     `r packageDescription("hashmap")$Version`
 - [fastmap](https://CRAN.R-project.org/package=fastmap)
     `r packageDescription("fastmap")$Version`
-- Base R [implementation](https://github.com/randy3k/collections/blob/master/vignettes/baseR.R)
+- We also compare to serveral base R implementations based on lists or environments, see [here](https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd) for details.
 
 
 ```{r global_options, include=FALSE}
@@ -32,14 +29,48 @@ requireNamespace("bench")
 library(tidyverse)
 options(digits = 3)
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-source("baseR.R")
 ```
 
 ## Queue
 
+```{r, echo = FALSE}
+Queue <- function() {
+    self <- environment()
+    q <- NULL
+    n <- NULL
+    push <- function(item) {
+        if (is.null(item)) {
+            q[n + 1] <<- list(item)
+        } else {
+            q[[n + 1]] <<- item
+        }
+        n <<- n + 1
+        invisible(self)
+    }
+    pop <- function() {
+        if (n == 0) stop("queue is empty")
+        v <- q[[1]]
+        q <<- q[-1]
+        n <<- n - 1
+        v
+    }
+    peek <- function() {
+        if (n == 0) stop("queue is empty")
+        q[[1]]
+    }
+    clear <- function() {
+        q <<- list()
+        n <<- 0
+        self
+    }
+    clear()
+    self
+}
+```
+
 ```{r queue, echo = FALSE, cache = TRUE}
-bench::press(
-    n = c(50, 100, 500, 1000),
+bench_queue <- bench::press(
+    n = c(10, 50, 100, 200, 500),
     bench::mark(
         `dequer::queue` = {
             q <- dequer::queue()
@@ -63,32 +94,74 @@ bench::press(
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
-        `base R` = {
+        `base::list` = {
             q <- Queue()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
-        `collections::Queue` = {
-            q <- collections::Queue()
+        `collections::queue` = {
+            q <- collections::queue()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
         check = FALSE
     )) %>%
-    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE)) %>%
+    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE))
+```
+
+```{r, echo = FALSE}
+bench_queue %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
     ggtitle("push and pop n times") + ylab("time")
+bench_queue %>%
+    filter(expression %in% c("base::list", "dequer::queue", "collections::queue")) %>%
+    ggplot(aes(x = n, y = median)) +
+    geom_line(aes(color = expression)) +
+    scale_colour_brewer(palette = "Set2", direction = -1) +
+    ggtitle("(zoom in)") + ylab("time")
 ```
 
-# Stack
+## Stack
+
+```{r, echo = FALSE}
+Stack <- function() {
+    self <- environment()
+    q <- NULL
+    n <- NULL
+
+    push <- function(item) {
+        if (is.null(item)) {
+            q[n + 1] <<- list(item)
+        } else {
+            q[[n + 1]] <<- item
+        }
+        n <<- n + 1
+        invisible(self)
+    }
+    pop <- function() {
+        if (n == 0) stop("stack is empty")
+        v <- q[[n]]
+        q <<- q[-n]
+        n <<- n - 1
+        v
+    }
+    clear <- function() {
+        q <<- list()
+        n <<- 0
+        invisible(self)
+    }
+    clear()
+    self
+}
+```
 
 ```{r stack, echo = FALSE, cache = TRUE}
-bench::press(
-    n = c(50, 100, 500, 1000),
+bench_stack <- bench::press(
+    n = c(10, 50, 100, 200, 500),
     bench::mark(
         `dequer::stack` = {
             q <- dequer::stack()
@@ -112,33 +185,87 @@ bench::press(
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
-        `base R` = {
+        `base::list` = {
             q <- Stack()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
-        `collections::Stack` = {
-            q <- collections::Stack()
+        `collections::stack` = {
+            q <- collections::stack()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
         check = FALSE
     )) %>%
-    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE)) %>%
+    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE))
+```
+
+```{r, echo = FALSE}
+bench_stack %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
     ggtitle("push and pop n times") + ylab("time")
+bench_stack %>%
+    filter(expression %in% c("base::list", "dequer::stack", "collections::stack")) %>%
+    ggplot(aes(x = n, y = median)) +
+    geom_line(aes(color = expression)) +
+    scale_colour_brewer(palette = "Set2", direction = -1) +
+    ggtitle("(zoom in)") + ylab("time")
 ```
 
 
-# Deque
+## Deque
+
+```{r, echo = FALSE}
+Deque <- function() {
+    self <- environment()
+    q <- NULL
+    n <- NULL
+
+    push <- function(item) {
+        if (is.null(item)) {
+            q[n + 1] <<- list(item)
+        } else {
+            q[[n + 1]] <<- item
+        }
+        n <<- self$n + 1
+        invisible(self)
+    }
+    pushleft <- function(item) {
+        q <<- c(list(item), q)
+        n <<- n + 1
+        invisible(self)
+    }
+    pop <- function() {
+        if (n == 0) stop("deque is empty")
+        v <- q[[n]]
+        q <<- q[-n]
+        n <<- n - 1
+        v
+    }
+    popleft <- function() {
+        if (n == 0) stop("deque is empty")
+        v <- q[[1]]
+        q <<- q[-1]
+        n <<- n - 1
+        v
+    }
+    clear <- function() {
+        q <<- list()
+        n <<- 0
+        invisible(self)
+    }
+    clear()
+    self
+}
+```
 
 ```{r deque, echo = FALSE, cache = TRUE}
 bench::press(
-    n = c(50, 100, 500, 1000),
+    n = c(10, 50, 100, 200, 500),
     bench::mark(
         `dequer::deque` = {
             q <- dequer::deque()
@@ -152,7 +279,7 @@ bench::press(
                 popback(q)
             }
         },
-        `base R` = {
+        `base::list` = {
             q <- Deque()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
@@ -161,8 +288,8 @@ bench::press(
                 q$popleft()
             }
         },
-        `collections::Stack` = {
-            q <- collections::Deque()
+        `collections::deque` = {
+            q <- collections::deque()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:floor(n / 2)) {
@@ -180,11 +307,11 @@ bench::press(
 ```
 
 
-# Priority Queue
+## Priority Queue
 
 ```{r priority_queue, echo = FALSE, cache = TRUE}
 bench::press(
-    n = c(50, 100, 500, 1000),
+    n = c(10, 50, 100, 200, 500),
     bench::mark(
         `liqueueR::PriorityQueue` = {
             q <- liqueueR::PriorityQueue$new()
@@ -202,8 +329,8 @@ bench::press(
             for (i in 1:n) insert(q, p[i], x[i])
             for (i in 1:n) pop(q)
         },
-        `collections::PriorityQueue` = {
-            q <- collections::PriorityQueue()
+        `collections::priority_queue` = {
+            q <- collections::priority_queue()
             x <- rnorm(n)
             p <- sample.int(n, n, replace = TRUE)
             for (i in 1:n) q$push(x[i], p[i])
@@ -222,8 +349,8 @@ bench::press(
 ## Dict / hashmap
 
 ```{r dict, echo = FALSE, cache = TRUE}
-bench::press(
-    n = c(50, 100, 500, 1000),
+bench_dict <- bench::press(
+    n = c(10, 50, 100, 200, 500),
     bench::mark(
         `datastructures::hashmap` = {
             h <- datastructures::hashmap()
@@ -254,15 +381,15 @@ bench::press(
             for (i in 1:n) h$set(k[i], x[i])
             for (i in sample(1:n)) h$get(k[i])
         },
-        `base R` = {
-            h <- Dict()
+        `base::new.env` = {
+            h <- new.env(parent = emptyenv())
             x <- rnorm(n)
             k <- as.character(seq_len(n))
-            for (i in 1:n) h$set(k[i], x[i])
-            for (i in sample(1:n)) h$get(k[i])
+            for (i in 1:n) h[[k[i]]] <- x[i]
+            for (i in sample(1:n)) get0(k[i], envir = x, inherits = FALSE)
         },
-        `collections::Dict` = {
-            h <- collections::Dict()
+        `collections::dict` = {
+            h <- collections::dict()
             x <- rnorm(n)
             k <- as.character(seq_len(n))
             for (i in 1:n) h$set(k[i], x[i])
@@ -270,38 +397,50 @@ bench::press(
         },
         check = FALSE
     )) %>%
-    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE)) %>%
+    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE))
+```
+
+```{r, echo = FALSE}
+bench_dict %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
-    ggtitle("set and get n times") + ylab("time")
+    ggtitle("push and pop n times") + ylab("time")
+bench_dict %>%
+    filter(expression %in% c(
+        "hash::hash", "fastmap::fastmap", "collections::dict", "base::new.env")) %>%
+    ggplot(aes(x = n, y = median)) +
+    geom_line(aes(color = expression)) +
+    scale_colour_brewer(palette = "Set2", direction = -1) +
+    ggtitle("(zoom in)") + ylab("time")
 ```
 
 
 ## Ordered Dict
 
-It is not a fair benchmark as OrderedDict is built on top of Dict. We are interested in the extra over head in OrderedDict.
+It is not a fair benchmark as OrderedDict is built on top of Dict. We just want to investigate the extra over head in OrderedDict.
+
 
 ```{r ordered_dict, echo = FALSE, cache = TRUE}
 bench::press(
-    n = c(50, 100, 500, 1000),
+    n = c(10, 50, 100, 200, 500),
     bench::mark(
-        `base R` = {
-            h <- OrderedDict()
+        `base::list` = {
+            h <- list()
+            x <- rnorm(n)
+            k <- as.character(seq_len(n))
+            for (i in 1:n) h[[k[i]]] <- x[i]
+            for (i in sample(1:n)) h[[k[i]]]
+        },
+        `collections::dict` = {
+            h <- collections::dict()
             x <- rnorm(n)
             k <- as.character(seq_len(n))
             for (i in 1:n) h$set(k[i], x[i])
             for (i in sample(1:n)) h$get(k[i])
         },
-        `collections::Dict` = {
-            h <- collections::Dict()
-            x <- rnorm(n)
-            k <- as.character(seq_len(n))
-            for (i in 1:n) h$set(k[i], x[i])
-            for (i in sample(1:n)) h$get(k[i])
-        },
-        `collections::OrderedDict` = {
-            h <- collections::OrderedDict()
+        `collections::ordered_dict` = {
+            h <- collections::ordered_dict()
             x <- rnorm(n)
             k <- as.character(seq_len(n))
             for (i in 1:n) h$set(k[i], x[i])

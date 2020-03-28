@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Double Ended Queue — Deque • collections</title>
+<title>Double Ended Queue — deque • collections</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,9 @@
 
 
 
-<meta property="og:title" content="Double Ended Queue — Deque" />
-<meta property="og:description" content="The Deque function creates a double ended queue." />
+<meta property="og:title" content="Double Ended Queue — deque" />
+<meta property="og:description" content="deque creates a double ended queue.
+Deque is deprecated and will be removed from future releases." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,14 +115,17 @@
     <div class="page-header">
     <h1>Double Ended Queue</h1>
     
-    <div class="hidden name"><code>Deque.Rd</code></div>
+    <div class="hidden name"><code>deque.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>Deque</code> function creates a double ended queue.</p>
+    <p><code>deque</code> creates a double ended queue.
+<code>Deque</code> is deprecated and will be removed from future releases.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Deque</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>deque</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>Deque</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,20 +155,20 @@
 </pre>
 <ul>
 <li><p><code>item</code>: any R object</p></li>
-<li><p><code>q</code>: a Deque object</p></li>
+<li><p><code>q</code>: a deque</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='Queue.html'>Queue</a> and <a href='Stack.html'>Stack</a></p></div>
+    <div class='dont-index'><p><a href='queue.html'>queue</a> and <a href='stack.html'>stack</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>Deque</span>()
+    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>deque</span>()
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"foo"</span>)
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"bar"</span>)
 <span class='no'>q</span>$<span class='fu'>pushleft</span>(<span class='st'>"baz"</span>)
 <span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># bar</span></div><div class='output co'>#&gt; [1] "bar"</div><div class='input'><span class='no'>q</span>$<span class='fu'>popleft</span>()  <span class='co'># baz</span></div><div class='output co'>#&gt; [1] "baz"</div><div class='input'>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>Deque</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>deque</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"baz"</span>)$<span class='fu'>pushleft</span>(<span class='st'>"bla"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

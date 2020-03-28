@@ -3,7 +3,7 @@
 
 #' @title Queue
 #' @description
-#' The `Queue` function creates a queue.
+#' `queue` creates a queue. `Queue` is deprecated and will be removed from future releases.
 #' @param items a list of items
 #' @details
 #' Following methods are exposed:
@@ -18,20 +18,29 @@
 #' }
 #' * `item`: any R object
 #' @examples
-#' q <- Queue()
+#' q <- queue()
 #' q$push("first")
 #' q$push("second")
 #' q$pop()  # first
 #' q$pop()  # second
 #'
-#' q <- Queue(list("foo", "bar"))
+#' q <- queue(list("foo", "bar"))
 #' q$push("baz")$push("bla")
-#' @seealso [Stack] and [Deque]
+#' @seealso [stack] and [deque]
 #' @export
-Queue <- function(items = NULL) {
+queue <- function(items = NULL) {
+    ret <- create_queue()
+    ret$initialize(items)
+    ret
+}
+
+
+create_queue <- function() {
     self <- environment()
+    ret <- new.env()
     q <- NULL
     last <- NULL
+
     initialize <- function(items = NULL) {
         clear()
         for (i in seq_along(items)) {
@@ -40,7 +49,7 @@ Queue <- function(items = NULL) {
     }
     push <- function(item) {
         .Call(C_queue_push, self, item)
-        invisible(self)
+        invisible(ret)
     }
     pop <- function() {
         .Call(C_queue_pop, self)
@@ -52,7 +61,7 @@ Queue <- function(items = NULL) {
     clear <- function() {
         q <<- NULL
         last <<- NULL
-        invisible(self)
+        invisible(ret)
     }
     size <- function() length(q)
     as_list <- function() as.list(q)
@@ -61,7 +70,13 @@ Queue <- function(items = NULL) {
         cat("Queue object with", n, "item(s)\n")
     }
 
-    initialize(items)
-    items <- NULL
-    self
+    ret$initialize <- initialize
+    ret$push <- push
+    ret$pop <- pop
+    ret$peek <- peek
+    ret$clear <- clear
+    ret$size <- size
+    ret$as_list <- as_list
+    ret$print <- print
+    ret
 }

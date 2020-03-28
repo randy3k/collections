@@ -2,7 +2,7 @@ context("Deque")
 
 
 test_that("push, peek and pop", {
-    q <- Deque()
+    q <- deque()
     q$push(1)$push(2)
     expect_equal(q$size(), 2)
     expect_equal(q$peek(), 2)
@@ -20,7 +20,7 @@ test_that("push, peek and pop", {
 })
 
 test_that("push, peek and pop with items", {
-    q <- Deque(list(1, 3))
+    q <- deque(list(1, 3))
     expect_equal(q$size(), 2)
     expect_equal(q$peek(), 3)
     expect_equal(q$pop(), 3)
@@ -32,7 +32,7 @@ test_that("push, peek and pop with items", {
 })
 
 test_that("pushleft, peekleft and popleft", {
-    q <- Deque()
+    q <- deque()
     q$pushleft(1)$pushleft(2)
     expect_equal(q$size(), 2)
     expect_equal(q$peekleft(), 2)
@@ -50,7 +50,7 @@ test_that("pushleft, peekleft and popleft", {
 })
 
 test_that("random push and pop", {
-    q <- Deque()
+    q <- deque()
     q$pushleft(1)$push("a")$pushleft(2)$push("b")
     expect_equal(q$size(), 4)
     expect_equal(q$popleft(), 2)
@@ -66,7 +66,7 @@ test_that("random push and pop", {
 })
 
 test_that("random push and pop 2", {
-    q <- Deque()
+    q <- deque()
     q$pushleft(1)$push("a")$pushleft(2)$push("b")
     expect_equal(q$size(), 4)
     expect_equal(q$pop(), "b")
@@ -82,7 +82,7 @@ test_that("random push and pop 2", {
 })
 
 test_that("remove", {
-    q <- Deque()
+    q <- deque()
     q$push("a")$pushleft(1)$push("b")$pushleft(2)
     expect_equal(q$size(), 4)
     q$remove("a")
@@ -95,7 +95,7 @@ test_that("remove", {
 })
 
 test_that("remove the first occurance of two identical items", {
-    q <- Deque()
+    q <- deque()
     q$push("a")$push("b")$push("a")$push("c")
     q$remove("a")
     expect_equal(q$size(), 3)
@@ -103,8 +103,8 @@ test_that("remove the first occurance of two identical items", {
 
 
 test_that("extend", {
-    q <- Deque()
-    q2 <- Deque()
+    q <- deque()
+    q2 <- deque()
     q2$push("a")$push("b")
     q$extend(q2)
     expect_equal(q$size(), 2)
@@ -114,21 +114,21 @@ test_that("extend", {
 })
 
 test_that("clear", {
-    q <- Deque()
+    q <- deque()
     q$push("a")$push("b")
     q$clear()
     expect_equal(q$size(), 0)
 })
 
 test_that("push NULL", {
-    q <- Deque()
+    q <- deque()
     q$push(NULL)$push(NULL)
     expect_null(q$pop())
     expect_equal(q$size(), 1)
 })
 
 test_that("pushleft NULL", {
-    q <- Deque()
+    q <- deque()
     q$pushleft(NULL)$pushleft(NULL)
     expect_null(q$popleft())
     expect_equal(q$size(), 1)

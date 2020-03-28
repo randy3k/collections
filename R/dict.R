@@ -1,6 +1,7 @@
 #' @title Dictionary
 #' @description
-#' The `Dict` function creates an ordinary (unordered) dictionary (a.k.a. hash).
+#' `dict` creates a directory (a.k.a hash map).
+#' `Dict` is deprecated and will be removed from future releases.
 #' @param items a list of items
 #' @param keys a list of keys, use \code{names(items)} if \code{NULL}
 #' @details
@@ -22,19 +23,28 @@
 #' * `key`: scalar character, environment or function
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
+#' * `d`: a dictionary
 #' @examples
-#' d <- Dict(list(apple = 5, orange = 10))
+#' d <- dict(list(apple = 5, orange = 10))
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # unordered
 #' d$pop("orange")
 #' d$as_list()  # "orange" is removed
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
-#' @seealso [OrderedDict]
+#' @seealso [ordered_dict]
 #' @importFrom xptr null_xptr
 #' @export
-Dict <- function(items = NULL, keys = NULL) {
+dict <- function(items = NULL, keys = NULL) {
+    ret <- create_dict()
+    ret$initialize(items, keys)
+    ret
+}
+
+
+create_dict <- function() {
     self <- environment()
+    ret <- list()
 
     INITIAL_SIZE <- 16L
     GROW_FACTOR <- 1.5
@@ -47,8 +57,6 @@ Dict <- function(items = NULL, keys = NULL) {
     vs <- NULL
     ks <- NULL
     ht_xptr <- NULL
-    # we will define the keys function
-    keys0 <- keys
 
     initialize <- function(items, keys) {
         clear()
@@ -68,29 +76,19 @@ Dict <- function(items = NULL, keys = NULL) {
             }
         }
     }
-    .get_index <- function(key) {
-        .Call(C_dict_index_get, self, ht_xptr, key)
-    }
     .set <- function(key, value) {
         .Call(C_dict_set, self, ht_xptr, key, value)
     }
     set <- function(key, value) {
-        .set(key, value)
-        invisible(self)
+        .Call(C_dict_set, self, ht_xptr, key, value)
+        invisible(ret)
     }
     get <- function(key, default) {
-        index <- .get_index(key)
-        if (index > 0L) {
-            vs[[index]]
-        } else if (missing(default)) {
-            stop("key not found")
-        } else {
-            default
-        }
+        .Call(C_dict_get, self, ht_xptr, key, if (missing(default)) missing_arg() else default)
     }
     remove <- function(key) {
         .Call(C_dict_remove, self, ht_xptr, key)
-        invisible(self)
+        invisible(ret)
     }
     pop <- function(key, default) {
         v <- get(key, default)
@@ -98,7 +96,7 @@ Dict <- function(items = NULL, keys = NULL) {
         v
     }
     has <- function(key) {
-        .get_index(key) != -1
+        .Call(C_dict_has, self, key)
     }
     keys <- function() {
         .Call(C_dict_keys, self)
@@ -110,7 +108,7 @@ Dict <- function(items = NULL, keys = NULL) {
         for (key in d$keys()) {
             set(key, d$get(key))
         }
-        invisible(self)
+        invisible(ret)
     }
     clear <- function() {
         n <<- 0L
@@ -121,7 +119,7 @@ Dict <- function(items = NULL, keys = NULL) {
         ht_xptr <<- null_xptr()
         holes$clear()
         nholes <<- 0L
-        invisible(self)
+        invisible(ret)
     }
     size <- function() n
     as_list <- function() {
@@ -134,8 +132,19 @@ Dict <- function(items = NULL, keys = NULL) {
         cat("Dict object with", n, "item(s)\n")
     }
 
-    initialize(items, keys0)
-    items <- NULL
-    keys0 <- NULL
-    self
+    ret$self <- self
+    ret$initialize <- initialize
+    ret$set <- set
+    ret$get <- get
+    ret$remove <- remove
+    ret$pop <- pop
+    ret$has <- has
+    ret$keys <- keys
+    ret$values <- values
+    ret$update <- update
+    ret$clear <- clear
+    ret$size <- size
+    ret$as_list <- as_list
+    ret$print <- print
+    ret
 }

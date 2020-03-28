@@ -141,6 +141,20 @@ SEXP dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key) {
 }
 
 
+SEXP dict_get(SEXP self, SEXP ht_xptr, SEXP _key, SEXP _default) {
+    int index = _dict_index_get(self, ht_xptr, validate_key(_key));
+    if (index <= 0) {
+        if (_default != R_MissingArg) {
+            return _default;
+        } else {
+            Rf_error("key not found");
+        }
+    }
+    SEXP vs = get_sexp_value(self, "vs");
+    return VECTOR_ELT(vs, index - 1);
+}
+
+
 static void grow(SEXP self, int m) {
     SEXP ks = PROTECT(get_sexp_value(self, "ks"));
     SEXP vs = PROTECT(get_sexp_value(self, "vs"));
@@ -285,6 +299,15 @@ SEXP dict_remove(SEXP self, SEXP ht_xptr, SEXP _key) {
     }
     return R_NilValue;
 }
+
+
+SEXP dict_has(SEXP self, SEXP _key) {
+    SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
+    int index = _dict_index_get(self, ht_xptr, validate_key(_key));
+    UNPROTECT(1);
+    return Rf_ScalarLogical(index >= 1);
+}
+
 
 SEXP dict_keys(SEXP self) {
     SEXP ks = PROTECT(get_sexp_value(self, "ks"));

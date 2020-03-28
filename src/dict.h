@@ -5,11 +5,14 @@
 #include <Rinternals.h>
 
 
-SEXP dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key);
+
+SEXP dict_get(SEXP self, SEXP ht_xptr, SEXP _key, SEXP _default);
 
 SEXP dict_set(SEXP self, SEXP ht_xptr, SEXP _key, SEXP value);
 
 SEXP dict_remove(SEXP self, SEXP ht_xptr, SEXP _key);
+
+SEXP dict_has(SEXP self, SEXP _key);
 
 SEXP dict_keys(SEXP self);
 

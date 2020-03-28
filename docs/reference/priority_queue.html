@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dictionary — dict • collections</title>
+<title>Priority Queue — priority_queue • collections</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,9 @@
 
 
 
-<meta property="og:title" content="Dictionary — dict" />
-<meta property="og:description" content="dict creates a directory (a.k.a hash map).
-Dict is deprecated and will be removed from future releases." />
+<meta property="og:title" content="Priority Queue — priority_queue" />
+<meta property="og:description" content="priority_queue creates a priority queue (a.k.a heap).
+PriorityQueue is deprecated and will be removed from future releases." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -113,19 +113,19 @@ Dict is deprecated and will be removed from future releases." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Dictionary</h1>
+    <h1>Priority Queue</h1>
     
-    <div class="hidden name"><code>dict.Rd</code></div>
+    <div class="hidden name"><code>priority_queue.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>dict</code> creates a directory (a.k.a hash map).
-<code>Dict</code> is deprecated and will be removed from future releases.</p>
+    <p><code>priority_queue</code> creates a priority queue (a.k.a heap).
+<code>PriorityQueue</code> is deprecated and will be removed from future releases.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dict</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keys</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>priority_queue</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>priorities</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>items</span>)))
 
-<span class='fu'>Dict</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keys</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>PriorityQueue</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>priorities</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>items</span>)))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,62 +135,41 @@ Dict is deprecated and will be removed from future releases." />
       <td><p>a list of items</p></td>
     </tr>
     <tr>
-      <th>keys</th>
-      <td><p>a list of keys, use <code><a href='https://rdrr.io/r/base/names.html'>names(items)</a></code> if <code>NULL</code></p></td>
+      <th>priorities</th>
+      <td><p>a vector of interger valued priorities</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Following methods are exposed:</p><pre>
-.$set(key, value)
-.$get(key, default)
-.$remove(key)
-.$pop(key, default)
-.$has(key)
-.$keys()
-.$values()
-.$update(d)
+.$push(item, priority = 0)
+.$pop()
 .$clear()
 .$size()
 .$as_list()
 .$print()
 </pre>
 <ul>
-<li><p><code>key</code>: scalar character, environment or function</p></li>
-<li><p><code>value</code>: any R object, value of the item</p></li>
-<li><p><code>default</code>: optional, the default value of an item if the key is not found</p></li>
-<li><p><code>d</code>: a dictionary</p></li>
+<li><p><code>item</code>: any R object</p></li>
+<li><p><code>priority</code>: a real number, item with larger priority pops first</p></li>
 </ul>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><a href='ordered_dict.html'>ordered_dict</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>dict</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>apple</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>orange</span> <span class='kw'>=</span> <span class='fl'>10</span>))
-<span class='no'>d</span>$<span class='fu'>set</span>(<span class='st'>"banana"</span>, <span class='fl'>3</span>)
-<span class='no'>d</span>$<span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"apple"</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>d</span>$<span class='fu'>as_list</span>()  <span class='co'># unordered</span></div><div class='output co'>#&gt; $apple
-#&gt; [1] 5
-#&gt; 
-#&gt; $orange
-#&gt; [1] 10
-#&gt; 
-#&gt; $banana
-#&gt; [1] 3
-#&gt; </div><div class='input'><span class='no'>d</span>$<span class='fu'>pop</span>(<span class='st'>"orange"</span>)</div><div class='output co'>#&gt; [1] 10</div><div class='input'><span class='no'>d</span>$<span class='fu'>as_list</span>()  <span class='co'># "orange" is removed</span></div><div class='output co'>#&gt; $apple
-#&gt; [1] 5
-#&gt; 
-#&gt; $banana
-#&gt; [1] 3
-#&gt; </div><div class='input'><span class='no'>d</span>$<span class='fu'>set</span>(<span class='st'>"orange"</span>, <span class='fl'>3</span>)$<span class='fu'>set</span>(<span class='st'>"pear"</span>, <span class='fl'>7</span>)  <span class='co'># chain methods</span></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>priority_queue</span>()
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"not_urgent"</span>)
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"urgent"</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"not_as_urgent"</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># urgent</span></div><div class='output co'>#&gt; [1] "urgent"</div><div class='input'><span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># not_as_urgent</span></div><div class='output co'>#&gt; [1] "not_as_urgent"</div><div class='input'><span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># not_urgent</span></div><div class='output co'>#&gt; [1] "not_urgent"</div><div class='input'>
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>priority_queue</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"not_urgent"</span>, <span class='st'>"urgent"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>2</span>))
+<span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"not_as_urgent"</span>, <span class='fl'>1</span>)$<span class='fu'>push</span>(<span class='st'>"not_urgent2"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

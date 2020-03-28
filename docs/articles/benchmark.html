@@ -82,8 +82,7 @@
 
     
     
-<p>The goal of this document is to compare the performances of some of the existing packages. See <a href="https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd">benchmark.Rmd</a> for the details.</p>
-<p>We are comparing these packages with <code>collections</code>.</p>
+<p>The goal of this document is to compare the performances of some of the existing packages.</p>
 <ul>
 <li>
 <a href="https://CRAN.R-project.org/package=dequer">dequer</a> 2.0-1</li>
@@ -97,39 +96,38 @@
 <a href="https://CRAN.R-project.org/package=hashmap">hashmap</a> 0.2.2</li>
 <li>
 <a href="https://CRAN.R-project.org/package=fastmap">fastmap</a> 1.0.1</li>
-<li>Base R <a href="https://github.com/randy3k/collections/blob/master/vignettes/baseR.R">implementation</a>
-</li>
+<li>We also compare to serveral base R implementations based on lists or environments, see <a href="https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd">here</a> for details.</li>
 </ul>
 <div id="queue" class="section level2">
 <h2 class="hasAnchor">
 <a href="#queue" class="anchor"></a>Queue</h2>
-<p><img src="benchmark_files/figure-html/queue-1.png" width="700"></p>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-2-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
 </div>
-<div id="stack" class="section level1">
-<h1 class="hasAnchor">
-<a href="#stack" class="anchor"></a>Stack</h1>
-<p><img src="benchmark_files/figure-html/stack-1.png" width="700"></p>
+<div id="stack" class="section level2">
+<h2 class="hasAnchor">
+<a href="#stack" class="anchor"></a>Stack</h2>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-4-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
-<div id="deque" class="section level1">
-<h1 class="hasAnchor">
-<a href="#deque" class="anchor"></a>Deque</h1>
+<div id="deque" class="section level2">
+<h2 class="hasAnchor">
+<a href="#deque" class="anchor"></a>Deque</h2>
 <p><img src="benchmark_files/figure-html/deque-1.png" width="700"></p>
 </div>
-<div id="priority-queue" class="section level1">
-<h1 class="hasAnchor">
-<a href="#priority-queue" class="anchor"></a>Priority Queue</h1>
+<div id="priority-queue" class="section level2">
+<h2 class="hasAnchor">
+<a href="#priority-queue" class="anchor"></a>Priority Queue</h2>
 <p><img src="benchmark_files/figure-html/priority_queue-1.png" width="700"></p>
+</div>
 <div id="dict-hashmap" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dict-hashmap" class="anchor"></a>Dict / hashmap</h2>
-<p><img src="benchmark_files/figure-html/dict-1.png" width="700"></p>
+<p><img src="benchmark_files/figure-html/unnamed-chunk-6-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 </div>
 <div id="ordered-dict" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ordered-dict" class="anchor"></a>Ordered Dict</h2>
-<p>It is not a fair benchmark as OrderedDict is built on top of Dict. We are interested in the extra over head in OrderedDict.</p>
+<p>It is not a fair benchmark as OrderedDict is built on top of Dict. We just want to investigate the extra over head in OrderedDict.</p>
 <p><img src="benchmark_files/figure-html/ordered_dict-1.png" width="700"></p>
-</div>
 </div>
   </div>
 
@@ -142,13 +140,9 @@
 <li><a href="#queue">Queue</a></li>
       <li><a href="#stack">Stack</a></li>
       <li><a href="#deque">Deque</a></li>
-      <li>
-<a href="#priority-queue">Priority Queue</a>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#dict-hashmap">Dict / hashmap</a></li>
+      <li><a href="#priority-queue">Priority Queue</a></li>
+      <li><a href="#dict-hashmap">Dict / hashmap</a></li>
       <li><a href="#ordered-dict">Ordered Dict</a></li>
-      </ul>
-</li>
       </ul>
 </div>
       </div>
