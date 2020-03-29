@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>StackL (R implementation) — StackL • collections</title>
+<title>Stack — stack • collections</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,8 @@
 
 
 
-<meta property="og:title" content="StackL (R implementation) — StackL" />
-<meta property="og:description" content="The StackL function creates a stack.
-Pure R implementation for benchmarking." />
+<meta property="og:title" content="Stack — stack" />
+<meta property="og:description" content="stack creates a stack. Stack is deprecated and will be removed from future releases." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -70,7 +69,7 @@ Pure R implementation for benchmarking." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collections</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.9.9999</span>
       </span>
     </div>
 
@@ -113,17 +112,18 @@ Pure R implementation for benchmarking." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>StackL (R implementation)</h1>
+    <h1>Stack</h1>
     
-    <div class="hidden name"><code>StackL.Rd</code></div>
+    <div class="hidden name"><code>stack.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The <code>StackL</code> function creates a stack.
-Pure R implementation for benchmarking.</p>
+    <p><code>stack</code> creates a stack. <code>Stack</code> is deprecated and will be removed from future releases.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>StackL</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>stack</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>Stack</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,14 +151,14 @@ Pure R implementation for benchmarking.</p>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='Stack.html'>Stack</a></p></div>
+    <div class='dont-index'><p><a href='queue.html'>queue</a> and <a href='deque.html'>deque</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>StackL</span>()
+    <pre class="examples"><div class='input'><span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stack</span>()
 <span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"first"</span>)
 <span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"second"</span>)
 <span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># second</span></div><div class='output co'>#&gt; [1] "second"</div><div class='input'><span class='no'>s</span>$<span class='fu'>pop</span>()  <span class='co'># first</span></div><div class='output co'>#&gt; [1] "first"</div><div class='input'>
-<span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>StackL</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
+<span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'>stack</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
 <span class='no'>s</span>$<span class='fu'>push</span>(<span class='st'>"baz"</span>)$<span class='fu'>push</span>(<span class='st'>"bla"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

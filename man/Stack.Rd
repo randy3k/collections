@@ -41,5 +41,5 @@ s <- stack(list("foo", "bar"))
 s$push("baz")$push("bla")
 }
 \seealso{
-\link{queu} and \link{deque}
+\link{queue} and \link{deque}
 }

@@ -23,7 +23,7 @@
 #'
 #' s <- stack(list("foo", "bar"))
 #' s$push("baz")$push("bla")
-#' @seealso [queu] and [deque]
+#' @seealso [queue] and [deque]
 #' @export
 stack <- function(items = NULL) {
     ret <- create_stack()
