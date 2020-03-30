@@ -1,7 +1,6 @@
 #' @title Ordered Dictionary
 #' @description
-#' `ordered_dict` creates an ordered directory.
-#' `OrderedDict` is deprecated and will be removed from future releases.
+#' `OrderedDict` creates an ordered dictionary.
 #' @param items a list of items
 #' @param keys a list of keys, use \code{names(items)} if \code{NULL}
 #' @details
@@ -24,30 +23,22 @@
 #' * `key`: scalar character, environment or function
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
-#' * `d`: an ordered dict
+#' * `d`: an OrderedDict or OrderedDictL
 #' @examples
-#' d <- ordered_dict(list(apple = 5, orange = 10))
+#' d <- OrderedDict(list(apple = 5, orange = 10))
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # the order the item is preserved
 #' d$pop("orange")
 #' d$as_list()  # "orange" is removed
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
-#' @seealso [dict]
+#' @seealso [Dict]
 #' @export
-ordered_dict <- function(items = NULL, keys = NULL) {
-    ret <- create_ordered_dict()
-    ret$initialize(items, keys)
-    ret
-}
-
-
-create_ordered_dict <- function() {
+OrderedDict <- function(items = NULL, keys = NULL) {
     self <- environment()
-    ret <- new.env()
-
     d <- NULL
     q <- NULL
+    keys0 <- keys
 
     initialize <- function(items, keys) {
         clear()
@@ -68,10 +59,10 @@ create_ordered_dict <- function() {
         }
     }
     set <- function(key, value) {
-        if (d$self$.set(key, value) == -1) {
+        if (d$.set(key, value) == -1) {
             q$push(key)
         }
-        invisible(ret)
+        invisible(self)
     }
     get <- function(key, default) {
         d$get(key, default)
@@ -82,7 +73,7 @@ create_ordered_dict <- function() {
             error = function(e) stop("key not found")
         )
         d$remove(key)
-        invisible(ret)
+        invisible(self)
     }
     pop <- function(key, default) {
         v <- get(key, default)
@@ -120,9 +111,9 @@ create_ordered_dict <- function() {
         self
     }
     clear <- function() {
-        d <<- dict()
+        d <<- Dict()
         q <<- Deque()
-        invisible(ret)
+        invisible(self)
     }
     size <- function() d$size()
     as_list <- function() {
@@ -139,20 +130,8 @@ create_ordered_dict <- function() {
         cat("OrderedDict object with", n, "item(s)\n")
     }
 
-    ret$self <- self
-    ret$initialize <- initialize
-    ret$set <- set
-    ret$get <- get
-    ret$remove <- remove
-    ret$pop <- pop
-    ret$popitem <- popitem
-    ret$has <- has
-    ret$keys <- keys
-    ret$values <- values
-    ret$update <- update
-    ret$clear <- clear
-    ret$size <- size
-    ret$as_list <- as_list
-    ret$print <- print
-    ret
+    initialize(items, keys0)
+    items <- NULL
+    keys0 <- NULL
+    self
 }

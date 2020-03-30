@@ -2,7 +2,7 @@
 context("Dict")
 
 test_that("push and pop", {
-    d <- dict()
+    d <- Dict()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
@@ -23,7 +23,7 @@ test_that("push and pop", {
 })
 
 test_that("push and pop with items", {
-    d <- dict(list(b = 2, a = 1, c = 3))
+    d <- Dict(list(b = 2, a = 1, c = 3))
     expect_equal(d$size(), 3)
     expect_equal(d$get("b"), 2)
     expect_equal(d$get("a"), 1)
@@ -41,7 +41,7 @@ test_that("push and pop with items", {
 })
 
 test_that("push and pop with items and keys", {
-    d <- dict(list(2, 1, 3), list("b", "a", "c"))
+    d <- Dict(list(2, 1, 3), list("b", "a", "c"))
     expect_equal(d$size(), 3)
     expect_equal(d$get("b"), 2)
     expect_equal(d$get("a"), 1)
@@ -59,7 +59,7 @@ test_that("push and pop with items and keys", {
 })
 
 test_that("clear", {
-    d <- dict()
+    d <- Dict()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
@@ -69,14 +69,14 @@ test_that("clear", {
 })
 
 test_that("NULL and default", {
-    d <- dict()
+    d <- Dict()
     d$set("b", NULL)
     expect_equal(d$get("b"), NULL)
     expect_equal(d$get("a", "default"), "default")
 })
 
 test_that("size is correctly calculated after remove", {
-    d <- dict()
+    d <- Dict()
     for (l in LETTERS) {
         d$set(l, 1)
     }
@@ -90,7 +90,7 @@ test_that("size is correctly calculated after remove", {
 })
 
 test_that("set a key twice", {
-    d <- dict()
+    d <- Dict()
     d$set("a", 1)
     d$set("b", 2)
     d$set("a", 3)
@@ -100,7 +100,7 @@ test_that("set a key twice", {
 })
 
 test_that("serialize and unserialized", {
-    d <- dict()
+    d <- Dict()
     d$set("b", 2)
     d$set("a", 1)
     d$set("c", 3)
@@ -115,7 +115,7 @@ test_that("serialize and unserialized", {
 
 
 test_that("hole is not popped if key error", {
-    d <- dict()
+    d <- Dict()
     d$set("a", 1)$set("b", 2)$set("c", 3)
     d$remove("b")
     expect_equal(d$size(), 2)
@@ -125,21 +125,21 @@ test_that("hole is not popped if key error", {
     ), NULL)
     expect_equal(d$size(), 2)
     d$set("b", 2)
-    expect_equal(d$self$vs[[2]], 2L)
+    expect_equal(d$vs[[2]], 2L)
 })
 
 test_that("grow and shrink", {
-    d <- dict()
+    d <- Dict()
     for (i in 1:100) d$set(paste0("key", i), i)
     len <- d$size()
-    expect_gt(length(d$self$ks), len)
+    expect_gt(length(d$ks), len)
     for (i in 1:99) d$remove(paste0("key", i))
-    expect_lt(length(d$self$ks), len)
+    expect_lt(length(d$ks), len)
     expect_length(d$keys(), 1)
 })
 
 test_that("object indexing works", {
-    d <- dict()
+    d <- Dict()
     s <- Stack()
     q <- Queue()
     f <- function() {

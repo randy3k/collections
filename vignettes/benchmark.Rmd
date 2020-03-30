@@ -100,15 +100,16 @@ bench_queue <- bench::press(
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
-        `collections::queue` = {
-            q <- collections::queue()
+        `collections::Queue` = {
+            q <- collections::Queue()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
         check = FALSE
     )) %>%
-    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE))
+    mutate(expression = fct_reorder(
+            as.character(expression), median, .fun = mean, .desc = TRUE))
 ```
 
 ```{r, echo = FALSE}
@@ -118,7 +119,7 @@ bench_queue %>%
     scale_colour_brewer(palette = "Set2", direction = -1) +
     ggtitle("push and pop n times") + ylab("time")
 bench_queue %>%
-    filter(expression %in% c("base::list", "dequer::queue", "collections::queue")) %>%
+    filter(expression %in% c("base::list", "dequer::queue", "collections::Queue")) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
@@ -191,15 +192,16 @@ bench_stack <- bench::press(
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
-        `collections::stack` = {
-            q <- collections::stack()
+        `collections::Stack` = {
+            q <- collections::Stack()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
         check = FALSE
     )) %>%
-    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE))
+    mutate(expression = fct_reorder(
+            as.character(expression), median, .fun = mean, .desc = TRUE))
 ```
 
 ```{r, echo = FALSE}
@@ -209,7 +211,7 @@ bench_stack %>%
     scale_colour_brewer(palette = "Set2", direction = -1) +
     ggtitle("push and pop n times") + ylab("time")
 bench_stack %>%
-    filter(expression %in% c("base::list", "dequer::stack", "collections::stack")) %>%
+    filter(expression %in% c("base::list", "dequer::stack", "collections::Stack")) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
@@ -288,8 +290,8 @@ bench::press(
                 q$popleft()
             }
         },
-        `collections::deque` = {
-            q <- collections::deque()
+        `collections::Deque` = {
+            q <- collections::Deque()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:floor(n / 2)) {
@@ -299,7 +301,8 @@ bench::press(
         },
         check = FALSE
     )) %>%
-    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE)) %>%
+    mutate(expression = fct_reorder(
+            as.character(expression), median, .fun = mean, .desc = TRUE)) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
@@ -329,8 +332,8 @@ bench::press(
             for (i in 1:n) insert(q, p[i], x[i])
             for (i in 1:n) pop(q)
         },
-        `collections::priority_queue` = {
-            q <- collections::priority_queue()
+        `collections::PriorityQueue` = {
+            q <- collections::PriorityQueue()
             x <- rnorm(n)
             p <- sample.int(n, n, replace = TRUE)
             for (i in 1:n) q$push(x[i], p[i])
@@ -338,7 +341,8 @@ bench::press(
         },
         check = FALSE
     )) %>%
-    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE)) %>%
+    mutate(expression = fct_reorder(
+            as.character(expression), median, .fun = mean, .desc = TRUE)) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
@@ -388,8 +392,8 @@ bench_dict <- bench::press(
             for (i in 1:n) h[[k[i]]] <- x[i]
             for (i in sample(1:n)) get0(k[i], envir = x, inherits = FALSE)
         },
-        `collections::dict` = {
-            h <- collections::dict()
+        `collections::Dict` = {
+            h <- collections::Dict()
             x <- rnorm(n)
             k <- as.character(seq_len(n))
             for (i in 1:n) h$set(k[i], x[i])
@@ -397,7 +401,8 @@ bench_dict <- bench::press(
         },
         check = FALSE
     )) %>%
-    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE))
+    mutate(expression = fct_reorder(
+            as.character(expression), median, .fun = mean, .desc = TRUE))
 ```
 
 ```{r, echo = FALSE}
@@ -408,7 +413,7 @@ bench_dict %>%
     ggtitle("push and pop n times") + ylab("time")
 bench_dict %>%
     filter(expression %in% c(
-        "hash::hash", "fastmap::fastmap", "collections::dict", "base::new.env")) %>%
+        "hash::hash", "fastmap::fastmap", "collections::Dict", "base::new.env")) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
@@ -417,9 +422,6 @@ bench_dict %>%
 
 
 ## Ordered Dict
-
-It is not a fair benchmark as OrderedDict is built on top of Dict. We just want to investigate the extra over head in OrderedDict.
-
 
 ```{r ordered_dict, echo = FALSE, cache = TRUE}
 bench::press(
@@ -432,15 +434,8 @@ bench::press(
             for (i in 1:n) h[[k[i]]] <- x[i]
             for (i in sample(1:n)) h[[k[i]]]
         },
-        `collections::dict` = {
-            h <- collections::dict()
-            x <- rnorm(n)
-            k <- as.character(seq_len(n))
-            for (i in 1:n) h$set(k[i], x[i])
-            for (i in sample(1:n)) h$get(k[i])
-        },
-        `collections::ordered_dict` = {
-            h <- collections::ordered_dict()
+        `collections::OrderedDict` = {
+            h <- collections::OrderedDict()
             x <- rnorm(n)
             k <- as.character(seq_len(n))
             for (i in 1:n) h$set(k[i], x[i])
@@ -448,7 +443,8 @@ bench::press(
         },
         check = FALSE
     )) %>%
-    mutate(expression = fct_reorder(as.character(expression), median, .desc = TRUE)) %>%
+    mutate(expression = fct_reorder(
+            as.character(expression), median, .fun = mean, .desc = TRUE)) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +

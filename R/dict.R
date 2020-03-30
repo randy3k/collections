@@ -1,7 +1,6 @@
 #' @title Dictionary
 #' @description
-#' `dict` creates a directory (a.k.a hash map).
-#' `Dict` is deprecated and will be removed from future releases.
+#' `Dict` creates an ordinary (unordered) dictionary (a.k.a. hash).
 #' @param items a list of items
 #' @param keys a list of keys, use \code{names(items)} if \code{NULL}
 #' @details
@@ -23,28 +22,19 @@
 #' * `key`: scalar character, environment or function
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
-#' * `d`: a dictionary
 #' @examples
-#' d <- dict(list(apple = 5, orange = 10))
+#' d <- Dict(list(apple = 5, orange = 10))
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # unordered
 #' d$pop("orange")
 #' d$as_list()  # "orange" is removed
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
-#' @seealso [ordered_dict]
+#' @seealso [OrderedDict]
 #' @importFrom xptr null_xptr
 #' @export
-dict <- function(items = NULL, keys = NULL) {
-    ret <- create_dict()
-    ret$initialize(items, keys)
-    ret
-}
-
-
-create_dict <- function() {
+Dict <- function(items = NULL, keys = NULL) {
     self <- environment()
-    ret <- list()
 
     INITIAL_SIZE <- 16L
     GROW_FACTOR <- 1.5
@@ -57,6 +47,8 @@ create_dict <- function() {
     vs <- NULL
     ks <- NULL
     ht_xptr <- NULL
+    # we will define the keys function
+    keys0 <- keys
 
     initialize <- function(items, keys) {
         clear()
@@ -81,14 +73,14 @@ create_dict <- function() {
     }
     set <- function(key, value) {
         .Call(C_dict_set, self, ht_xptr, key, value)
-        invisible(ret)
+        invisible(self)
     }
     get <- function(key, default) {
-        .Call(C_dict_get, self, ht_xptr, key, if (missing(default)) missing_arg() else default)
+        .Call(C_dict_get, self, ht_xptr, key, missing_arg(default))
     }
     remove <- function(key) {
         .Call(C_dict_remove, self, ht_xptr, key)
-        invisible(ret)
+        invisible(self)
     }
     pop <- function(key, default) {
         v <- get(key, default)
@@ -108,7 +100,7 @@ create_dict <- function() {
         for (key in d$keys()) {
             set(key, d$get(key))
         }
-        invisible(ret)
+        invisible(self)
     }
     clear <- function() {
         n <<- 0L
@@ -119,7 +111,7 @@ create_dict <- function() {
         ht_xptr <<- null_xptr()
         holes$clear()
         nholes <<- 0L
-        invisible(ret)
+        invisible(self)
     }
     size <- function() n
     as_list <- function() {
@@ -132,19 +124,8 @@ create_dict <- function() {
         cat("Dict object with", n, "item(s)\n")
     }
 
-    ret$self <- self
-    ret$initialize <- initialize
-    ret$set <- set
-    ret$get <- get
-    ret$remove <- remove
-    ret$pop <- pop
-    ret$has <- has
-    ret$keys <- keys
-    ret$values <- values
-    ret$update <- update
-    ret$clear <- clear
-    ret$size <- size
-    ret$as_list <- as_list
-    ret$print <- print
-    ret
+    initialize(items, keys0)
+    items <- NULL
+    keys0 <- NULL
+    self
 }

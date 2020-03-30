@@ -3,4 +3,4 @@
 "_PACKAGE"
 
 # helper to identify if default is missing
-missing_arg <- function() .Call(C_missing_arg)
+missing_arg <- function(default) if (missing(default)) .Call(C_missing_arg) else default

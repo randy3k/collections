@@ -1,6 +1,6 @@
 #' @title Stack
 #' @description
-#' `stack` creates a stack. `Stack` is deprecated and will be removed from future releases.
+#' `Stack` creates a stack.
 #' @param items a list of items
 #' @details
 #' Following methods are exposed:
@@ -15,26 +15,18 @@
 #' }
 #' * `item`: any R object
 #' @examples
-#' s <- stack()
+#' s <- Stack()
 #' s$push("first")
 #' s$push("second")
 #' s$pop()  # second
 #' s$pop()  # first
 #'
-#' s <- stack(list("foo", "bar"))
+#' s <- Stack(list("foo", "bar"))
 #' s$push("baz")$push("bla")
-#' @seealso [queue] and [deque]
+#' @seealso [Queue] and [Deque]
 #' @export
-stack <- function(items = NULL) {
-    ret <- create_stack()
-    ret$initialize(items)
-    ret
-}
-
-
-create_stack <- function() {
+Stack <- function(items = NULL) {
     self <- environment()
-    ret <- new.env()
     q <- NULL
 
     initialize <- function(items = NULL) {
@@ -45,7 +37,7 @@ create_stack <- function() {
     }
     push <- function(item) {
         .Call(C_stack_push, self, item)
-        invisible(ret)
+        invisible(self)
     }
     pop <- function() {
         .Call(C_stack_pop, self)
@@ -56,7 +48,7 @@ create_stack <- function() {
     }
     clear <- function() {
         q <<- NULL
-        invisible(ret)
+        invisible(self)
     }
     size <- function() length(q)
     as_list <- function() as.list(q)
@@ -65,13 +57,7 @@ create_stack <- function() {
         cat("Stack object with", n, "item(s)\n")
     }
 
-    ret$initialize <- initialize
-    ret$push <- push
-    ret$pop <- pop
-    ret$peek <- peek
-    ret$clear <- clear
-    ret$size <- size
-    ret$as_list <- as_list
-    ret$print <- print
-    ret
+    initialize(items)
+    items <- NULL
+    self
 }

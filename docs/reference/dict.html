@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dictionary — dict • collections</title>
+<title>Dictionary — Dict • collections</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,8 @@
 
 
 
-<meta property="og:title" content="Dictionary — dict" />
-<meta property="og:description" content="dict creates a directory (a.k.a hash map).
-Dict is deprecated and will be removed from future releases." />
+<meta property="og:title" content="Dictionary — Dict" />
+<meta property="og:description" content="Dict creates an ordinary (unordered) dictionary (a.k.a. hash)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,17 +114,14 @@ Dict is deprecated and will be removed from future releases." />
     <div class="page-header">
     <h1>Dictionary</h1>
     
-    <div class="hidden name"><code>dict.Rd</code></div>
+    <div class="hidden name"><code>Dict.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>dict</code> creates a directory (a.k.a hash map).
-<code>Dict</code> is deprecated and will be removed from future releases.</p>
+    <p><code>Dict</code> creates an ordinary (unordered) dictionary (a.k.a. hash).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dict</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keys</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>Dict</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keys</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>Dict</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keys</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,15 +156,14 @@ Dict is deprecated and will be removed from future releases." />
 <li><p><code>key</code>: scalar character, environment or function</p></li>
 <li><p><code>value</code>: any R object, value of the item</p></li>
 <li><p><code>default</code>: optional, the default value of an item if the key is not found</p></li>
-<li><p><code>d</code>: a dictionary</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='ordered_dict.html'>ordered_dict</a></p></div>
+    <div class='dont-index'><p><a href='OrderedDict.html'>OrderedDict</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>dict</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>apple</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>orange</span> <span class='kw'>=</span> <span class='fl'>10</span>))
+    <pre class="examples"><div class='input'><span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>Dict</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>apple</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>orange</span> <span class='kw'>=</span> <span class='fl'>10</span>))
 <span class='no'>d</span>$<span class='fu'>set</span>(<span class='st'>"banana"</span>, <span class='fl'>3</span>)
 <span class='no'>d</span>$<span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"apple"</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='no'>d</span>$<span class='fu'>as_list</span>()  <span class='co'># unordered</span></div><div class='output co'>#&gt; $apple
 #&gt; [1] 5

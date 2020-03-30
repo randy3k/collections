@@ -1,7 +1,6 @@
 #' @title Double Ended Queue
 #' @description
-#' `deque` creates a double ended queue.
-#' `Deque` is deprecated and will be removed from future releases.
+#' `Deque` creates a double ended queue.
 #' @param items a list of items
 #' @details
 #' Following methods are exposed:
@@ -21,29 +20,21 @@
 #' .$print()
 #' }
 #' * `item`: any R object
-#' * `q`: a deque
+#' * `q`: a Deque object
 #' @examples
-#' q <- deque()
+#' q <- Deque()
 #' q$push("foo")
 #' q$push("bar")
 #' q$pushleft("baz")
 #' q$pop()  # bar
 #' q$popleft()  # baz
 #'
-#' q <- deque(list("foo", "bar"))
+#' q <- Deque(list("foo", "bar"))
 #' q$push("baz")$pushleft("bla")
-#' @seealso [queue] and [stack]
+#' @seealso [Queue] and [Stack]
 #' @export
-deque <- function(items = NULL) {
-    ret <- create_deque()
-    ret$initialize(items)
-    ret
-}
-
-
-create_deque <- function() {
+Deque <- function(items = NULL) {
     self <- environment()
-    ret <- new.env()
     q <- NULL
     last <- NULL
 
@@ -55,11 +46,11 @@ create_deque <- function() {
     }
     push <- function(item) {
         .Call(C_deque_push, self, item)
-        invisible(ret)
+        invisible(self)
     }
     pushleft <- function(item) {
         .Call(C_deque_pushleft, self, item)
-        invisible(ret)
+        invisible(self)
     }
     pop <- function() {
         .Call(C_deque_pop, self)
@@ -76,31 +67,31 @@ create_deque <- function() {
         .Call(C_pairlist_car, q)[[2]]
     }
     extend <- function(deque) {
-        q <- deque$self$q
+        q <- deque$q
         while (!is.null(q)) {
             v <- .Call(C_pairlist_car, q)
             push(v[[2]])
             q <- .Call(C_pairlist_cdr, q)
         }
-        invisible(ret)
+        invisible(self)
     }
     extendleft <- function(deque) {
-        q <- deque$self$q
+        q <- deque$q
         while (!is.null(q)) {
             v <- .Call(C_pairlist_car, q)
             pushleft(v[[2]])
             q <- .Call(C_pairlist_cdr, q)
         }
-        invisible(ret)
+        invisible(self)
     }
     clear <- function() {
         q <<- NULL
         last <<- NULL
-        invisible(ret)
+        invisible(self)
     }
     remove <- function(item) {
         .Call(C_deque_remove, self, item)
-        invisible(ret)
+        invisible(self)
     }
     size <- function() length(q)
     as_list <- function() {
@@ -118,20 +109,7 @@ create_deque <- function() {
         cat("Deque object with", n, "item(s)\n")
     }
 
-    ret$self <- self
-    ret$initialize <- initialize
-    ret$push <- push
-    ret$pushleft <- pushleft
-    ret$pop <- pop
-    ret$popleft <- popleft
-    ret$peek <- peek
-    ret$peekleft <- peekleft
-    ret$extend <- extend
-    ret$extendleft <- extendleft
-    ret$clear <- clear
-    ret$remove <- remove
-    ret$size <- size
-    ret$as_list <- as_list
-    ret$print <- print
-    ret
+    initialize(items)
+    items <- NULL
+    self
 }
