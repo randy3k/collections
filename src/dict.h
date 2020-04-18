@@ -1,5 +1,5 @@
-#ifndef _DICT_H_
-#define _DICT_H_ 1
+#ifndef _dict_H_
+#define _dict_H_ 1
 
 #include <R.h>
 #include <Rinternals.h>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Queue — Queue • collections</title>
+<title>Queue — queue • collections</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Queue — Queue" />
-<meta property="og:description" content="Queue creates a queue." />
+<meta property="og:title" content="Queue — queue" />
+<meta property="og:description" content="queue creates a queue." />
 
 
 
@@ -121,15 +121,17 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Queue</h1>
-    <small class="dont-index">Source: <a href='https://github.com/randy3k/collections/blob/master/R/queue.R'><code>R/queue.R</code></a></small>
-    <div class="hidden name"><code>Queue.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/randy3k/collections/blob/master/R/queue.R'><code>R/queue.R</code></a>, <a href='https://github.com/randy3k/collections/blob/master/R/zzz.R'><code>R/zzz.R</code></a></small>
+    <div class="hidden name"><code>queue.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>Queue</code> creates a queue.</p>
+    <p><code>queue</code> creates a queue.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Queue</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>queue</span>(<span class='kw'>items</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>Queue</span>(<span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,6 +139,10 @@
     <tr>
       <th>items</th>
       <td><p>a list of items</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>anything</p></td>
     </tr>
     </table>
 
@@ -154,16 +160,22 @@
 <li><p><code>item</code>: any R object</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    
+<ul>
+<li><p><code>Queue</code>: Deprecated soon</p></li>
+</ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='Stack.html'>Stack</a> and <a href='Deque.html'>Deque</a></p></div>
+    <div class='dont-index'><p><a href='stack.html'>stack</a> and <a href='deque.html'>deque</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>Queue</span>()
+    <pre class="examples"><div class='input'><span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>queue</span>()
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"first"</span>)
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"second"</span>)
 <span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># first</span></div><div class='output co'>#&gt; [1] "first"</div><div class='input'><span class='no'>q</span>$<span class='fu'>pop</span>()  <span class='co'># second</span></div><div class='output co'>#&gt; [1] "second"</div><div class='input'>
-<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>Queue</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
+<span class='no'>q</span> <span class='kw'>&lt;-</span> <span class='fu'>queue</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>))
 <span class='no'>q</span>$<span class='fu'>push</span>(<span class='st'>"baz"</span>)$<span class='fu'>push</span>(<span class='st'>"bla"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

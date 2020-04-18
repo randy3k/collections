@@ -1,6 +1,6 @@
 #' @title Double Ended Queue
 #' @description
-#' `Deque` creates a double ended queue.
+#' `deque` creates a double ended queue.
 #' @param items a list of items
 #' @details
 #' Following methods are exposed:
@@ -20,20 +20,20 @@
 #' .$print()
 #' }
 #' * `item`: any R object
-#' * `q`: a Deque object
+#' * `q`: a deque object
 #' @examples
-#' q <- Deque()
+#' q <- deque()
 #' q$push("foo")
 #' q$push("bar")
 #' q$pushleft("baz")
 #' q$pop()  # bar
 #' q$popleft()  # baz
 #'
-#' q <- Deque(list("foo", "bar"))
+#' q <- deque(list("foo", "bar"))
 #' q$push("baz")$pushleft("bla")
-#' @seealso [Queue] and [Stack]
+#' @seealso [queue] and [stack]
 #' @export
-Deque <- function(items = NULL) {
+deque <- function(items = NULL) {
     self <- environment()
     q <- NULL
     last <- NULL
@@ -106,7 +106,7 @@ Deque <- function(items = NULL) {
     }
     print <- function() {
         n <- size()
-        cat("Deque object with", n, "item(s)\n")
+        cat("deque object with", n, "item(s)\n")
     }
 
     initialize(items)

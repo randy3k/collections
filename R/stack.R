@@ -1,6 +1,6 @@
 #' @title Stack
 #' @description
-#' `Stack` creates a stack.
+#' `stack` creates a stack.
 #' @param items a list of items
 #' @details
 #' Following methods are exposed:
@@ -15,17 +15,17 @@
 #' }
 #' * `item`: any R object
 #' @examples
-#' s <- Stack()
+#' s <- stack()
 #' s$push("first")
 #' s$push("second")
 #' s$pop()  # second
 #' s$pop()  # first
 #'
-#' s <- Stack(list("foo", "bar"))
+#' s <- stack(list("foo", "bar"))
 #' s$push("baz")$push("bla")
-#' @seealso [Queue] and [Deque]
+#' @seealso [queue] and [deque]
 #' @export
-Stack <- function(items = NULL) {
+stack <- function(items = NULL) {
     self <- environment()
     q <- NULL
 
@@ -54,7 +54,7 @@ Stack <- function(items = NULL) {
     as_list <- function() as.list(q)
     print <- function() {
         n <- size()
-        cat("Stack object with", n, "item(s)\n")
+        cat("stack object with", n, "item(s)\n")
     }
 
     initialize(items)

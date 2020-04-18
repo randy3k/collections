@@ -7,7 +7,7 @@
 \title{collections: High Performance Container Data Types}
 \description{
 Provides high performance container data types such
-    as Queue, Stack, Deque, Dict and OrderedDict. Benchmarks
+    as Queue, Stack, deque, dict and Ordereddict. Benchmarks
     <https://randy3k.github.io/collections/articles/benchmark.html> have
     shown that these containers are asymptotically more efficient than
     those offered by other packages.

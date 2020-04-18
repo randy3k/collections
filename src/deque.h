@@ -1,5 +1,5 @@
-#ifndef _DEQUE_H_
-#define _DEQUE_H_ 1
+#ifndef _deque_H_
+#define _deque_H_ 1
 
 #include <R.h>
 #include <Rinternals.h>

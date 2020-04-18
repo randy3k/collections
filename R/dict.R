@@ -1,6 +1,6 @@
 #' @title Dictionary
 #' @description
-#' `Dict` creates an ordinary (unordered) dictionary (a.k.a. hash).
+#' `dict` creates an ordinary (unordered) dictionary (a.k.a. hash).
 #' @param items a list of items
 #' @param keys a list of keys, use \code{names(items)} if \code{NULL}
 #' @details
@@ -22,22 +22,23 @@
 #' * `key`: scalar character, environment or function
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
+#' * `d`: a dict object
 #' @examples
-#' d <- Dict(list(apple = 5, orange = 10))
+#' d <- dict(list(apple = 5, orange = 10))
 #' d$set("banana", 3)
 #' d$get("apple")
 #' d$as_list()  # unordered
 #' d$pop("orange")
 #' d$as_list()  # "orange" is removed
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
-#' @seealso [OrderedDict]
+#' @seealso [ordered_dict]
 #' @export
-Dict <- function(items = NULL, keys = NULL) {
+dict <- function(items = NULL, keys = NULL) {
     self <- environment()
 
     n <- NULL
     m <- NULL
-    holes <- Stack()
+    holes <- stack()
     nholes <- NULL
     vs <- NULL
     ks <- NULL
@@ -109,7 +110,7 @@ Dict <- function(items = NULL, keys = NULL) {
     }
     print <- function() {
         n <- size()
-        cat("Dict object with", n, "item(s)\n")
+        cat("dict object with", n, "item(s)\n")
     }
 
     initialize(items, keys0)

@@ -27,7 +27,7 @@ The goal of this document is to compare the performances of some of the existing
     `r packageDescription("hashmap")$Version` provides
     hashmap for atomic vectors using boost library.
 - [fastmap](https://CRAN.R-project.org/package=fastmap)
-    `r packageDescription("fastmap")$Version`. The current implementation of collection::Dict
+    `r packageDescription("fastmap")$Version`. The current implementation of collection::dict
     is actually inspired by it. However, a more
     efficient hash table library [tommy](https://github.com/amadvance/tommyds/)
     is used.
@@ -45,7 +45,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ## Queue
 
 ```{r, echo = FALSE}
-Queue <- function() {
+queue <- function() {
     self <- environment()
     q <- NULL
     n <- NULL
@@ -106,13 +106,13 @@ bench_queue <- bench::press(
             for (i in 1:n) q$pop()
         },
         `base::list` = {
-            q <- Queue()
+            q <- queue()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
         `collections::Queue` = {
-            q <- collections::Queue()
+            q <- collections::queue()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
@@ -140,7 +140,7 @@ bench_queue %>%
 ## Stack
 
 ```{r, echo = FALSE}
-Stack <- function() {
+stack <- function() {
     self <- environment()
     q <- NULL
     n <- NULL
@@ -198,13 +198,13 @@ bench_stack <- bench::press(
             for (i in 1:n) q$pop()
         },
         `base::list` = {
-            q <- Stack()
+            q <- stack()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
-        `collections::Stack` = {
-            q <- collections::Stack()
+        `collections::stack` = {
+            q <- collections::stack()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
@@ -230,10 +230,10 @@ bench_stack %>%
 ```
 
 
-## Deque
+## deque
 
 ```{r, echo = FALSE}
-Deque <- function() {
+deque <- function() {
     self <- environment()
     q <- NULL
     n <- NULL
@@ -293,7 +293,7 @@ bench::press(
             }
         },
         `base::list` = {
-            q <- Deque()
+            q <- deque()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:floor(n / 2)) {
@@ -301,8 +301,8 @@ bench::press(
                 q$popleft()
             }
         },
-        `collections::Deque` = {
-            q <- collections::Deque()
+        `collections::deque` = {
+            q <- collections::deque()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
             for (i in 1:floor(n / 2)) {
@@ -343,8 +343,8 @@ bench::press(
             for (i in 1:n) insert(q, p[i], x[i])
             for (i in 1:n) pop(q)
         },
-        `collections::PriorityQueue` = {
-            q <- collections::PriorityQueue()
+        `collections::priority_queue` = {
+            q <- collections::priority_queue()
             x <- rnorm(n)
             p <- sample.int(n, n, replace = TRUE)
             for (i in 1:n) q$push(x[i], p[i])
@@ -361,7 +361,7 @@ bench::press(
 ```
 
 
-## Dict / hashmap
+## dict / hashmap
 
 ```{r dict, echo = FALSE, cache = TRUE}
 bench_dict <- bench::press(
@@ -403,8 +403,8 @@ bench_dict <- bench::press(
             for (i in 1:n) h[[k[i]]] <- x[i]
             for (i in sample(1:n)) get0(k[i], envir = x, inherits = FALSE)
         },
-        `collections::Dict` = {
-            h <- collections::Dict()
+        `collections::dict` = {
+            h <- collections::dict()
             x <- rnorm(n)
             k <- as.character(seq_len(n))
             for (i in 1:n) h$set(k[i], x[i])
@@ -424,7 +424,7 @@ bench_dict %>%
     ggtitle("push and pop n times") + ylab("time")
 bench_dict %>%
     filter(expression %in% c(
-        "hash::hash", "fastmap::fastmap", "collections::Dict", "base::new.env")) %>%
+        "hash::hash", "fastmap::fastmap", "collections::dict", "base::new.env")) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
@@ -432,7 +432,7 @@ bench_dict %>%
 ```
 
 
-## Ordered Dict
+## Ordered dict
 
 ```{r ordered_dict, echo = FALSE, cache = TRUE}
 bench::press(
@@ -445,8 +445,8 @@ bench::press(
             for (i in 1:n) h[[k[i]]] <- x[i]
             for (i in sample(1:n)) h[[k[i]]]
         },
-        `collections::OrderedDict` = {
-            h <- collections::OrderedDict()
+        `collections::ordered_dict` = {
+            h <- collections::ordered_dict()
             x <- rnorm(n)
             k <- as.character(seq_len(n))
             for (i in 1:n) h$set(k[i], x[i])

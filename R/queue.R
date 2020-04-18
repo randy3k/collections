@@ -3,7 +3,7 @@
 
 #' @title Queue
 #' @description
-#' `Queue` creates a queue.
+#' `queue` creates a queue.
 #' @param items a list of items
 #' @details
 #' Following methods are exposed:
@@ -18,17 +18,17 @@
 #' }
 #' * `item`: any R object
 #' @examples
-#' q <- Queue()
+#' q <- queue()
 #' q$push("first")
 #' q$push("second")
 #' q$pop()  # first
 #' q$pop()  # second
 #'
-#' q <- Queue(list("foo", "bar"))
+#' q <- queue(list("foo", "bar"))
 #' q$push("baz")$push("bla")
-#' @seealso [Stack] and [Deque]
+#' @seealso [stack] and [deque]
 #' @export
-Queue <- function(items = NULL) {
+queue <- function(items = NULL) {
     self <- environment()
     q <- NULL
     last <- NULL
@@ -58,7 +58,7 @@ Queue <- function(items = NULL) {
     as_list <- function() as.list(q)
     print <- function() {
         n <- size()
-        cat("Queue object with", n, "item(s)\n")
+        cat("queue object with", n, "item(s)\n")
     }
 
     initialize(items)
