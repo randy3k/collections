@@ -21,8 +21,6 @@ License: MIT + file LICENSE
 URL: URL: https://github.com/randy3k/collections
 Depends:
     R (>= 3.4.0)
-Imports:
-    xptr (>= 1.1.2)
 Suggests: 
     covr (>= 3.4.0),
     testthat (>= 2.3.1)

@@ -31,14 +31,9 @@
 #' d$as_list()  # "orange" is removed
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
 #' @seealso [OrderedDict]
-#' @importFrom xptr null_xptr
 #' @export
 Dict <- function(items = NULL, keys = NULL) {
     self <- environment()
-
-    INITIAL_SIZE <- 16L
-    GROW_FACTOR <- 1.5
-    SHRINK_FACTOR <- 0.15
 
     n <- NULL
     m <- NULL
@@ -103,14 +98,7 @@ Dict <- function(items = NULL, keys = NULL) {
         invisible(self)
     }
     clear <- function() {
-        n <<- 0L
-        m <<- INITIAL_SIZE
-        vs <<- vector("list", INITIAL_SIZE)
-        ks <<- vector("list", INITIAL_SIZE)
-        # new("externalptr") doesn't work because it returns a static pointer
-        ht_xptr <<- null_xptr()
-        holes$clear()
-        nholes <<- 0L
+        .Call(C_dict_clear, self)
         invisible(self)
     }
     size <- function() n

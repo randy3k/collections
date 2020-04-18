@@ -29,6 +29,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"dict_has", (DL_FUNC) &dict_has, 2},
     {"dict_keys", (DL_FUNC) &dict_keys, 1},
     {"dict_values", (DL_FUNC) &dict_values, 1},
+    {"dict_clear", (DL_FUNC) &dict_clear, 1},
     {"heapify", (DL_FUNC) &heapify, 1},
     {"heap_push", (DL_FUNC) &heap_push, 3},
     {"heap_pop", (DL_FUNC) &heap_pop, 1},

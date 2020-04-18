@@ -18,4 +18,6 @@ SEXP dict_keys(SEXP self);
 
 SEXP dict_values(SEXP self);
 
+SEXP dict_clear(SEXP self);
+
 #endif

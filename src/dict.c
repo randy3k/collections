@@ -346,3 +346,19 @@ SEXP dict_values(SEXP self) {
     UNPROTECT(3);
     return values;
 }
+
+
+SEXP dict_clear(SEXP self) {
+    set_int_value(self, "n", 0);
+    set_int_value(self, "m", INITIAL_SIZE);
+    SEXP vs = PROTECT(Rf_allocVector(VECSXP, INITIAL_SIZE));
+    SEXP ks = PROTECT(Rf_allocVector(VECSXP, INITIAL_SIZE));
+    set_sexp_value(self, "vs", vs);
+    set_sexp_value(self, "ks", ks);
+    SEXP xptr = PROTECT(R_MakeExternalPtr(NULL, R_NilValue, R_NilValue));
+    set_sexp_value(self, "ht_xptr", xptr);
+    holes_clear(self);
+    set_int_value(self, "nholes", 0);
+    UNPROTECT(3);
+    return R_NilValue;
+}
