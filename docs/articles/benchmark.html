@@ -92,17 +92,18 @@
 <p>The goal of this document is to compare the performances of some of the existing packages.</p>
 <ul>
 <li>
-<a href="https://CRAN.R-project.org/package=dequer">dequer</a> 2.0-1</li>
+<a href="https://CRAN.R-project.org/package=dequer">dequer</a> 2.0-1implements double ended queues and it supports arbitrary R objects. However, it uses <code>R_PreserveObject</code> and <code>R_ReleaseObject</code> heavily which could be an issue for long queues.<br>
+</li>
 <li>
-<a href="https://CRAN.R-project.org/package=datastructures">datastructures</a> 0.2.8</li>
+<a href="https://CRAN.R-project.org/package=datastructures">datastructures</a> 0.2.8 uses ‘Boost’ and ‘STL’ data types to implement queues and hashmaps. For some reasons, it is often slow as shown in the benchmark.</li>
 <li>
-<a href="https://CRAN.R-project.org/package=liqueueR">liqueueR</a> 0.0.1</li>
+<a href="https://CRAN.R-project.org/package=liqueueR">liqueueR</a> 0.0.1 implements queues in pure R code which explains its slowness.</li>
 <li>
-<a href="https://CRAN.R-project.org/package=hash">hash</a> 2.2.6.1</li>
+<a href="https://CRAN.R-project.org/package=hash">hash</a> 2.2.6.1 uses R environments to create hash tables. It is <a href="https://r-lib.github.io/fastmap/#memory-leak-examples">known</a> that regular R enviroments leak memory.</li>
 <li>
-<a href="https://CRAN.R-project.org/package=hashmap">hashmap</a> 0.2.2</li>
+<a href="https://CRAN.R-project.org/package=hashmap">hashmap</a> 0.2.2 provides hashmap for atomic vectors using boost library.</li>
 <li>
-<a href="https://CRAN.R-project.org/package=fastmap">fastmap</a> 1.0.1</li>
+<a href="https://CRAN.R-project.org/package=fastmap">fastmap</a> 1.0.1. The current implementation of collection::Dict is actually inspired by it. However, a more efficient hash table library <a href="https://github.com/amadvance/tommyds/">tommy</a> is used.</li>
 <li>We also compare to serveral base R implementations based on lists or environments, see <a href="https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd">here</a> for details.</li>
 </ul>
 <div id="queue" class="section level2">

@@ -18,30 +18,17 @@ Deque, Dict and OrderedDict. Benchmarks
 shown that these containers are asymptotically more efficient than those
 offered by other packages.
 
-## Related R packages
+## Installation
 
-[dequer](https://CRAN.R-project.org/package=dequer) implements double
-ended queues and it supports arbitrary R objects. However, it uses
-`R_PreserveObject` and `R_ReleaseObject` heavily which could be an issue
-for long queues.
+You can install the released version of collections from
+[CRAN](https://CRAN.R-project.org) with:
 
-[datastructures](https://CRAN.R-project.org/package=datastructures) uses
-‘Boost’ and ‘STL’ data types to implement queues and hashmaps. For some
-reasons, it is often slow as shown in the benchmark.
+``` r
+install.packages("collections")
+```
 
-[liqueueR](https://CRAN.R-project.org/package=liqueueR) implements
-queues in pure R code.
+Install the latest development version using
 
-[hash](https://CRAN.R-project.org/package=hash) uses R environment to
-create hash tables. As indicated by the author of
-[fastmap](https://CRAN.R-project.org/package=fastmap), a small amount of
-memory may be leaked.
-
-[hashmap](https://CRAN.R-project.org/package=hashmap) provides hashmap
-for atomic vectors using boost library.
-
-[fastmap](https://CRAN.R-project.org/package=fastmap) provides hashmap
-which does not leak memory. The current implementation of
-collection::Dict is actually inspired by it. However, a more efficient
-hash table library [tommy](https://github.com/amadvance/tommyds/) is
-used.
+``` r
+devtools::install_github("randy3k/collections")
+```

@@ -9,18 +9,28 @@ vignette: >
 
 The goal of this document is to compare the performances of some of the existing packages.
 
-- [dequer](https://CRAN.R-project.org/package=dequer)
-    `r packageDescription("dequer")$Version`
+- [dequer](https://CRAN.R-project.org/package=dequer) `r packageDescription("dequer")$Version`implements double
+    ended queues and it supports arbitrary R objects. However, it uses
+    `R_PreserveObject` and `R_ReleaseObject` heavily which could be an issue
+    for long queues.    
 - [datastructures](https://CRAN.R-project.org/package=datastructures )
-    `r packageDescription("datastructures")$Version`
+    `r packageDescription("datastructures")$Version` uses
+    ‘Boost’ and ‘STL’ data types to implement queues and hashmaps. For some
+    reasons, it is often slow as shown in the benchmark.
 - [liqueueR](https://CRAN.R-project.org/package=liqueueR)
-    `r packageDescription("liqueueR")$Version`
+    `r packageDescription("liqueueR")$Version` implements
+    queues in pure R code which explains its slowness.
 - [hash](https://CRAN.R-project.org/package=hash)
-    `r packageDescription("hash")$Version`
+    `r packageDescription("hash")$Version` uses R environments to 
+    create hash tables. It is [known](https://r-lib.github.io/fastmap/#memory-leak-examples) that regular R enviroments leak memory.
 - [hashmap](https://CRAN.R-project.org/package=hashmap)
-    `r packageDescription("hashmap")$Version`
+    `r packageDescription("hashmap")$Version` provides
+    hashmap for atomic vectors using boost library.
 - [fastmap](https://CRAN.R-project.org/package=fastmap)
-    `r packageDescription("fastmap")$Version`
+    `r packageDescription("fastmap")$Version`. The current implementation of collection::Dict
+    is actually inspired by it. However, a more
+    efficient hash table library [tommy](https://github.com/amadvance/tommyds/)
+    is used.
 - We also compare to serveral base R implementations based on lists or environments, see [here](https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd) for details.
 
 
@@ -30,6 +40,7 @@ library(tidyverse)
 options(digits = 3)
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
+
 
 ## Queue
 

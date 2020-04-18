@@ -88,15 +88,13 @@
 
 <p>Documentation: <a href="https://randy3k.github.io/collections">http://randy3k.github.io/collections</a></p>
 <p>Provides high performance container data types such as Queue, Stack, Deque, Dict and OrderedDict. Benchmarks <a href="https://randy3k.github.io/collections/articles/benchmark.html" class="uri">https://randy3k.github.io/collections/articles/benchmark.html</a> have shown that these containers are asymptotically more efficient than those offered by other packages.</p>
-<div id="related-r-packages" class="section level2">
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#related-r-packages" class="anchor"></a>Related R packages</h2>
-<p><a href="https://CRAN.R-project.org/package=dequer">dequer</a> implements double ended queues and it supports arbitrary R objects. However, it uses <code>R_PreserveObject</code> and <code>R_ReleaseObject</code> heavily which could be an issue for long queues.</p>
-<p><a href="https://CRAN.R-project.org/package=datastructures">datastructures</a> uses âBoostâ and âSTLâ data types to implement queues and hashmaps. For some reasons, it is often slow as shown in the benchmark.</p>
-<p><a href="https://CRAN.R-project.org/package=liqueueR">liqueueR</a> implements queues in pure R code.</p>
-<p><a href="https://CRAN.R-project.org/package=hash">hash</a> uses R environment to create hash tables. As indicated by the author of <a href="https://CRAN.R-project.org/package=fastmap">fastmap</a>, a small amount of memory may be leaked.</p>
-<p><a href="https://CRAN.R-project.org/package=hashmap">hashmap</a> provides hashmap for atomic vectors using boost library.</p>
-<p><a href="https://CRAN.R-project.org/package=fastmap">fastmap</a> provides hashmap which does not leak memory. The current implementation of collection::Dict is actually inspired by it. However, a more efficient hash table library <a href="https://github.com/amadvance/tommyds/">tommy</a> is used.</p>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>You can install the released version of collections from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"collections"</span>)</pre></div>
+<p>Install the latest development version using</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"randy3k/collections"</span>)</pre></div>
 </div>
 </div>
   </div>

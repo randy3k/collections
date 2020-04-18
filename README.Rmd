@@ -5,13 +5,13 @@ output:
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
 ```{r results='asis', echo = FALSE, eval = TRUE}
-d <- packageDescription("collections")
+d <- read.dcf("DESCRIPTION")
 ```
 
 ```{r results="asis", echo = FALSE, eval = TRUE}
-cat(c("# ", paste(trimws(strsplit(d$Title, "\n")[[1]]), collapse = " ")))
+title <- d[colnames(d) == "Title"]
+cat(c("# ", paste(trimws(strsplit(title, "\n")[[1]]), collapse = " ")))
 ```
 
 [![Github Action](https://github.com/randy3k/collections/workflows/build/badge.svg?branch=master)](https://github.com/randy3k/collections)
@@ -22,33 +22,20 @@ cat(c("# ", paste(trimws(strsplit(d$Title, "\n")[[1]]), collapse = " ")))
 Documentation: [http://randy3k.github.io/collections](https://randy3k.github.io/collections)
 
 ```{r results="asis", echo = FALSE, eval = TRUE}
-cat(d$Description)
+cat(d[colnames(d) == "Description"])
 ```
 
-## Related R packages
 
-[dequer](https://CRAN.R-project.org/package=dequer) implements double
-ended queues and it supports arbitrary R objects. However, it uses
-`R_PreserveObject` and `R_ReleaseObject` heavily which could be an issue
-for long queues.
+## Installation
 
-[datastructures](https://CRAN.R-project.org/package=datastructures) uses
-‘Boost’ and ‘STL’ data types to implement queues and hashmaps. For some
-reasons, it is often slow as shown in the benchmark.
+You can install the released version of collections from [CRAN](https://CRAN.R-project.org) with:
 
-[liqueueR](https://CRAN.R-project.org/package=liqueueR) implements
-queues in pure R code.
+``` r
+install.packages("collections")
+```
 
-[hash](https://CRAN.R-project.org/package=hash) uses R environment to 
-create hash tables. As indicated by the author of 
-[fastmap](https://CRAN.R-project.org/package=fastmap),
-a small amount of memory may be leaked.
+Install the latest development version using
 
-[hashmap](https://CRAN.R-project.org/package=hashmap) provides
-hashmap for atomic vectors using boost library.
-
-[fastmap](https://CRAN.R-project.org/package=fastmap) provides hashmap
-which does not leak memory. The current implementation of collection::Dict
-is actually inspired by it. However, a more
-efficient hash table library [tommy](https://github.com/amadvance/tommyds/)
-is used.
+```r
+devtools::install_github("randy3k/collections")
+```
