@@ -1,41 +1,39 @@
-#' @export
-#' @describeIn deque Deprecated soon
+#' Deprecated Functions
+#' @name deprecated
 #' @param ... anything
+
+#' @export
+#' @rdname deprecated
 Deque <- function(...) {
     deque(...)
 }
 
 #' @export
-#' @describeIn dict Deprecated soon
-#' @param ... anything
+#' @rdname deprecated
 Dict <- function(...) {
     dict(...)
 }
 
 #' @export
-#' @describeIn ordered_dict Deprecated soon
-#' @param ... anything
+#' @rdname deprecated
 OrderedDict <- function(...) {
     ordered_dict(...)
 }
 
 #' @export
-#' @describeIn priority_queue Deprecated soon
-#' @param ... anything
+#' @rdname deprecated
 PriorityDict <- function(...) {
     priority_queue(...)
 }
 
 #' @export
-#' @describeIn queue Deprecated soon
-#' @param ... anything
+#' @rdname deprecated
 Queue <- function(...) {
     queue(...)
 }
 
 #' @export
-#' @describeIn stack Deprecated soon
-#' @param ... anything
+#' @rdname deprecated
 Stack <- function(...) {
     stack(...)
 }
