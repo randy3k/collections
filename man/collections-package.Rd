@@ -15,7 +15,7 @@ Provides high performance container data types such
 \seealso{
 Useful links:
 \itemize{
-  \item \url{URL: https://github.com/randy3k/collections}
+  \item \url{https://github.com/randy3k/collections}
 }
 
 }
