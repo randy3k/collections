@@ -226,7 +226,7 @@ void _dict_index_set(SEXP self, SEXP ht_xptr, const char* key, int index) {
 
 SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
     const char* key = validate_key(_key);
-    SEXP ht_xptr = get_sexp_value(self, "ht_xptr");
+    SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
     int idx = _dict_index_get(self, ht_xptr, key);
     int index;
 
@@ -259,7 +259,7 @@ SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
     }
     SEXP vs = PROTECT(get_sexp_value(self, "vs"));
     SET_VECTOR_ELT(vs, index - 1, value);
-    UNPROTECT(1);
+    UNPROTECT(2);
     return Rf_ScalarInteger(idx);
 }
 
