@@ -38,7 +38,7 @@ dict <- function(items = NULL, keys = NULL) {
 
     n <- NULL
     m <- NULL
-    holes <- stack()
+    holes <- NULL
     nholes <- NULL
     vs <- NULL
     ks <- NULL
@@ -99,6 +99,7 @@ dict <- function(items = NULL, keys = NULL) {
         invisible(self)
     }
     clear <- function() {
+        holes <<- stack()
         .Call(C_dict_clear, self)
         invisible(self)
     }

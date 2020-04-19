@@ -357,7 +357,6 @@ SEXP dict_clear(SEXP self) {
     set_sexp_value(self, "ks", ks);
     SEXP xptr = PROTECT(R_MakeExternalPtr(NULL, R_NilValue, R_NilValue));
     set_sexp_value(self, "ht_xptr", xptr);
-    holes_clear(self);
     set_int_value(self, "nholes", 0);
     UNPROTECT(3);
     return R_NilValue;
