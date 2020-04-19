@@ -121,6 +121,7 @@ static int _dict_index_get(SEXP self, SEXP ht_xptr, const char* key) {
     item *s;
     int index;
 
+    PROTECT(ht_xptr);
     ht = R_ExternalPtrAddr(ht_xptr);
     if (ht == NULL) {
         ht = init_hashlin(self, ht_xptr);
@@ -132,6 +133,7 @@ static int _dict_index_get(SEXP self, SEXP ht_xptr, const char* key) {
     } else {
         index = s->value;
     }
+    UNPROTECT(1);
     return index;
 }
 
