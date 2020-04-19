@@ -63,27 +63,28 @@ s$pop()
 
 Deque
 ```{r}
-s <- deque()
-s$push(1)$pushleft(2)
-s$pop()
+dq <- deque()
+dq$push(1)$pushleft(2)
+dq$pop()
 ```
 
 Priority Queue
 ```{r}
-q <- priority_queue()
-q$push("not_urgent")
-q$push("urgent", priority = 2)
-q$push("not_as_urgent", priority = 1)
-q$pop()
-q$pop()
-q$pop()
+pq <- priority_queue()
+pq$push("not_urgent")
+pq$push("urgent", priority = 2)
+pq$push("not_as_urgent", priority = 1)
+pq$pop()
+pq$pop()
+pq$pop()
 ```
 
 Dictionary. Comparing to R envrionments, `dict()` does not [leak memory](https://r-lib.github.io/fastmap/#memory-leak-examples) and supports hashing functions and environments.
 ```{r}
 d <- dict()
-d$set(q, s)$set(s, q)
-identical(d$get(q), s)
+e <- new.env()
+d$set(e, 1)$set(sum, 2)
+d$get(e)
 ```
 
 Ordered Dictionary

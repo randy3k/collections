@@ -56,24 +56,24 @@ s$pop()
 Deque
 
 ``` r
-s <- deque()
-s$push(1)$pushleft(2)
-s$pop()
+dq <- deque()
+dq$push(1)$pushleft(2)
+dq$pop()
 #> [1] 1
 ```
 
 Priority Queue
 
 ``` r
-q <- priority_queue()
-q$push("not_urgent")
-q$push("urgent", priority = 2)
-q$push("not_as_urgent", priority = 1)
-q$pop()
+pq <- priority_queue()
+pq$push("not_urgent")
+pq$push("urgent", priority = 2)
+pq$push("not_as_urgent", priority = 1)
+pq$pop()
 #> [1] "urgent"
-q$pop()
+pq$pop()
 #> [1] "not_as_urgent"
-q$pop()
+pq$pop()
 #> [1] "not_urgent"
 ```
 
@@ -81,9 +81,10 @@ Dictionary. Comparing to R envrionments, `dict()` does not [leak memory](https:/
 
 ``` r
 d <- dict()
-d$set(q, s)$set(s, q)
-identical(d$get(q), s)
-#> [1] TRUE
+e <- new.env()
+d$set(e, 1)$set(sum, 2)
+d$get(e)
+#> [1] 1
 ```
 
 Ordered Dictionary
