@@ -60,23 +60,23 @@ ordered_dict <- function(items = NULL, keys = NULL) {
     }
     set <- function(key, value) {
         if (.Call(C_dict_set, d, key, value) == -1) {
-            q$push(key)
+            .Call(C_deque_push, q, key)
         }
         invisible(self)
     }
     get <- function(key, default) {
-        d$get(key, default)
+        .Call(C_dict_get, d, key, missing_arg(default))
     }
     remove <- function(key) {
         tryCatch(
-            q$remove(key),
+            .Call(C_deque_remove, q, key),
             error = function(e) stop("key not found")
         )
-        d$remove(key)
+        .Call(C_dict_remove, d, key)
         invisible(self)
     }
     pop <- function(key, default) {
-        v <- get(key, default)
+        v <- .Call(C_dict_get, d, key, missing_arg(default))
         remove(key)
         v
     }
