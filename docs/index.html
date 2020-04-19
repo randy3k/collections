@@ -96,6 +96,51 @@
 <p>Install the latest development version using</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"randy3k/collections"</span>)</pre></div>
 </div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">collections</span>, <span class="kw">warn.conflicts</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></div>
+<p>Queue</p>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">q</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/queue.html">queue</a></span>()
+<span class="no">q</span>$<span class="fu">push</span>(<span class="fl">1</span>)$<span class="fu">push</span>(<span class="fl">2</span>)
+<span class="no">q</span>$<span class="fu">pop</span>()
+<span class="co">#&gt; [1] 1</span></pre></div>
+<p>Stack</p>
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">s</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/stack.html">stack</a></span>()
+<span class="no">s</span>$<span class="fu">push</span>(<span class="fl">1</span>)$<span class="fu">push</span>(<span class="fl">2</span>)
+<span class="no">s</span>$<span class="fu">pop</span>()
+<span class="co">#&gt; [1] 2</span></pre></div>
+<p>Deque</p>
+<div class="sourceCode" id="cb6"><pre class="r"><span class="no">s</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/deque.html">deque</a></span>()
+<span class="no">s</span>$<span class="fu">push</span>(<span class="fl">1</span>)$<span class="fu">pushleft</span>(<span class="fl">2</span>)
+<span class="no">s</span>$<span class="fu">pop</span>()
+<span class="co">#&gt; [1] 1</span></pre></div>
+<p>Priority Queue</p>
+<div class="sourceCode" id="cb7"><pre class="r"><span class="no">q</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/priority_queue.html">priority_queue</a></span>()
+<span class="no">q</span>$<span class="fu">push</span>(<span class="st">"not_urgent"</span>)
+<span class="no">q</span>$<span class="fu">push</span>(<span class="st">"urgent"</span>, <span class="kw">priority</span> <span class="kw">=</span> <span class="fl">2</span>)
+<span class="no">q</span>$<span class="fu">push</span>(<span class="st">"not_as_urgent"</span>, <span class="kw">priority</span> <span class="kw">=</span> <span class="fl">1</span>)
+<span class="no">q</span>$<span class="fu">pop</span>()
+<span class="co">#&gt; [1] "urgent"</span>
+<span class="no">q</span>$<span class="fu">pop</span>()
+<span class="co">#&gt; [1] "not_as_urgent"</span>
+<span class="no">q</span>$<span class="fu">pop</span>()
+<span class="co">#&gt; [1] "not_urgent"</span></pre></div>
+<p>Dictionary. Comparing to R envrionments, <code><a href="reference/dict.html">dict()</a></code> does not <a href="https://r-lib.github.io/fastmap/#memory-leak-examples">leak memory</a> and supports hashing functions and environments.</p>
+<div class="sourceCode" id="cb8"><pre class="r"><span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/dict.html">dict</a></span>()
+<span class="no">d</span>$<span class="fu">set</span>(<span class="no">q</span>, <span class="no">s</span>)$<span class="fu">set</span>(<span class="no">s</span>, <span class="no">q</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span>(<span class="no">d</span>$<span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span>(<span class="no">q</span>), <span class="no">s</span>)
+<span class="co">#&gt; [1] TRUE</span></pre></div>
+<p>Ordered Dictionary</p>
+<div class="sourceCode" id="cb9"><pre class="r"><span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/ordered_dict.html">ordered_dict</a></span>()
+<span class="no">d</span>$<span class="fu">set</span>(<span class="st">"b"</span>, <span class="fl">1</span>)$<span class="fu">set</span>(<span class="st">"a"</span>, <span class="fl">2</span>)
+<span class="no">d</span>$<span class="fu">as_list</span>()
+<span class="co">#&gt; $b</span>
+<span class="co">#&gt; [1] 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $a</span>
+<span class="co">#&gt; [1] 2</span></pre></div>
+</div>
 </div>
   </div>
 

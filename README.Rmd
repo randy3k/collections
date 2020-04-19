@@ -1,6 +1,7 @@
 ---
 output:
-  github_document:
+  reprex::reprex_document:
+    advertise: false
     html_preview: false
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -38,4 +39,56 @@ Install the latest development version using
 
 ```r
 devtools::install_github("randy3k/collections")
+```
+
+## Example
+
+```{r}
+library(collections, warn.conflicts = FALSE)
+```
+
+Queue
+```{r}
+q <- queue()
+q$push(1)$push(2)
+q$pop()
+```
+
+Stack
+```{r}
+s <- stack()
+s$push(1)$push(2)
+s$pop()
+```
+
+Deque
+```{r}
+s <- deque()
+s$push(1)$pushleft(2)
+s$pop()
+```
+
+Priority Queue
+```{r}
+q <- priority_queue()
+q$push("not_urgent")
+q$push("urgent", priority = 2)
+q$push("not_as_urgent", priority = 1)
+q$pop()
+q$pop()
+q$pop()
+```
+
+Dictionary. Comparing to R envrionments, `dict()` does not [leak memory](https://r-lib.github.io/fastmap/#memory-leak-examples) and supports hashing functions and environments.
+```{r}
+d <- dict()
+d$set(q, s)$set(s, q)
+identical(d$get(q), s)
+```
+
+Ordered Dictionary
+```{r}
+d <- ordered_dict()
+d$set("b", 1)$set("a", 2)
+d$as_list()
 ```
