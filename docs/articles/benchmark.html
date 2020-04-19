@@ -118,7 +118,7 @@
 </div>
 <div id="deque" class="section level2">
 <h2 class="hasAnchor">
-<a href="#deque" class="anchor"></a>deque</h2>
+<a href="#deque" class="anchor"></a>Deque</h2>
 <p><img src="benchmark_files/figure-html/deque-1.png" width="700"></p>
 </div>
 <div id="priority-queue" class="section level2">
@@ -126,15 +126,17 @@
 <a href="#priority-queue" class="anchor"></a>Priority Queue</h2>
 <p><img src="benchmark_files/figure-html/priority_queue-1.png" width="700"></p>
 </div>
-<div id="dict-hashmap" class="section level2">
+<div id="dictionary" class="section level2">
 <h2 class="hasAnchor">
-<a href="#dict-hashmap" class="anchor"></a>dict / hashmap</h2>
+<a href="#dictionary" class="anchor"></a>Dictionary</h2>
 <p><img src="benchmark_files/figure-html/unnamed-chunk-6-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
+<p>Note that <code><a href="https://rdrr.io/r/base/environment.html">base::new.env</a></code> suffers from <a href="https://r-lib.github.io/fastmap/#memory-leak-examples">memory leak</a> issue.</p>
 </div>
 <div id="ordered-dict" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ordered-dict" class="anchor"></a>Ordered dict</h2>
 <p><img src="benchmark_files/figure-html/ordered_dict-1.png" width="700"></p>
+<p>Note that <code>ordered_dict</code> grows linearly in <code>n</code> but but <code>list</code> does not.</p>
 </div>
   </div>
 

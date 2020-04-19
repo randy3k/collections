@@ -111,7 +111,7 @@ bench_queue <- bench::press(
             for (i in 1:n) q$push(x[i])
             for (i in 1:n) q$pop()
         },
-        `collections::Queue` = {
+        `collections::queue` = {
             q <- collections::queue()
             x <- rnorm(n)
             for (i in 1:n) q$push(x[i])
@@ -130,7 +130,7 @@ bench_queue %>%
     scale_colour_brewer(palette = "Set2", direction = -1) +
     ggtitle("push and pop n times") + ylab("time")
 bench_queue %>%
-    filter(expression %in% c("base::list", "dequer::queue", "collections::Queue")) %>%
+    filter(expression %in% c("base::list", "dequer::queue", "collections::queue")) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
@@ -222,7 +222,7 @@ bench_stack %>%
     scale_colour_brewer(palette = "Set2", direction = -1) +
     ggtitle("push and pop n times") + ylab("time")
 bench_stack %>%
-    filter(expression %in% c("base::list", "dequer::stack", "collections::Stack")) %>%
+    filter(expression %in% c("base::list", "dequer::stack", "collections::stack")) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
@@ -230,7 +230,7 @@ bench_stack %>%
 ```
 
 
-## deque
+## Deque
 
 ```{r, echo = FALSE}
 deque <- function() {
@@ -361,7 +361,7 @@ bench::press(
 ```
 
 
-## dict / hashmap
+## Dictionary
 
 ```{r dict, echo = FALSE, cache = TRUE}
 bench_dict <- bench::press(
@@ -431,6 +431,8 @@ bench_dict %>%
     ggtitle("(zoom in)") + ylab("time")
 ```
 
+Note that `base::new.env` suffers from [memory leak](https://r-lib.github.io/fastmap/#memory-leak-examples) issue.
+
 
 ## Ordered dict
 
@@ -461,3 +463,5 @@ bench::press(
     scale_colour_brewer(palette = "Set2", direction = -1) +
     ggtitle("set and get n times") + ylab("time")
 ```
+
+Note that `ordered_dict` grows linearly in `n` but but `list` does not.
