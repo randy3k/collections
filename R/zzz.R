@@ -40,7 +40,7 @@ Stack <- function(...) {
 
 
 #' @export
-.R6Classes <- list(
+DevClasses <- list(
     Queue = R6Class("Queue", queue),
     Stack = R6Class("Stack", stack),
     Deque = R6Class("Deque", deque),
