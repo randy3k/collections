@@ -13,7 +13,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="High Performance Container Data Types">
 <meta property="og:description" content="Provides high performance container data types such
-    as Queue, Stack, deque, dict and Ordereddict. Benchmarks
+    as queues, stacks, deques, dicts and ordered dicts. Benchmarks
     &lt;https://randy3k.github.io/collections/articles/benchmark.html&gt; have
     shown that these containers are asymptotically more efficient than
     those offered by other packages.">
@@ -87,7 +87,7 @@
 <a href="#high-performance-container-data-types" class="anchor"></a>High Performance Container Data Types</h1></div>
 
 <p>Documentation: <a href="https://randy3k.github.io/collections">http://randy3k.github.io/collections</a></p>
-<p>Provides high performance container data types such as Queue, Stack, deque, dict and Ordereddict. Benchmarks <a href="https://randy3k.github.io/collections/articles/benchmark.html" class="uri">https://randy3k.github.io/collections/articles/benchmark.html</a> have shown that these containers are asymptotically more efficient than those offered by other packages.</p>
+<p>Provides high performance container data types such as queues, stacks, deques, dicts and ordered dicts. Benchmarks <a href="https://randy3k.github.io/collections/articles/benchmark.html" class="uri">https://randy3k.github.io/collections/articles/benchmark.html</a> have shown that these containers are asymptotically more efficient than those offered by other packages.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -111,26 +111,27 @@
 <span class="no">s</span>$<span class="fu">pop</span>()
 <span class="co">#&gt; [1] 2</span></pre></div>
 <p>Deque</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="no">s</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/deque.html">deque</a></span>()
-<span class="no">s</span>$<span class="fu">push</span>(<span class="fl">1</span>)$<span class="fu">pushleft</span>(<span class="fl">2</span>)
-<span class="no">s</span>$<span class="fu">pop</span>()
+<div class="sourceCode" id="cb6"><pre class="r"><span class="no">dq</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/deque.html">deque</a></span>()
+<span class="no">dq</span>$<span class="fu">push</span>(<span class="fl">1</span>)$<span class="fu">pushleft</span>(<span class="fl">2</span>)
+<span class="no">dq</span>$<span class="fu">pop</span>()
 <span class="co">#&gt; [1] 1</span></pre></div>
 <p>Priority Queue</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="no">q</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/priority_queue.html">priority_queue</a></span>()
-<span class="no">q</span>$<span class="fu">push</span>(<span class="st">"not_urgent"</span>)
-<span class="no">q</span>$<span class="fu">push</span>(<span class="st">"urgent"</span>, <span class="kw">priority</span> <span class="kw">=</span> <span class="fl">2</span>)
-<span class="no">q</span>$<span class="fu">push</span>(<span class="st">"not_as_urgent"</span>, <span class="kw">priority</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="no">q</span>$<span class="fu">pop</span>()
+<div class="sourceCode" id="cb7"><pre class="r"><span class="no">pq</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/priority_queue.html">priority_queue</a></span>()
+<span class="no">pq</span>$<span class="fu">push</span>(<span class="st">"not_urgent"</span>)
+<span class="no">pq</span>$<span class="fu">push</span>(<span class="st">"urgent"</span>, <span class="kw">priority</span> <span class="kw">=</span> <span class="fl">2</span>)
+<span class="no">pq</span>$<span class="fu">push</span>(<span class="st">"not_as_urgent"</span>, <span class="kw">priority</span> <span class="kw">=</span> <span class="fl">1</span>)
+<span class="no">pq</span>$<span class="fu">pop</span>()
 <span class="co">#&gt; [1] "urgent"</span>
-<span class="no">q</span>$<span class="fu">pop</span>()
+<span class="no">pq</span>$<span class="fu">pop</span>()
 <span class="co">#&gt; [1] "not_as_urgent"</span>
-<span class="no">q</span>$<span class="fu">pop</span>()
+<span class="no">pq</span>$<span class="fu">pop</span>()
 <span class="co">#&gt; [1] "not_urgent"</span></pre></div>
 <p>Dictionary. Comparing to R envrionments, <code><a href="reference/dict.html">dict()</a></code> does not <a href="https://r-lib.github.io/fastmap/#memory-leak-examples">leak memory</a> and supports hashing functions and environments.</p>
 <div class="sourceCode" id="cb8"><pre class="r"><span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/dict.html">dict</a></span>()
-<span class="no">d</span>$<span class="fu">set</span>(<span class="no">q</span>, <span class="no">s</span>)$<span class="fu">set</span>(<span class="no">s</span>, <span class="no">q</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span>(<span class="no">d</span>$<span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span>(<span class="no">q</span>), <span class="no">s</span>)
-<span class="co">#&gt; [1] TRUE</span></pre></div>
+<span class="no">e</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span>()
+<span class="no">d</span>$<span class="fu">set</span>(<span class="no">e</span>, <span class="fl">1</span>)$<span class="fu">set</span>(<span class="no">sum</span>, <span class="fl">2</span>)
+<span class="no">d</span>$<span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span>(<span class="no">e</span>)
+<span class="co">#&gt; [1] 1</span></pre></div>
 <p>Ordered Dictionary</p>
 <div class="sourceCode" id="cb9"><pre class="r"><span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/ordered_dict.html">ordered_dict</a></span>()
 <span class="no">d</span>$<span class="fu">set</span>(<span class="st">"b"</span>, <span class="fl">1</span>)$<span class="fu">set</span>(<span class="st">"a"</span>, <span class="fl">2</span>)
