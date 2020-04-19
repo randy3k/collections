@@ -23,6 +23,7 @@ patch_symbols <- function(expr, public, private) {
 }
 
 
+#' @importFrom utils hasName
 resolve_objects <- function(constructor) {
     stopifnot(is.function(constructor))
     args <- as.list(formals(constructor))
