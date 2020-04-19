@@ -1,6 +1,5 @@
 context("deque")
 
-
 test_that("push, peek and pop", {
     q <- deque()
     q$push(1)$push(2)

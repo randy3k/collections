@@ -37,14 +37,3 @@ Queue <- function(...) {
 Stack <- function(...) {
     stack(...)
 }
-
-
-#' @export
-DevClasses <- list(
-    Queue = R6Class("Queue", queue),
-    Stack = R6Class("Stack", stack),
-    Deque = R6Class("Deque", deque),
-    PriorityQueue = R6Class("PriorityQueue", priority_queue),
-    Dict = R6Class("Dict", dict),
-    OrderedDict = R6Class("OrderedDict", ordered_dict)
-)
