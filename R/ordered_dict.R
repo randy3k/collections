@@ -38,7 +38,7 @@ ordered_dict <- function(items = NULL, keys = NULL) {
     self <- environment()
     d <- NULL
     q <- NULL
-    keys0 <- keys
+    .keys <- keys
 
     initialize <- function(items, keys) {
         clear()
@@ -59,7 +59,7 @@ ordered_dict <- function(items = NULL, keys = NULL) {
         }
     }
     set <- function(key, value) {
-        if (d$.set(key, value) == -1) {
+        if (.Call(C_dict_set, d, key, value) == -1) {
             q$push(key)
         }
         invisible(self)
@@ -130,8 +130,8 @@ ordered_dict <- function(items = NULL, keys = NULL) {
         cat("ordered_dict object with", n, "item(s)\n")
     }
 
-    initialize(items, keys0)
+    initialize(items, .keys)
     items <- NULL
-    keys0 <- NULL
+    .keys <- NULL
     self
 }

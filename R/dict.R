@@ -44,7 +44,7 @@ dict <- function(items = NULL, keys = NULL) {
     ks <- NULL
     ht_xptr <- NULL
     # we will define the keys function
-    keys0 <- keys
+    .keys <- keys
 
     initialize <- function(items, keys) {
         clear()
@@ -64,18 +64,15 @@ dict <- function(items = NULL, keys = NULL) {
             }
         }
     }
-    .set <- function(key, value) {
-        .Call(C_dict_set, self, ht_xptr, key, value)
-    }
     set <- function(key, value) {
-        .Call(C_dict_set, self, ht_xptr, key, value)
+        .Call(C_dict_set, self, key, value)
         invisible(self)
     }
     get <- function(key, default) {
-        .Call(C_dict_get, self, ht_xptr, key, missing_arg(default))
+        .Call(C_dict_get, self, key, missing_arg(default))
     }
     remove <- function(key) {
-        .Call(C_dict_remove, self, ht_xptr, key)
+        .Call(C_dict_remove, self, key)
         invisible(self)
     }
     pop <- function(key, default) {
@@ -114,8 +111,8 @@ dict <- function(items = NULL, keys = NULL) {
         cat("dict object with", n, "item(s)\n")
     }
 
-    initialize(items, keys0)
+    initialize(items, .keys)
     items <- NULL
-    keys0 <- NULL
+    .keys <- NULL
     self
 }
