@@ -22,7 +22,7 @@ OrderedDict <- function(...) {
 
 #' @export
 #' @rdname deprecated
-PriorityDict <- function(...) {
+PriorityQueue <- function(...) {
     priority_queue(...)
 }
 

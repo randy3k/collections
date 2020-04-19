@@ -3,7 +3,7 @@
 export(Deque)
 export(Dict)
 export(OrderedDict)
-export(PriorityDict)
+export(PriorityQueue)
 export(Queue)
 export(Stack)
 export(deque)

@@ -5,7 +5,7 @@
 \alias{Deque}
 \alias{Dict}
 \alias{OrderedDict}
-\alias{PriorityDict}
+\alias{PriorityQueue}
 \alias{Queue}
 \alias{Stack}
 \title{Deprecated Functions}
@@ -16,7 +16,7 @@ Dict(...)
 
 OrderedDict(...)
 
-PriorityDict(...)
+PriorityQueue(...)
 
 Queue(...)
 
