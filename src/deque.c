@@ -1,21 +1,6 @@
 #include "deque.h"
 #include "utils.h"
 
-// return the current item of a pairlist
-SEXP pairlist_car(SEXP x) {
-  if (!Rf_isList(x))
-    Rf_error("x must be a pairlist");
-  return CAR(x);
-}
-
-
-// return the next item of a pairlist
-SEXP pairlist_cdr(SEXP x) {
-  if (!Rf_isList(x))
-    Rf_error("x must be a pairlist");
-  return CDR(x);
-}
-
 
 SEXP deque_push(SEXP self, SEXP value) {
     SEXP q = PROTECT(get_sexp_value(self, "q"));

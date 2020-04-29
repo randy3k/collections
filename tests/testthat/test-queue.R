@@ -44,3 +44,13 @@ test_that("push NULL", {
     expect_null(q$pop())
     expect_equal(q$size(), 1)
 })
+
+
+test_that("serialization", {
+    q <- queue()
+    q$push(1)$push(2)
+    q2 <- unserialize(serialize(q, NULL))
+    expect_equal(q2$size(), 2)
+    q2$push(3)
+    expect_equal(q2$size(), 3)
+})

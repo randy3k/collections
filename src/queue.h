@@ -8,4 +8,6 @@ SEXP queue_push(SEXP self, SEXP value);
 
 SEXP queue_pop(SEXP self);
 
+SEXP queue_clear(SEXP self);
+
 #endif

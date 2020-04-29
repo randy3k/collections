@@ -14,6 +14,7 @@ SEXP missing_arg() {
 static const R_CallMethodDef CallEntries[] = {
     {"queue_push", (DL_FUNC) &queue_push, 2},
     {"queue_pop", (DL_FUNC) &queue_pop, 1},
+    {"queue_clear", (DL_FUNC) &queue_clear, 1},
     {"stack_push", (DL_FUNC) &stack_push, 2},
     {"stack_pop", (DL_FUNC) &stack_pop, 1},
     {"pairlist_car", (DL_FUNC) &pairlist_car, 1},
