@@ -1,77 +1,101 @@
 #include "deque.h"
 #include "utils.h"
 
-// return the current item of a pairlist
-SEXP pairlist_car(SEXP x) {
-  if (!Rf_isList(x))
-    Rf_error("x must be a pairlist");
-  return CAR(x);
-}
+#if !defined(static_inline)
+#if defined(_MSC_VER) || defined(__GNUC__)
+#define static_inline static __inline
+#else
+#define static_inline static
+#endif
+#endif
 
 
-// return the next item of a pairlist
-SEXP pairlist_cdr(SEXP x) {
-  if (!Rf_isList(x))
-    Rf_error("x must be a pairlist");
-  return CDR(x);
+static_inline SEXP get_last_cons(SEXP q, SEXP last_ptr) {
+    SEXP last = PROTECT(R_ExternalPtrAddr(last_ptr));
+    SEXP nextq;
+    if (last == NULL) {
+        nextq = CDR(q);
+        while (!Rf_isNull(nextq)) {
+            R_SetExternalPtrAddr(VECTOR_ELT(CAR(nextq), 0), q);
+            q = nextq;
+            nextq = CDR(q);
+        }
+        R_SetExternalPtrAddr(last_ptr, q);
+        last = q;
+    }
+    UNPROTECT(1);
+    return last;
 }
 
 
 SEXP deque_push(SEXP self, SEXP value) {
+    PROTECT(value);
     SEXP q = PROTECT(get_sexp_value(self, "q"));
-    SEXP last;
-    SEXP v;
+    SEXP last_ptr = PROTECT(get_sexp_value(self, "last"));
     SEXP x = PROTECT(Rf_allocVector(VECSXP ,2));
+    SEXP last = PROTECT(get_last_cons(q, last_ptr));
+    SEXP v;
     if (q == R_NilValue) {
         SET_VECTOR_ELT(x, 0, R_NilValue);
         SET_VECTOR_ELT(x, 1, value);
         v = PROTECT(Rf_cons(x, R_NilValue));
         set_sexp_value(self, "q", v);
-        set_sexp_value(self, "last", v);
+        R_SetExternalPtrAddr(last_ptr, v);
+        UNPROTECT(1);
     } else {
-        last = get_sexp_value(self, "last");
-        SET_VECTOR_ELT(x, 0, last);
+        SET_VECTOR_ELT(x, 0, PROTECT(R_MakeExternalPtr(last, R_NilValue, R_NilValue)));
         SET_VECTOR_ELT(x, 1, value);
         v = PROTECT(Rf_cons(x, R_NilValue));
         SETCDR(last, v);
-        set_sexp_value(self, "last", v);
+        R_SetExternalPtrAddr(last_ptr, v);
+        UNPROTECT(2);
     }
-    UNPROTECT(3);
+    UNPROTECT(5);
     return value;
 }
 
+
 SEXP deque_pushleft(SEXP self, SEXP value) {
+    PROTECT(value);
     SEXP q = PROTECT(get_sexp_value(self, "q"));
-    SEXP v;
+    SEXP last_ptr = PROTECT(get_sexp_value(self, "last"));
     SEXP x = PROTECT(Rf_allocVector(VECSXP ,2));
+    SEXP v;
     if (q == R_NilValue) {
         SET_VECTOR_ELT(x, 0, R_NilValue);
         SET_VECTOR_ELT(x, 1, value);
         v = PROTECT(Rf_cons(x, R_NilValue));
         set_sexp_value(self, "q", v);
-        set_sexp_value(self, "last", v);
+        R_SetExternalPtrAddr(last_ptr, v);
+        UNPROTECT(1);
     } else {
         SET_VECTOR_ELT(x, 0, R_NilValue);
         SET_VECTOR_ELT(x, 1, value);
         v = PROTECT(Rf_cons(x, q));
-        SET_VECTOR_ELT(CAR(q), 0, v);
+        SET_VECTOR_ELT(CAR(q), 0, PROTECT(R_MakeExternalPtr(v, R_NilValue, R_NilValue)));
         set_sexp_value(self, "q", v);
+        UNPROTECT(2);
     }
-    UNPROTECT(3);
+    UNPROTECT(4);
     return value;
 }
 
+
 SEXP deque_pop(SEXP self) {
-    SEXP last = PROTECT(get_sexp_value(self, "last"));
-    if (last == R_NilValue) Rf_error("deque is empty");
-    SEXP prev = VECTOR_ELT(CAR(last), 0);
-    if (prev == R_NilValue) {
+    SEXP q = PROTECT(get_sexp_value(self, "q"));
+    if (q == R_NilValue) Rf_error("deque is empty");
+    SEXP last_ptr = PROTECT(get_sexp_value(self, "last"));
+    SEXP last = PROTECT(get_last_cons(q, last_ptr));
+    SEXP prev_ptr = VECTOR_ELT(CAR(last), 0);
+    if (prev_ptr == R_NilValue) {
         set_sexp_value(self, "q", R_NilValue);
+        R_SetExternalPtrAddr(last_ptr, NULL);
     } else {
+        SEXP prev = R_ExternalPtrAddr(prev_ptr);
+        R_SetExternalPtrAddr(last_ptr, prev);
         SETCDR(prev, R_NilValue);
     }
-    set_sexp_value(self, "last", prev);
-    UNPROTECT(1);
+    UNPROTECT(3);
     return VECTOR_ELT(CAR(last), 1);
 }
 
@@ -80,40 +104,75 @@ SEXP deque_popleft(SEXP self) {
     if (q == R_NilValue) Rf_error("deque is empty");
     SEXP nextq = CDR(q);
     if (nextq == R_NilValue) {
-        set_sexp_value(self, "last", R_NilValue);
+        set_sexp_value(self, "q", nextq);
+        SEXP last_ptr = PROTECT(get_sexp_value(self, "last"));
+        R_SetExternalPtrAddr(last_ptr, NULL);
+        UNPROTECT(1);
     } else {
+        set_sexp_value(self, "q", nextq);
         SET_VECTOR_ELT(CAR(nextq), 0, R_NilValue);
     }
-    set_sexp_value(self, "q", nextq);
     UNPROTECT(1);
     return VECTOR_ELT(CAR(q), 1);
 }
 
+
+SEXP deque_peek(SEXP self) {
+    SEXP last_ptr = PROTECT(get_sexp_value(self, "last"));
+    SEXP q = PROTECT(get_sexp_value(self, "q"));
+    if (Rf_isNull(q)) {
+        Rf_error("deque is empty");
+    }
+    SEXP last = PROTECT(get_last_cons(q, last_ptr));
+    SEXP value = VECTOR_ELT(CAR(last), 1);
+    UNPROTECT(3);
+    return value;
+}
+
+
 SEXP deque_remove(SEXP self, SEXP value) {
-    SEXP q = get_sexp_value(self, "q");
-    SEXP v, nextq, prev;
+    SEXP q = PROTECT(get_sexp_value(self, "q"));
+    SEXP last_ptr = PROTECT(get_sexp_value(self, "last"));
+    // make sure the pointers are resolved after serialization/unserialization
+    get_last_cons(q, last_ptr);
+    SEXP v, nextq, prev_ptr;
     while (q != R_NilValue) {
         v = CAR(q);
         nextq = CDR(q);
         if (R_compute_identical(VECTOR_ELT(v, 1), value, 16)) {
-            prev = VECTOR_ELT(v, 0);
-            if (nextq == R_NilValue && prev == R_NilValue) {
+            prev_ptr = VECTOR_ELT(v, 0);
+            if (nextq == R_NilValue && prev_ptr == R_NilValue) {
                 set_sexp_value(self, "q", R_NilValue);
-                set_sexp_value(self, "last", R_NilValue);
+                R_SetExternalPtrAddr(last_ptr, NULL);
             } else if (nextq == R_NilValue) {
+                // last item
+                SEXP prev = R_ExternalPtrAddr(prev_ptr);
                 SETCDR(prev, R_NilValue);
-                set_sexp_value(self, "last", prev);
-            } else if (prev == R_NilValue) {
-                set_sexp_value(self, "q", nextq);
+                R_SetExternalPtrAddr(last_ptr, prev);
+            } else if (prev_ptr == R_NilValue) {
+                // first item
                 SET_VECTOR_ELT(CAR(nextq), 0, R_NilValue);
+                set_sexp_value(self, "q", nextq);
             } else {
+                SEXP prev = R_ExternalPtrAddr(prev_ptr);
                 SETCDR(prev, nextq);
-                SET_VECTOR_ELT(CAR(nextq), 0, prev);
+                SET_VECTOR_ELT(CAR(nextq), 0, prev_ptr);
             }
+            UNPROTECT(2);
             return R_NilValue;
         }
         q = nextq;
     }
+    UNPROTECT(2);
     Rf_error("value not found");
+    return R_NilValue;
+}
+
+
+SEXP deque_clear(SEXP self) {
+    set_sexp_value(self, "q", R_NilValue);
+    SEXP last = PROTECT(R_MakeExternalPtr(NULL, R_NilValue, R_NilValue));
+    set_sexp_value(self, "last", last);
+    UNPROTECT(1);
     return R_NilValue;
 }

@@ -59,8 +59,8 @@ deque <- function(items = NULL) {
         .Call(C_deque_popleft, self)
     }
     peek <- function() {
-        if (is.null(last)) stop("deque is empty")
-        .Call(C_pairlist_car, last)[[2]]
+        if (is.null(q)) stop("deque is empty")
+        .Call(C_deque_peek, self)
     }
     peekleft <- function() {
         if (is.null(q)) stop("deque is empty")
@@ -85,8 +85,7 @@ deque <- function(items = NULL) {
         invisible(self)
     }
     clear <- function() {
-        q <<- NULL
-        last <<- NULL
+        .Call(C_deque_clear, self)
         invisible(self)
     }
     remove <- function(item) {

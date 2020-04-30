@@ -64,3 +64,13 @@ test_that("grow and shrink", {
     for (i in 1:99) q$pop()
     expect_lt(length(q$self$h), len)
 })
+
+
+test_that("serialization", {
+    q <- priority_queue()
+    q$push(1)$push(2)
+    q2 <- unserialize(serialize(q, NULL))
+    expect_equal(q2$size(), 2)
+    q2$push(3)
+    expect_equal(q2$size(), 3)
+})

@@ -50,8 +50,7 @@ queue <- function(items = NULL) {
         .Call(C_pairlist_car, q)
     }
     clear <- function() {
-        q <<- NULL
-        last <<- NULL
+        .Call(C_queue_clear, self)
         invisible(self)
     }
     size <- function() length(q)

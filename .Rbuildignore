@@ -12,3 +12,4 @@ vignettes
 .*\.o
 ^.github$
 ^.covrignore$
+^codecov.yml$

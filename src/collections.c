@@ -5,6 +5,7 @@
 #include "deque.h"
 #include "dict.h"
 #include "priority_queue.h"
+#include "utils.h"
 
 
 SEXP missing_arg() {
@@ -14,6 +15,7 @@ SEXP missing_arg() {
 static const R_CallMethodDef CallEntries[] = {
     {"queue_push", (DL_FUNC) &queue_push, 2},
     {"queue_pop", (DL_FUNC) &queue_pop, 1},
+    {"queue_clear", (DL_FUNC) &queue_clear, 1},
     {"stack_push", (DL_FUNC) &stack_push, 2},
     {"stack_pop", (DL_FUNC) &stack_pop, 1},
     {"pairlist_car", (DL_FUNC) &pairlist_car, 1},
@@ -22,7 +24,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"deque_pushleft", (DL_FUNC) &deque_pushleft, 2},
     {"deque_pop", (DL_FUNC) &deque_pop, 1},
     {"deque_popleft", (DL_FUNC) &deque_popleft, 1},
+    {"deque_peek", (DL_FUNC) &deque_peek, 1},
     {"deque_remove", (DL_FUNC) &deque_remove, 2},
+    {"deque_clear", (DL_FUNC) &deque_clear, 1},
     {"dict_get", (DL_FUNC) &dict_get, 3},
     {"dict_set", (DL_FUNC) &dict_set, 3},
     {"dict_remove", (DL_FUNC) &dict_remove, 2},

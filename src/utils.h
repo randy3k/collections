@@ -6,6 +6,12 @@
 #include <Rinternals.h>
 
 
+SEXP pairlist_car(SEXP x);
+
+SEXP pairlist_cdr(SEXP x);
+
+SEXP pairlist_last(SEXP x);
+
 SEXP get_sexp_value(SEXP env, const char* name);
 
 void set_sexp_value(SEXP env, const char* name, SEXP value);
