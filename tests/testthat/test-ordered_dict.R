@@ -114,3 +114,18 @@ test_that("object indexing works", {
     expect_equal(d$get(f), 3)
     expect_equal(d$keys(), list(s, q, f))
 })
+
+
+test_that("serialize and unserialized", {
+    d <- ordered_dict()
+    d$set("b", 2)
+    d$set("a", 1)
+    d$set("c", 3)
+    d$remove("c")
+    d2 <- unserialize(serialize(d, NULL))
+    expect_equal(d2$get("a"), 1)
+
+    d$remove("a")
+    d2 <- unserialize(serialize(d, NULL))
+    expect_error(d2$get("a"), "not found")
+})
