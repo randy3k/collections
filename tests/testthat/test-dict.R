@@ -114,19 +114,19 @@ test_that("serialize and unserialized", {
 })
 
 
-test_that("hole is not popped if key error", {
-    d <- dict()
-    d$set("a", 1)$set("b", 2)$set("c", 3)
-    d$remove("b")
-    expect_equal(d$size(), 2)
-    expect_equal(tryCatch(
-        d$set("", 2),
-        error = function(e) NULL
-    ), NULL)
-    expect_equal(d$size(), 2)
-    d$set("b", 2)
-    expect_equal(d$vs[[2]], 2L)
-})
+# test_that("hole is not popped if key error", {
+#     d <- dict()
+#     d$set("a", 1)$set("b", 2)$set("c", 3)
+#     d$remove("b")
+#     expect_equal(d$size(), 2)
+#     expect_equal(tryCatch(
+#         d$set("", 2),
+#         error = function(e) NULL
+#     ), NULL)
+#     expect_equal(d$size(), 2)
+#     d$set("b", 2)
+#     expect_equal(d$vs[[2]], 2L)
+# })
 
 test_that("grow and shrink", {
     d <- dict()
@@ -151,4 +151,16 @@ test_that("object indexing works", {
     expect_equal(d$get(q), 2)
     expect_equal(d$get(f), 3)
     expect_equal(d$keys(), list(s, q, f))
+})
+
+
+test_that("vector indexing works", {
+    d <- dict()
+    a <- c(1L, 2L)
+    b <- list(key1 = "value1", key2 = 2)
+    d$set(a, 1)$set(b, 2)
+    expect_equal(d$size(), 2)
+    expect_equal(d$get(c(1L, 2L)), 1)
+    expect_equal(d$get(list(key1 = "value1", key2 = 2)), 2)
+    expect_error(d$get(c(1, 2)))
 })

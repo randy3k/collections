@@ -16,7 +16,7 @@
 
 
 typedef struct item {
-    const char* key;
+    SEXP key;
     int value;
     tommy_node node;
 } item;
@@ -62,19 +62,32 @@ static_inline void holes_clear(SEXP self) {
 }
 
 
-static const char* validate_key(SEXP key) {
-    if (!Rf_isVector(key) && !Rf_isNull(key)) {
+static_inline const char* digest(SEXP self, SEXP x) {
+    SEXP digestfun = PROTECT(get_sexp_value(self, "digest"));
+    SEXP l = PROTECT(Rf_lang2(digestfun, x));
+    int errorOccurred;
+    SEXP result = R_tryEval(l, self, &errorOccurred);
+    if (errorOccurred || TYPEOF(result) != STRSXP) {
+        Rf_error("cannot compute digest of the key");
+    }
+    UNPROTECT(2);
+    return R_CHAR(Rf_asChar(result));
+}
+
+
+tommy_hash_t strhash(SEXP self, SEXP key) {
+    const char* key_c;
+    if (TYPEOF(key) == STRSXP && Rf_length(key) == 1) {
+        SEXP c = Rf_asChar(key);
+        key_c = Rf_translateCharUTF8(c);
+    } else if (Rf_isVector(key)) {
+        key_c = digest(self, key);
+    } else {
         const char* buf = R_alloc(sizeof(char), 30);
-        sprintf((char*) buf, "\xef\x80\x80\x30%p", key);
-        return buf;
-    } else if (TYPEOF(key) != STRSXP || Rf_length(key) != 1) {
-        Rf_error("expect scalar character, environment or function");
+        sprintf((char*) buf, "<%p>", key);
+        key_c = buf;
     }
-    SEXP c = Rf_asChar(key);
-    if (Rf_StringBlank(c) || Rf_isNull(c)) {
-        Rf_error("invalid key");
-    }
-    return Rf_translateCharUTF8(c);
+    return tommy_strhash_u32(0, key_c);
 }
 
 
@@ -91,17 +104,15 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
     int i;
     int n = get_int_value(self, "n");
     if (n > 0) {
-        const char* key;
         SEXP ks = PROTECT(get_sexp_value(self, "ks"));
         SEXP c;
         R_len_t nks = Rf_length(ks);
         for (i = 0; i < nks; i++) {
             c = VECTOR_ELT(ks, i);
             if (Rf_isNull(c)) continue;
-            key = validate_key(c);
-            hashed_key = tommy_strhash_u32(0, key);
+            hashed_key = strhash(self, c);
             s = (item*) malloc(sizeof(item));
-            s->key = key;
+            s->key = c;
             s->value = i + 1;
             tommy_hashlin_insert(ht, &s->node, s, hashed_key);
         }
@@ -112,11 +123,12 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
 
 
 static int compare(const void* arg, const void* obj) {
-    return strcmp(arg, ((item*) obj)->key);
+    // return 0 if match
+    return !R_compute_identical((SEXP) arg, (SEXP) ((item*) obj)->key, 16);
 }
 
 
-static int _dict_index_get(SEXP self, SEXP ht_xptr, const char* key) {
+static int _dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t hashed_key) {
     tommy_hashlin *ht;
     item *s;
     int index;
@@ -126,8 +138,7 @@ static int _dict_index_get(SEXP self, SEXP ht_xptr, const char* key) {
     if (ht == NULL) {
         ht = init_hashlin(self, ht_xptr);
     }
-    tommy_hash_t hashed_key = tommy_strhash_u32(0, key);
-    s = tommy_hashlin_search(ht, compare, key, hashed_key);
+    s = tommy_hashlin_search(ht, compare, _key, hashed_key);
     if (s == NULL) {
         index = -1;
     } else {
@@ -138,14 +149,10 @@ static int _dict_index_get(SEXP self, SEXP ht_xptr, const char* key) {
 }
 
 
-SEXP dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key) {
-    return Rf_ScalarInteger(_dict_index_get(self, ht_xptr, validate_key(_key)));
-}
-
-
 SEXP dict_get(SEXP self, SEXP _key, SEXP _default) {
     SEXP ht_xptr = get_sexp_value(self, "ht_xptr");
-    int index = _dict_index_get(self, ht_xptr, validate_key(_key));
+    tommy_hash_t hashed_key = strhash(self, _key);
+    int index = _dict_index_get(self, ht_xptr, _key, hashed_key);
     if (index <= 0) {
         if (_default != R_MissingArg) {
             return _default;
@@ -208,7 +215,7 @@ static void shrink(SEXP self, int m) {
 }
 
 
-void _dict_index_set(SEXP self, SEXP ht_xptr, const char* key, int index) {
+void _dict_index_set(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t hashed_key, int index) {
     tommy_hashlin* ht;
     item *s;
 
@@ -216,18 +223,17 @@ void _dict_index_set(SEXP self, SEXP ht_xptr, const char* key, int index) {
     if (ht == NULL) {
         ht = init_hashlin(self, ht_xptr);
     }
-    tommy_hash_t hashed_key = tommy_strhash_u32(0, key);
     s = (item*) malloc(sizeof(item));
-    s->key = key;
+    s->key = _key;
     s->value = index;
     tommy_hashlin_insert(ht, &s->node, s, hashed_key);
 }
 
 
 SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
-    const char* key = validate_key(_key);
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
-    int idx = _dict_index_get(self, ht_xptr, key);
+    tommy_hash_t hashed_key = strhash(self, _key);
+    int idx = _dict_index_get(self, ht_xptr, _key, hashed_key);
     int index;
 
     if (idx == -1) {
@@ -245,14 +251,10 @@ SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
             grow(self, m2);
             set_int_value(self, "m", m2);
         }
-        _dict_index_set(self, ht_xptr, key, index);
+        _dict_index_set(self, ht_xptr, _key, hashed_key, index);
 
         SEXP ks = PROTECT(get_sexp_value(self, "ks"));
-        if (TYPEOF(_key) == STRSXP) {
-            SET_VECTOR_ELT(ks, index - 1, Rf_ScalarString(Rf_mkCharCE(key, CE_UTF8)));
-        } else  {
-            SET_VECTOR_ELT(ks, index - 1, _key);
-        }
+        SET_VECTOR_ELT(ks, index - 1, _key);
         UNPROTECT(1);
     } else {
         index = idx;
@@ -267,7 +269,6 @@ SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
 SEXP dict_remove(SEXP self, SEXP _key) {
     tommy_hashlin *ht;
     item *s;
-    const char* key;
     int index;
 
     SEXP ht_xptr = get_sexp_value(self, "ht_xptr");
@@ -275,9 +276,8 @@ SEXP dict_remove(SEXP self, SEXP _key) {
     if (ht == NULL) {
         ht = init_hashlin(self, ht_xptr);
     }
-    key = validate_key(_key);
-    tommy_hash_t hashed_key = tommy_strhash_u32(0, key);
-    s = tommy_hashlin_remove(ht, compare, key, hashed_key);
+    tommy_hash_t hashed_key = strhash(self, _key);
+    s = tommy_hashlin_remove(ht, compare, _key, hashed_key);
     if (s == NULL) {
         Rf_error("key not found");
     }
@@ -308,7 +308,8 @@ SEXP dict_remove(SEXP self, SEXP _key) {
 
 SEXP dict_has(SEXP self, SEXP _key) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
-    int index = _dict_index_get(self, ht_xptr, validate_key(_key));
+    tommy_hash_t hashed_key = strhash(self, _key);
+    int index = _dict_index_get(self, ht_xptr, _key, hashed_key);
     UNPROTECT(1);
     return Rf_ScalarLogical(index >= 1);
 }
