@@ -150,7 +150,7 @@ static int _dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t hash
 
 
 SEXP dict_get(SEXP self, SEXP _key, SEXP _default) {
-    SEXP ht_xptr = get_sexp_value(self, "ht_xptr");
+    SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
     tommy_hash_t hashed_key = strhash(self, _key);
     int index = _dict_index_get(self, ht_xptr, _key, hashed_key);
     if (index <= 0) {
@@ -161,6 +161,7 @@ SEXP dict_get(SEXP self, SEXP _key, SEXP _default) {
         }
     }
     SEXP vs = get_sexp_value(self, "vs");
+    UNPROTECT(1);
     return VECTOR_ELT(vs, index - 1);
 }
 
@@ -271,7 +272,7 @@ SEXP dict_remove(SEXP self, SEXP _key) {
     item *s;
     int index;
 
-    SEXP ht_xptr = get_sexp_value(self, "ht_xptr");
+    SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
     ht = R_ExternalPtrAddr(ht_xptr);
     if (ht == NULL) {
         ht = init_hashlin(self, ht_xptr);
@@ -290,7 +291,7 @@ SEXP dict_remove(SEXP self, SEXP _key) {
     SEXP vs = PROTECT(get_sexp_value(self, "vs"));
     SET_VECTOR_ELT(ks, index - 1, R_NilValue);
     SET_VECTOR_ELT(vs, index - 1, R_NilValue);
-    UNPROTECT(2);
+    UNPROTECT(3);
     holes_push(self, index);
     add_int_value(self, "nholes", 1);
     int m = get_int_value(self, "m");
