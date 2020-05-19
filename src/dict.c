@@ -153,6 +153,7 @@ SEXP dict_get(SEXP self, SEXP _key, SEXP _default) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
     tommy_hash_t hashed_key = strhash(self, _key);
     int index = _dict_index_get(self, ht_xptr, _key, hashed_key);
+    UNPROTECT(1);
     if (index <= 0) {
         if (_default != R_MissingArg) {
             return _default;
@@ -161,7 +162,6 @@ SEXP dict_get(SEXP self, SEXP _key, SEXP _default) {
         }
     }
     SEXP vs = get_sexp_value(self, "vs");
-    UNPROTECT(1);
     return VECTOR_ELT(vs, index - 1);
 }
 
