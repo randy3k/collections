@@ -31,6 +31,17 @@
 #' d$pop("orange")
 #' d$as_list()  # "orange" is removed
 #' d$set("orange", 3)$set("pear", 7)  # chain methods
+#'
+#' # vector indexing
+#' d$set(c(1L, 2L), 3)$set(LETTERS, 26)
+#' d$get(c(1L, 2L))  # 3
+#' d$get(LETTERS)  # 26
+#'
+#' # object indexing
+#' e <- new.env()
+#' d$set(sum, 1)$set(e, 2)
+#' d$get(sum)  # 1
+#' d$get(e)  # 2
 #' @seealso [ordered_dict]
 #' @export
 dict <- function(items = NULL, keys = NULL) {
