@@ -1,7 +1,10 @@
+name: tagbot
+
 on:
   schedule:
     # every six hour
     - cron: 0 */6 * * *
+
 jobs:
   publish-github-release:
     runs-on: ubuntu-latest
@@ -10,9 +13,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: fetch all tags
-        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - name: fetch all tags and branches
+        run: git fetch --all
+
+      - run: git merge-base 5d33096 HEAD
+
       - name: check and publish release
         run: |
           tagbot::publish_release()
         shell: Rscript {0}
+        env:
+          GITHUB_PAT: ${{secrets.GITHUB_TOKEN}}
