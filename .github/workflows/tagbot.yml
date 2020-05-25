@@ -15,9 +15,6 @@ jobs:
           fetch-depth: 0
       - name: fetch all tags and branches
         run: git fetch --all
-
-      - run: git merge-base 5d33096 HEAD
-
       - name: check and publish release
         run: |
           tagbot::publish_release()
