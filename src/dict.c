@@ -82,6 +82,8 @@ tommy_hash_t strhash(SEXP self, SEXP key) {
         key_c = Rf_translateCharUTF8(c);
     } else if (Rf_isVector(key)) {
         key_c = digest(self, key);
+    } else if (Rf_isFunction(key)) {
+        key_c = digest(self, BODY(key));
     } else {
         const char* buf = R_alloc(sizeof(char), 30);
         sprintf((char*) buf, "<%p>", key);
