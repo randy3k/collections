@@ -79,7 +79,7 @@ pq$pop()
 #> [1] "not_urgent"
 ```
 
-Dictionary. Comparing to R envrionments, `dict()` does not [leak memory](https://r-lib.github.io/fastmap/#memory-leak-examples) and supports hashing any R objects.
+Dictionary. Comparing to R envrionments, `dict()` does not [leak memory](https://r-lib.github.io/fastmap/#memory-leak-examples) and supports hashing environments or functions.
 
 ``` r
 d <- dict()
