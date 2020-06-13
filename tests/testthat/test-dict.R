@@ -145,12 +145,16 @@ test_that("object indexing works", {
     f <- function() {
         NULL
     }
-    d$set(s, 1)$set(q, 2)$set(f, 3)
-    expect_equal(d$size(), 3)
+    g <- function(x) {
+        x
+    }
+    d$set(s, 1)$set(q, 2)$set(f, 3)$set(g, 4)
+    expect_equal(d$size(), 4)
     expect_equal(d$get(s), 1)
     expect_equal(d$get(q), 2)
     expect_equal(d$get(f), 3)
-    expect_equal(d$keys(), list(s, q, f))
+    expect_equal(d$get(g), 4)
+    expect_equal(d$keys(), list(s, q, f, g))
 })
 
 
