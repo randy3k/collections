@@ -63,14 +63,20 @@ static_inline void holes_clear(SEXP self) {
 
 
 static_inline const char* digest(SEXP self, SEXP x) {
+    // we need to mask the object in order to make `base::serialize` work
+    SEXP xsym = install("x");
+    SEXP new_env = PROTECT(Rf_lang3(Rf_install("::"), Rf_install("base"), Rf_install("new.env")));
+    SEXP mask = PROTECT(Rf_eval(Rf_lang1(new_env), self));
+    Rf_defineVar(xsym, x, mask);
     SEXP digestfun = PROTECT(get_sexp_value(self, "digest"));
-    SEXP l = PROTECT(Rf_lang2(digestfun, x));
+    SEXP l = PROTECT(Rf_lang2(digestfun, xsym));
     int errorOccurred;
-    SEXP result = R_tryEval(l, self, &errorOccurred);
+    SEXP result = R_tryEval(l, mask, &errorOccurred);
+    Rf_defineVar(xsym, R_NilValue, mask);
     if (errorOccurred || TYPEOF(result) != STRSXP) {
         Rf_error("cannot compute digest of the key");
     }
-    UNPROTECT(2);
+    UNPROTECT(4);
     return R_CHAR(Rf_asChar(result));
 }
 
