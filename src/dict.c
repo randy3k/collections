@@ -66,7 +66,8 @@ static_inline const char* digest(SEXP self, SEXP x) {
     // we need to mask the object in order to make `base::serialize` work
     SEXP xsym = install("x");
     SEXP new_env = PROTECT(Rf_lang3(Rf_install("::"), Rf_install("base"), Rf_install("new.env")));
-    SEXP mask = PROTECT(Rf_eval(Rf_lang1(new_env), self));
+    SEXP new_env_call = PROTECT(Rf_lang1(new_env));
+    SEXP mask = PROTECT(Rf_eval(new_env_call, self));
     Rf_defineVar(xsym, x, mask);
     SEXP digestfun = PROTECT(get_sexp_value(self, "digest"));
     SEXP l = PROTECT(Rf_lang2(digestfun, xsym));
@@ -76,7 +77,7 @@ static_inline const char* digest(SEXP self, SEXP x) {
     if (errorOccurred || TYPEOF(result) != STRSXP) {
         Rf_error("cannot compute digest of the key");
     }
-    UNPROTECT(4);
+    UNPROTECT(5);
     return R_CHAR(Rf_asChar(result));
 }
 
@@ -89,7 +90,11 @@ tommy_hash_t strhash(SEXP self, SEXP key) {
     } else if (Rf_isVector(key)) {
         key_c = digest(self, key);
     } else if (Rf_isFunction(key)) {
-        key_c = digest(self, BODY(key));
+        SEXP key2 = PROTECT(Rf_duplicate(key));
+        // the digest function will also hash the enclosure
+        SET_CLOENV(key2, R_NilValue);
+        key_c = digest(self, key2);
+        UNPROTECT(1);
     } else {
         const char* buf = R_alloc(sizeof(char), 30);
         sprintf((char*) buf, "<%p>", key);
