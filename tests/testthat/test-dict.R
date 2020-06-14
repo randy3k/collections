@@ -163,8 +163,22 @@ test_that("vector indexing works", {
     a <- c(1L, 2L)
     b <- list(key1 = "value1", key2 = 2)
     d$set(a, 1)$set(b, 2)
-    expect_equal(d$size(), 2)
+    c <- list(key1 = "value1", key2 = 2, key3 = list(1, 2, LETTERS))
+    d$set(a, 1)$set(b, 2)$set(c, 3)
+    expect_equal(d$size(), 3)
     expect_equal(d$get(c(1L, 2L)), 1)
     expect_equal(d$get(list(key1 = "value1", key2 = 2)), 2)
     expect_error(d$get(c(1, 2)))
+    expect_equal(d$get(c), 3)
+})
+
+
+test_that("attributes must be hashable", {
+    d <- dict()
+    a <- 1:4
+    e <- new.env()
+    d$set(a, 1)
+    expect_equal(d$get(a), 1)
+    attr(a, "e") <- e
+    expect_error(d$set(a, 2), "not hashable")
 })
