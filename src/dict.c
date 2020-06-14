@@ -72,19 +72,13 @@ static_inline const char* digest(SEXP self, SEXP x) {
     SEXP digestfun = PROTECT(get_sexp_value(self, "digest"));
     SEXP l = PROTECT(Rf_lang2(digestfun, xsym));
     int errorOccurred;
-
-    // remove attributes while computing hash
-    SEXP attrib = PROTECT(ATTRIB(x));
-    SET_ATTRIB(x, R_NilValue);
     SEXP result = R_tryEval(l, mask, &errorOccurred);
-    // restore attributes
-    SET_ATTRIB(x, attrib);
     // remove the mask
     Rf_defineVar(xsym, R_NilValue, mask);
     if (errorOccurred || TYPEOF(result) != STRSXP) {
         Rf_error("cannot compute digest of the key");
     }
-    UNPROTECT(6);
+    UNPROTECT(5);
     return R_CHAR(Rf_asChar(result));
 }
 
@@ -136,8 +130,9 @@ tommy_hash_t strhash(SEXP self, SEXP key) {
         sprintf((char*) key_c, "env<%p>", key);
     } else if (Rf_isFunction(key)) {
         SEXP key2 = PROTECT(Rf_shallow_duplicate(key));
-        // the digest function will also hash the closure environment
+        // the digest function will also hash the closure environment and attributes
         SET_CLOENV(key2, R_NilValue);
+        SET_ATTRIB(key2, R_NilValue);
         key_c = digest(self, key2);
         UNPROTECT(1);
     } else {
