@@ -89,29 +89,34 @@ static_inline const char* digest(SEXP self, SEXP x) {
 }
 
 
-static_inline int is_hashable(SEXP key, int level) {
+static_inline int is_hashable(SEXP key) {
     if (Rf_isNull(key)) {
         return 1;
     }else if (Rf_isVectorAtomic(key)) {
-        SEXP attrib = ATTRIB(key);
-        SEXP v, nx;
-        if (level > 0) {
-            while (attrib != R_NilValue) {
-                v = CAR(attrib);
-                if (!is_hashable(v, 1)) {
-                    return 0;
-                }
-                attrib = CDR(attrib);
-            }
+        if (!is_hashable(ATTRIB(key))) {
+            return 0;
         }
         return 1;
     } else if (TYPEOF(key) == VECSXP) {
         R_xlen_t i;
         R_xlen_t n = Rf_length(key);
         for (i = 0; i < n; i++) {
-            if (!is_hashable(VECTOR_ELT(key, i), 1)) {
+            if (!is_hashable(VECTOR_ELT(key, i))) {
                 return 0;
             }
+        }
+        if (!is_hashable(ATTRIB(key))) {
+            return 0;
+        }
+        return 1;
+    } else if (TYPEOF(key) == LISTSXP) {
+        SEXP v;
+        while (key != R_NilValue) {
+            v = CAR(key);
+            if (!is_hashable(v)) {
+                return 0;
+            }
+            key = CDR(key);
         }
         return 1;
     }
@@ -124,7 +129,7 @@ tommy_hash_t strhash(SEXP self, SEXP key) {
     if (TYPEOF(key) == STRSXP && Rf_length(key) == 1) {
         SEXP c = Rf_asChar(key);
         key_c = Rf_translateCharUTF8(c);
-    } else if (is_hashable(key, 0)) {
+    } else if (is_hashable(key)) {
         key_c = digest(self, key);
     } else if (Rf_isEnvironment(key)) {
         key_c = R_alloc(sizeof(char), 30);
