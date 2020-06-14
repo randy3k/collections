@@ -72,13 +72,39 @@ static_inline const char* digest(SEXP self, SEXP x) {
     SEXP digestfun = PROTECT(get_sexp_value(self, "digest"));
     SEXP l = PROTECT(Rf_lang2(digestfun, xsym));
     int errorOccurred;
+
+    // remove attributes while computing hash
+    SEXP attrib = PROTECT(ATTRIB(x));
+    SET_ATTRIB(x, R_NilValue);
     SEXP result = R_tryEval(l, mask, &errorOccurred);
+    // restore attributes
+    SET_ATTRIB(x, attrib);
+    // remove the mask
     Rf_defineVar(xsym, R_NilValue, mask);
     if (errorOccurred || TYPEOF(result) != STRSXP) {
         Rf_error("cannot compute digest of the key");
     }
-    UNPROTECT(5);
+    UNPROTECT(6);
     return R_CHAR(Rf_asChar(result));
+}
+
+
+static_inline int is_hashable(SEXP key) {
+    if (Rf_isVectorAtomic(key)) {
+        return 1;
+    } else if (TYPEOF(key) == VECSXP) {
+        R_xlen_t i;
+        R_xlen_t n = Rf_length(key);
+        SEXP v;
+        for (i = 0; i < n; i++) {
+            v = VECTOR_ELT(key, i);
+            if (!is_hashable(v) || ATTRIB(v) != R_NilValue) {
+                return 0;
+            }
+        }
+        return 1;
+    }
+    return 0;
 }
 
 
@@ -87,19 +113,19 @@ tommy_hash_t strhash(SEXP self, SEXP key) {
     if (TYPEOF(key) == STRSXP && Rf_length(key) == 1) {
         SEXP c = Rf_asChar(key);
         key_c = Rf_translateCharUTF8(c);
-    } else if (Rf_isVectorAtomic(key)) {
+    } else if (is_hashable(key)) {
         key_c = digest(self, key);
     } else if (Rf_isEnvironment(key)) {
         key_c = R_alloc(sizeof(char), 30);
         sprintf((char*) key_c, "env<%p>", key);
     } else if (Rf_isFunction(key)) {
-        SEXP key2 = PROTECT(Rf_duplicate(key));
-        // the digest function will also hash the enclosure
+        SEXP key2 = PROTECT(Rf_shallow_duplicate(key));
+        // the digest function will also hash the closure environment
         SET_CLOENV(key2, R_NilValue);
         key_c = digest(self, key2);
         UNPROTECT(1);
     } else {
-        Rf_error("doesn't support this type of key");
+        Rf_error("key is not hashable");
     }
     return tommy_strhash_u32(0, key_c);
 }
