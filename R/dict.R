@@ -19,7 +19,7 @@
 #' .$as_list()
 #' .$print()
 #' }
-#' * `key`: scalar character, environment or function
+#' * `key`: a scalar character, an atomic vector, an enviroment or a function
 #' * `value`: any R object, value of the item
 #' * `default`: optional, the default value of an item if the key is not found
 #' * `d`: a dict object

@@ -13,3 +13,4 @@ vignettes
 ^.github$
 ^.covrignore$
 ^codecov.yml$
+^compile_flags.txt$

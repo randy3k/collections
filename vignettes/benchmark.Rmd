@@ -23,9 +23,6 @@ The goal of this document is to compare the performances of some of the existing
 - [hash](https://CRAN.R-project.org/package=hash)
     `r packageDescription("hash")$Version` uses R environments to 
     create hash tables. It is [known](https://r-lib.github.io/fastmap/#memory-leak-examples) that regular R enviroments leak memory.
-- [hashmap](https://CRAN.R-project.org/package=hashmap)
-    `r packageDescription("hashmap")$Version` provides
-    hashmap for atomic vectors using boost library.
 - [fastmap](https://CRAN.R-project.org/package=fastmap)
     `r packageDescription("fastmap")$Version`. The current implementation of collection::dict
     is actually inspired by it. However, a more
@@ -377,13 +374,6 @@ bench_dict <- bench::press(
         },
         `hash::hash` = {
             h <- hash::hash()
-            x <- rnorm(n)
-            k <- as.character(seq_len(n))
-            for (i in 1:n) h[[k[i]]] <- x[i]
-            for (i in sample(1:n)) h[[k[i]]]
-        },
-        `hashmap::hashmap` = {
-            h <- hashmap::hashmap(keys = character(0), values = numeric(0))
             x <- rnorm(n)
             k <- as.character(seq_len(n))
             for (i in 1:n) h[[k[i]]] <- x[i]

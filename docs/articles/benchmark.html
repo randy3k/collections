@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">collections</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.9999</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@
 
       
 
-      </header><script src="benchmark_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><script src="benchmark_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Benchmarking ‘collections’</h1>
@@ -100,8 +100,6 @@
 <a href="https://CRAN.R-project.org/package=liqueueR">liqueueR</a> 0.0.1 implements queues in pure R code which explains its slowness.</li>
 <li>
 <a href="https://CRAN.R-project.org/package=hash">hash</a> 2.2.6.1 uses R environments to create hash tables. It is <a href="https://r-lib.github.io/fastmap/#memory-leak-examples">known</a> that regular R enviroments leak memory.</li>
-<li>
-<a href="https://CRAN.R-project.org/package=hashmap">hashmap</a> 0.2.2 provides hashmap for atomic vectors using boost library.</li>
 <li>
 <a href="https://CRAN.R-project.org/package=fastmap">fastmap</a> 1.0.1. The current implementation of collection::dict is actually inspired by it. However, a more efficient hash table library <a href="https://github.com/amadvance/tommyds/">tommy</a> is used.</li>
 <li>We also compare to serveral base R implementations based on lists or environments, see <a href="https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd">here</a> for details.</li>

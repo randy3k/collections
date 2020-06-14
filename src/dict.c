@@ -87,8 +87,11 @@ tommy_hash_t strhash(SEXP self, SEXP key) {
     if (TYPEOF(key) == STRSXP && Rf_length(key) == 1) {
         SEXP c = Rf_asChar(key);
         key_c = Rf_translateCharUTF8(c);
-    } else if (Rf_isVector(key)) {
+    } else if (Rf_isVectorAtomic(key)) {
         key_c = digest(self, key);
+    } else if (Rf_isEnvironment(key)) {
+        key_c = R_alloc(sizeof(char), 30);
+        sprintf((char*) key_c, "env<%p>", key);
     } else if (Rf_isFunction(key)) {
         SEXP key2 = PROTECT(Rf_duplicate(key));
         // the digest function will also hash the enclosure
@@ -96,9 +99,7 @@ tommy_hash_t strhash(SEXP self, SEXP key) {
         key_c = digest(self, key2);
         UNPROTECT(1);
     } else {
-        const char* buf = R_alloc(sizeof(char), 30);
-        sprintf((char*) buf, "<%p>", key);
-        key_c = buf;
+        Rf_error("doesn't support this type of key");
     }
     return tommy_strhash_u32(0, key_c);
 }
