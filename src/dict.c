@@ -82,7 +82,7 @@ static_inline const char* digest(SEXP self, SEXP x) {
 }
 
 
-static_inline int is_hashable(SEXP key) {
+static int is_hashable(SEXP key) {
     if (Rf_isNull(key)) {
         return 1;
     }else if (Rf_isVectorAtomic(key)) {
@@ -110,6 +110,9 @@ static_inline int is_hashable(SEXP key) {
                 return 0;
             }
             key = CDR(key);
+        }
+        if (!is_hashable(ATTRIB(key))) {
+            return 0;
         }
         return 1;
     }
