@@ -12,6 +12,8 @@ test_that("push and pop", {
     expect_equal(d$get("c"), 3)
     expect_error(d$get("d"), "not found")
     expect_error(d$pop("d"), "not found")
+    expect_equal(d$get("d", 1), 1)
+    expect_equal(d$pop("d", 1), 1)
     d$remove("b")
     expect_equal(d$size(), 2)
     expect_equal(d$pop("a"), 1)

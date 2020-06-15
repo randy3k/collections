@@ -1,5 +1,36 @@
 #include "utils.h"
 
+
+
+static SEXP make_current_frame_call() {
+    SEXP sys_frame_fun = PROTECT(Rf_findFun(Rf_install("sys.frame"), R_BaseEnv));
+    SEXP function_sym = PROTECT(Rf_findFun(Rf_install("function"), R_BaseEnv));
+    SEXP current_frame_body = PROTECT(Rf_lang2(sys_frame_fun, PROTECT(Rf_ScalarInteger(-1))));
+    SEXP current_frame_lang = PROTECT(Rf_lang3(function_sym, R_NilValue, current_frame_body));
+    SEXP fn = Rf_eval(current_frame_lang, R_EmptyEnv);
+    UNPROTECT(4);
+    return fn;
+}
+
+
+static SEXP current_frame_call = NULL;
+
+SEXP r_current_frame() {
+    if (current_frame_call == NULL) {
+        current_frame_call = make_current_frame_call();
+        R_PreserveObject(current_frame_call);
+    }
+    // skip the sys.frame wrapper
+    return Rf_eval(Rf_lang1(current_frame_call), R_EmptyEnv);
+}
+
+
+int r_is_missing(SEXP env, const char* name) {
+    SEXP missing_sym = Rf_findFun(Rf_install("missing"), R_BaseEnv);
+    return Rf_asInteger(Rf_eval(Rf_lang2(missing_sym, Rf_install(name)), env));
+}
+
+
 // return the current value of a pairlist
 SEXP pairlist_car(SEXP x) {
   if (!Rf_isList(x))

@@ -8,7 +8,7 @@
 #' \preformatted{
 #' .$set(key, value)
 #' .$get(key, default)
-#' .$remove(key)
+#' .$remove(key, silent = FALSE)
 #' .$pop(key, default)
 #' .$popitem(last = TRUE)
 #' .$has(key)
@@ -65,19 +65,19 @@ ordered_dict <- function(items = NULL, keys = NULL) {
         invisible(self)
     }
     get <- function(key, default) {
-        .Call(C_dict_get, d, key, missing_arg(default))
+        .Call(C_dict_get, d, key)
     }
-    remove <- function(key) {
+    remove <- function(key, silent = FALSE) {
         tryCatch(
             .Call(C_deque_remove, q, key),
-            error = function(e) stop("key not found")
+            error = function(e) if (!silent) stop("key not found")
         )
-        .Call(C_dict_remove, d, key)
+        .Call(C_dict_remove, d, key, silent)
         invisible(self)
     }
     pop <- function(key, default) {
-        v <- .Call(C_dict_get, d, key, missing_arg(default))
-        remove(key)
+        v <- .Call(C_dict_get, d, key)
+        remove(key, TRUE)
         v
     }
     popitem <- function(last = TRUE) {

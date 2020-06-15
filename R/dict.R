@@ -8,7 +8,7 @@
 #' \preformatted{
 #' .$set(key, value)
 #' .$get(key, default)
-#' .$remove(key)
+#' .$remove(key, silent = FALSE)
 #' .$pop(key, default)
 #' .$has(key)
 #' .$keys()
@@ -80,15 +80,16 @@ dict <- function(items = NULL, keys = NULL) {
         invisible(self)
     }
     get <- function(key, default) {
-        .Call(C_dict_get, self, key, missing_arg(default))
+        .Call(C_dict_get, self, key)
     }
-    remove <- function(key) {
-        .Call(C_dict_remove, self, key)
+    remove <- function(key, silent = FALSE) {
+        .Call(C_dict_remove, self, key, silent)
         invisible(self)
     }
     pop <- function(key, default) {
+        # TODO: get and remove in one shot
         v <- get(key, default)
-        remove(key)
+        .Call(C_dict_remove, self, key, TRUE)
         v
     }
     has <- function(key) {

@@ -5,6 +5,9 @@
 #include <R.h>
 #include <Rinternals.h>
 
+SEXP r_current_frame();
+
+int r_is_missing(SEXP env, const char* name);
 
 SEXP pairlist_car(SEXP x);
 

@@ -208,16 +208,18 @@ static int _dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t h) {
 }
 
 
-SEXP dict_get(SEXP self, SEXP _key, SEXP _default) {
+SEXP dict_get(SEXP self, SEXP _key) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
     tommy_hash_t h = digest(_key);
     int index = _dict_index_get(self, ht_xptr, _key, h);
     UNPROTECT(1);
     if (index <= 0) {
-        if (_default != R_MissingArg) {
-            return _default;
-        } else {
+        SEXP fn = r_current_frame();
+        if (r_is_missing(fn, "default")) {
             Rf_error("key not found");
+        } else {
+            SEXP _default = Rf_findVar(Rf_install("default"), fn);
+            return Rf_eval(_default, PRENV(_default));
         }
     }
     SEXP vs = get_sexp_value(self, "vs");
@@ -326,20 +328,26 @@ SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
 }
 
 
-SEXP dict_remove(SEXP self, SEXP _key) {
+SEXP dict_remove(SEXP self, SEXP _key, SEXP _silent) {
     tommy_hashlin *ht;
     item *s;
     int index;
+    int silent = Rf_asInteger(_silent);
 
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
     ht = R_ExternalPtrAddr(ht_xptr);
     if (ht == NULL) {
         ht = init_hashlin(self, ht_xptr);
     }
+    UNPROTECT(1);
     tommy_hash_t h = digest(_key);
     s = tommy_hashlin_remove(ht, compare, _key, h);
     if (s == NULL) {
-        Rf_error("key not found");
+        if (silent) {
+            return R_NilValue;
+        } else {
+            Rf_error("key not found");
+        }
     }
 
     index = s->value;
@@ -350,7 +358,7 @@ SEXP dict_remove(SEXP self, SEXP _key) {
     SEXP vs = PROTECT(get_sexp_value(self, "vs"));
     SET_VECTOR_ELT(ks, index - 1, R_NilValue);
     SET_VECTOR_ELT(vs, index - 1, R_NilValue);
-    UNPROTECT(3);
+    UNPROTECT(2);
     holes_push(self, index);
     add_int_value(self, "nholes", 1);
     int m = get_int_value(self, "m");
