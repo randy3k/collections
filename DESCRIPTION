@@ -1,7 +1,7 @@
 Type: Package
 Package: collections
 Title: High Performance Container Data Types
-Version: 0.3.3
+Version: 0.3.3.9999
 Date: 2020-06-14
 Authors@R: 
     c(person(given = "Randy",
