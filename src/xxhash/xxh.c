@@ -57,7 +57,7 @@ static void OutBytes(R_outpstream_t stream, void *buf, int length)
 }
 
 
-const char* xxh_digest(SEXP x) {
+XXH64_hash_t xxh_digest(SEXP x) {
     XXH3_state_t* const xxh_state = XXH3_createState();
     XXH3_64bits_reset_withSeed(xxh_state, 0);
     struct R_outpstream_st stream;
@@ -69,9 +69,5 @@ const char* xxh_digest(SEXP x) {
 
     R_Serialize(x, &stream);
 
-    XXH64_hash_t hash = XXH3_64bits_digest(xxh_state);
-    char* s = R_alloc(sizeof(char), 9);
-    uint64ToHex(hash, s);
-    s[8] = '\x00';
-    return s;
+    return XXH3_64bits_digest(xxh_state);
 }

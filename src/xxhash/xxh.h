@@ -13,7 +13,7 @@
 
 #include "xxh3.h"
 
-const char* xxh_digest(SEXP x);
+XXH64_hash_t xxh_digest(SEXP x);
 
 
 #endif /* end of include guard: XXH_H__ */
