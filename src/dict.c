@@ -1,6 +1,7 @@
 #include "tommyds/tommyhashlin.h"
 #include "dict.h"
 #include "utils.h"
+#include "xxhash/xxh.h"
 
 #define INITIAL_SIZE 16
 #define GROW_FACTOR 1.5
@@ -62,24 +63,24 @@ static_inline void holes_clear(SEXP self) {
 }
 
 
-static_inline const char* digest(SEXP self, SEXP x) {
-    // we need to mask the object in order to make `base::serialize` work
-    SEXP xsym = Rf_install("x");
-    SEXP new_env = PROTECT(Rf_lang1(Rf_install("new.env")));
-    SEXP mask = PROTECT(Rf_eval(new_env, R_BaseEnv));
-    Rf_defineVar(xsym, x, mask);
-    SEXP digestfun = PROTECT(get_sexp_value(self, "digest"));
-    SEXP l = PROTECT(Rf_lang2(digestfun, xsym));
-    int errorOccurred;
-    SEXP result = R_tryEval(l, mask, &errorOccurred);
-    // remove the mask
-    Rf_defineVar(xsym, R_NilValue, mask);
-    if (errorOccurred || TYPEOF(result) != STRSXP) {
-        Rf_error("cannot compute digest of the key");
-    }
-    UNPROTECT(4);
-    return R_CHAR(Rf_asChar(result));
-}
+// static_inline const char* digest(SEXP self, SEXP x) {
+//     // we need to mask the object in order to make `base::serialize` work
+//     SEXP xsym = Rf_install("x");
+//     SEXP new_env = PROTECT(Rf_lang1(Rf_install("new.env")));
+//     SEXP mask = PROTECT(Rf_eval(new_env, R_BaseEnv));
+//     Rf_defineVar(xsym, x, mask);
+//     SEXP digestfun = PROTECT(get_sexp_value(self, "digest"));
+//     SEXP l = PROTECT(Rf_lang2(digestfun, xsym));
+//     int errorOccurred;
+//     SEXP result = R_tryEval(l, mask, &errorOccurred);
+//     // remove the mask
+//     Rf_defineVar(xsym, R_NilValue, mask);
+//     if (errorOccurred || TYPEOF(result) != STRSXP) {
+//         Rf_error("cannot compute digest of the key");
+//     }
+//     UNPROTECT(4);
+//     return R_CHAR(Rf_asChar(result));
+// }
 
 
 static int is_hashable(SEXP key) {
@@ -126,7 +127,7 @@ tommy_hash_t strhash(SEXP self, SEXP key) {
         SEXP c = Rf_asChar(key);
         key_c = Rf_translateCharUTF8(c);
     } else if (is_hashable(key)) {
-        key_c = digest(self, key);
+        key_c = xxh_digest(key);
     } else if (Rf_isEnvironment(key)) {
         key_c = R_alloc(sizeof(char), 30);
         sprintf((char*) key_c, "env<%p>", key);
@@ -135,7 +136,7 @@ tommy_hash_t strhash(SEXP self, SEXP key) {
         // the digest function will also hash the closure environment and attributes
         SET_CLOENV(key2, R_NilValue);
         SET_ATTRIB(key2, R_NilValue);
-        key_c = digest(self, key2);
+        key_c = xxh_digest(key2);
         UNPROTECT(1);
     } else {
         Rf_error("key is not hashable");

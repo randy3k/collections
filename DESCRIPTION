@@ -11,7 +11,11 @@ Authors@R:
       person(given = "Andrea",
              family = "Mazzoleni",
              role = "cph",
-             comment = "tommy hash table library"))
+             comment = "tommy hash table library"),
+      person(given = "Yann",
+             family = "Collet",
+             role = "cph",
+             comment = "xxhash algorithm"))
 Description: Provides high performance container data types such
     as queues, stacks, deques, dicts and ordered dicts. Benchmarks
     <https://randy3k.github.io/collections/articles/benchmark.html> have
@@ -30,5 +34,3 @@ LazyData: true
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
-Imports: 
-    fastdigest (>= 0.6.3)
