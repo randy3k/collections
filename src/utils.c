@@ -8,7 +8,7 @@ static SEXP make_current_frame_call() {
     SEXP current_frame_body = PROTECT(Rf_lang2(sys_frame_fun, PROTECT(Rf_ScalarInteger(-1))));
     SEXP current_frame_lang = PROTECT(Rf_lang3(function_sym, R_NilValue, current_frame_body));
     SEXP fn = Rf_eval(current_frame_lang, R_EmptyEnv);
-    UNPROTECT(4);
+    UNPROTECT(5);
     return fn;
 }
 
