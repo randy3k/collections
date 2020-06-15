@@ -46,7 +46,8 @@ int uint64ToHex(uint64_t num, char *s)
 static void OutChar(R_outpstream_t stream, int c)
 {
     XXH3_state_t* const xxh_state = (XXH3_state_t* const) stream->data;
-    XXH3_64bits_update(xxh_state, &c, sizeof(int));
+    char x = (char) c;
+    XXH3_64bits_update(xxh_state, &x, 1);
 }
 
 static void OutBytes(R_outpstream_t stream, void *buf, int length)
