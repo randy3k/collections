@@ -69,9 +69,7 @@ static_inline const char* digest(SEXP self, SEXP x) {
     SEXP mask = PROTECT(Rf_eval(new_env, R_BaseEnv));
     Rf_defineVar(xsym, x, mask);
     SEXP digestfun = PROTECT(get_sexp_value(self, "digest"));
-    SEXP algo = PROTECT(Rf_ScalarString(Rf_mkChar("spookyhash")));
-    SEXP l = PROTECT(Rf_lang3(digestfun, xsym, algo));
-    SET_TAG(CDDR(l), Rf_install("algo"));
+    SEXP l = PROTECT(Rf_lang2(digestfun, xsym));
     int errorOccurred;
     SEXP result = R_tryEval(l, mask, &errorOccurred);
     // remove the mask
@@ -79,7 +77,7 @@ static_inline const char* digest(SEXP self, SEXP x) {
     if (errorOccurred || TYPEOF(result) != STRSXP) {
         Rf_error("cannot compute digest of the key");
     }
-    UNPROTECT(5);
+    UNPROTECT(4);
     return R_CHAR(Rf_asChar(result));
 }
 

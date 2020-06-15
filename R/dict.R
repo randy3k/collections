@@ -54,7 +54,7 @@ dict <- function(items = NULL, keys = NULL) {
     vs <- NULL
     ks <- NULL
     ht_xptr <- NULL
-    digest <- digest::digest
+    digest <- fastdigest::fastdigest
     # we will define the keys function
     .keys <- keys
 
