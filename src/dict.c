@@ -218,8 +218,10 @@ SEXP dict_get(SEXP self, SEXP _key) {
         if (r_is_missing(fn, "default")) {
             Rf_error("key not found");
         } else {
-            SEXP _default = Rf_findVar(Rf_install("default"), fn);
-            return Rf_eval(_default, PRENV(_default));
+            SEXP _default = PROTECT(Rf_findVar(Rf_install("default"), fn));
+            _default = Rf_eval(_default, PRENV(_default));
+            UNPROTECT(1);
+            return _default;
         }
     }
     SEXP vs = get_sexp_value(self, "vs");

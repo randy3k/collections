@@ -21,13 +21,17 @@ SEXP r_current_frame() {
         R_PreserveObject(current_frame_call);
     }
     // skip the sys.frame wrapper
-    return Rf_eval(Rf_lang1(current_frame_call), R_EmptyEnv);
+    SEXP res = Rf_eval(PROTECT(Rf_lang1(current_frame_call)), R_EmptyEnv);
+    UNPROTECT(1);
+    return res;
 }
 
 
 int r_is_missing(SEXP env, const char* name) {
     SEXP missing_sym = Rf_findFun(Rf_install("missing"), R_BaseEnv);
-    return Rf_asInteger(Rf_eval(Rf_lang2(missing_sym, Rf_install(name)), env));
+    int res = Rf_asInteger(Rf_eval(PROTECT(Rf_lang2(missing_sym, Rf_install(name))), env));
+    UNPROTECT(1);
+    return res;
 }
 
 
