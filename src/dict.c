@@ -122,6 +122,7 @@ static int is_hashable(SEXP key) {
 
 
 tommy_hash_t digest(SEXP key) {
+
     if (is_hashable(key)) {
         return xxh_digest(key);
     }

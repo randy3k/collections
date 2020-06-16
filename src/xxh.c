@@ -34,8 +34,7 @@ XXH64_hash_t xxh_serialized_digest(SEXP x) {
 
 
 XXH64_hash_t xxh_digest(SEXP x) {
-
-    if (Rf_isVectorAtomic(x) && !ALTREP(x) && length(x) >= 1) {
+    if (Rf_length(x) >= 0 && Rf_isVectorAtomic(x) && (Rf_length(x) == 1 || !ALTREP(x))) {
         char *p;
         if (TYPEOF(x) == STRSXP) {
             if (Rf_length(x) == 1) {
