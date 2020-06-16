@@ -1,5 +1,43 @@
 #include "xxh.h"
-#include <string.h>
+
+
+int is_hashable(SEXP key) {
+    if (Rf_isNull(key)) {
+        return 1;
+    }else if (Rf_isVectorAtomic(key)) {
+        if (!is_hashable(ATTRIB(key))) {
+            return 0;
+        }
+        return 1;
+    } else if (TYPEOF(key) == VECSXP) {
+        R_xlen_t i;
+        R_xlen_t n = Rf_length(key);
+        for (i = 0; i < n; i++) {
+            if (!is_hashable(VECTOR_ELT(key, i))) {
+                return 0;
+            }
+        }
+        if (!is_hashable(ATTRIB(key))) {
+            return 0;
+        }
+        return 1;
+    } else if (TYPEOF(key) == LISTSXP) {
+        SEXP v;
+        while (key != R_NilValue) {
+            v = CAR(key);
+            if (!is_hashable(v)) {
+                return 0;
+            }
+            key = CDR(key);
+        }
+        if (!is_hashable(ATTRIB(key))) {
+            return 0;
+        }
+        return 1;
+    }
+    return 0;
+}
+
 
 // much of the following is derived from the fastdigest package but adapt to xxh
 

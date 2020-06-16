@@ -63,65 +63,7 @@ static_inline void holes_clear(SEXP self) {
 }
 
 
-// static_inline const char* digest(SEXP self, SEXP x) {
-//     // we need to mask the object in order to make `base::serialize` work
-//     SEXP xsym = Rf_install("x");
-//     SEXP new_env = PROTECT(Rf_lang1(Rf_install("new.env")));
-//     SEXP mask = PROTECT(Rf_eval(new_env, R_BaseEnv));
-//     Rf_defineVar(xsym, x, mask);
-//     SEXP digestfun = PROTECT(get_sexp_value(self, "digest"));
-//     SEXP l = PROTECT(Rf_lang2(digestfun, xsym));
-//     int errorOccurred;
-//     SEXP result = R_tryEval(l, mask, &errorOccurred);
-//     // remove the mask
-//     Rf_defineVar(xsym, R_NilValue, mask);
-//     if (errorOccurred || TYPEOF(result) != STRSXP) {
-//         Rf_error("cannot compute digest of the key");
-//     }
-//     UNPROTECT(4);
-//     return R_CHAR(Rf_asChar(result));
-// }
-
-
-static int is_hashable(SEXP key) {
-    if (Rf_isNull(key)) {
-        return 1;
-    }else if (Rf_isVectorAtomic(key)) {
-        if (!is_hashable(ATTRIB(key))) {
-            return 0;
-        }
-        return 1;
-    } else if (TYPEOF(key) == VECSXP) {
-        R_xlen_t i;
-        R_xlen_t n = Rf_length(key);
-        for (i = 0; i < n; i++) {
-            if (!is_hashable(VECTOR_ELT(key, i))) {
-                return 0;
-            }
-        }
-        if (!is_hashable(ATTRIB(key))) {
-            return 0;
-        }
-        return 1;
-    } else if (TYPEOF(key) == LISTSXP) {
-        SEXP v;
-        while (key != R_NilValue) {
-            v = CAR(key);
-            if (!is_hashable(v)) {
-                return 0;
-            }
-            key = CDR(key);
-        }
-        if (!is_hashable(ATTRIB(key))) {
-            return 0;
-        }
-        return 1;
-    }
-    return 0;
-}
-
-
-tommy_hash_t digest(SEXP key) {
+tommy_hash_t dict_hash(SEXP key) {
 
     if (is_hashable(key)) {
         return xxh_digest(key);
@@ -133,7 +75,7 @@ tommy_hash_t digest(SEXP key) {
 
     if (Rf_isFunction(key)) {
         SEXP key2 = PROTECT(Rf_shallow_duplicate(key));
-        // the digest function will also hash the closure environment and attributes
+        // avoid R_Serialize serilizing the closure environment and attributes
         SET_CLOENV(key2, R_NilValue);
         SET_ATTRIB(key2, R_NilValue);
         tommy_hash_t h = xxh_serialized_digest(key2);
@@ -164,7 +106,7 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
         for (i = 0; i < nks; i++) {
             c = VECTOR_ELT(ks, i);
             if (Rf_isNull(c)) continue;
-            h = digest(c);
+            h = dict_hash(c);
             s = (item*) malloc(sizeof(item));
             s->key = c;
             s->value = i + 1;
@@ -205,7 +147,7 @@ static int _dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t h) {
 
 SEXP dict_get(SEXP self, SEXP _key) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
-    tommy_hash_t h = digest(_key);
+    tommy_hash_t h = dict_hash(_key);
     int index = _dict_index_get(self, ht_xptr, _key, h);
     UNPROTECT(1);
     if (index <= 0) {
@@ -291,7 +233,7 @@ void _dict_index_set(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t h, int ind
 
 SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
-    tommy_hash_t h = digest(_key);
+    tommy_hash_t h = dict_hash(_key);
     int idx = _dict_index_get(self, ht_xptr, _key, h);
     int index;
 
@@ -337,7 +279,7 @@ SEXP dict_remove(SEXP self, SEXP _key, SEXP _silent) {
         ht = init_hashlin(self, ht_xptr);
     }
     UNPROTECT(1);
-    tommy_hash_t h = digest(_key);
+    tommy_hash_t h = dict_hash(_key);
     s = tommy_hashlin_remove(ht, compare, _key, h);
     if (s == NULL) {
         if (silent) {
@@ -373,7 +315,7 @@ SEXP dict_remove(SEXP self, SEXP _key, SEXP _silent) {
 
 SEXP dict_has(SEXP self, SEXP _key) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
-    tommy_hash_t h = digest(_key);
+    tommy_hash_t h = dict_hash(_key);
     int index = _dict_index_get(self, ht_xptr, _key, h);
     UNPROTECT(1);
     return Rf_ScalarLogical(index >= 1);
