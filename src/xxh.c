@@ -17,6 +17,27 @@ static void OutBytes(R_outpstream_t stream, void *buf, int length)
 
 
 XXH64_hash_t xxh_digest(SEXP x) {
+
+    if (Rf_isVectorAtomic(x) && !ALTREP(x)) {
+        char *p;
+        if (TYPEOF(x) == INTSXP) {
+            p = (char*) INTEGER(x);
+            return XXH3_64bits(p, Rf_length(x) * sizeof(int));
+        }
+        if (TYPEOF(x) == REALSXP) {
+            p = (char*) REAL(x);
+            return XXH3_64bits(p, Rf_length(x) * sizeof(double));
+        }
+        if (TYPEOF(x) == LGLSXP) {
+            p = (char*) LOGICAL(x);
+            return XXH3_64bits(p, Rf_length(x) * sizeof(int));
+        }
+        if (TYPEOF(x) == RAWSXP) {
+            p = (char*) RAW(x);
+            return XXH3_64bits(p, Rf_length(x));
+        }
+    }
+
     XXH3_state_t* const xxh_state = XXH3_createState();
     XXH3_64bits_reset_withSeed(xxh_state, 0);
     struct R_outpstream_st stream;

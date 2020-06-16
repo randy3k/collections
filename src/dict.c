@@ -1,7 +1,7 @@
 #include "tommyds/tommyhashlin.h"
 #include "dict.h"
+#include "xxh.h"
 #include "utils.h"
-#include "xxhash/xxh.h"
 
 #define INITIAL_SIZE 16
 #define GROW_FACTOR 1.5
@@ -127,16 +127,20 @@ tommy_hash_t digest(SEXP key) {
         SEXP c = Rf_asChar(key);
         s = Rf_translateCharUTF8(c);
         return XXH3_64bits(s, strlen(s));
+    }
 
-    } else if (is_hashable(key)) {
+    if (is_hashable(key)) {
         return xxh_digest(key);
+    }
 
-    } else if (Rf_isEnvironment(key)) {
+    if (Rf_isEnvironment(key)) {
         s = R_alloc(sizeof(char), 30);
         sprintf((char*) s, "env<%p>", key);
         return XXH3_64bits(s, strlen(s));
 
-    } else if (Rf_isFunction(key)) {
+    }
+
+    if (Rf_isFunction(key)) {
         SEXP key2 = PROTECT(Rf_shallow_duplicate(key));
         // the digest function will also hash the closure environment and attributes
         SET_CLOENV(key2, R_NilValue);
@@ -146,6 +150,7 @@ tommy_hash_t digest(SEXP key) {
         return h;
 
     }
+
     Rf_error("key is not hashable");
 }
 

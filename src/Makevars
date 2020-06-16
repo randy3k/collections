@@ -1,2 +1,2 @@
-SOURCES = collections.c deque.c dict.c priority_queue.c queue.c stack.c utils.c
-OBJECTS = tommyds/tommy.o xxhash/xxh.o $(SOURCES:.c=.o)
+SOURCES = collections.c deque.c dict.c priority_queue.c queue.c stack.c xxh.c utils.c
+OBJECTS = tommyds/tommy.o $(SOURCES:.c=.o)

@@ -23,9 +23,7 @@ Description: Provides high performance container data types such
     those offered by other packages.
 License: MIT + file LICENSE
 URL: https://github.com/randy3k/collections
-Depends:
-    R (>= 3.4.0)
-Suggests: 
+Suggests:
     covr (>= 3.4.0),
     testthat (>= 2.3.1)
 ByteCompile: yes

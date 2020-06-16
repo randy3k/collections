@@ -5,13 +5,21 @@
 #include <config.h>
 #endif
 
+#include "Rversion.h"
+
+#if (R_VERSION < R_Version(3, 5, 0))
+
+# define ALTREP(x) false
+
+#endif
+
 #define USE_RINTERNALS
 #include <R.h>
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
 #undef USE_RINTERNALS
 
-#include "xxh3.h"
+#include "xxhash/xxh3.h"
 
 XXH64_hash_t xxh_digest(SEXP x);
 
