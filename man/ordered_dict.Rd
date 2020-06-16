@@ -19,7 +19,7 @@ Following methods are exposed:
 \preformatted{
 .$set(key, value)
 .$get(key, default)
-.$remove(key)
+.$remove(key, silent = FALSE)
 .$pop(key, default)
 .$popitem(last = TRUE)
 .$has(key)

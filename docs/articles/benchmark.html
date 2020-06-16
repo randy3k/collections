@@ -128,7 +128,7 @@
 <h2 class="hasAnchor">
 <a href="#dictionary" class="anchor"></a>Dictionary</h2>
 <p><img src="benchmark_files/figure-html/unnamed-chunk-6-1.png" width="700"><img src="benchmark_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
-<p>Note that <code><a href="https://rdrr.io/r/base/environment.html">base::new.env</a></code> suffers from <a href="https://r-lib.github.io/fastmap/#memory-leak-examples">memory leak</a> issue.</p>
+<p>Note that <code><a href="https://rdrr.io/r/base/environment.html">base::new.env</a></code> suffers from <a href="https://r-lib.github.io/fastmap/#memory-leak-examples">memory leak</a> issue. The performance gap between R environments and <code><a href="../reference/dict.html">collections::dict</a></code> is mainly attributed to the overhead in accessing the <code>$get</code> and <code>$set</code> methods from the <code>dict</code> object.</p>
 </div>
 <div id="ordered-dict" class="section level2">
 <h2 class="hasAnchor">

@@ -25,6 +25,7 @@ Useful links:
 Other contributors:
 \itemize{
   \item Andrea Mazzoleni (tommy hash table library) [copyright holder]
+  \item Yann Collet (xxhash algorithm) [copyright holder]
 }
 
 }

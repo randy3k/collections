@@ -127,7 +127,7 @@
 <span class="co">#&gt; [1] "not_as_urgent"</span>
 <span class="no">pq</span>$<span class="fu">pop</span>()
 <span class="co">#&gt; [1] "not_urgent"</span></pre></div>
-<p>Dictionary. Comparing to R envrionments, <code><a href="reference/dict.html">dict()</a></code> does not <a href="https://r-lib.github.io/fastmap/#memory-leak-examples">leak memory</a> and supports not only character keys.</p>
+<p>Dictionary. Comparing to R envrionments, <code><a href="reference/dict.html">dict()</a></code> does not <a href="https://r-lib.github.io/fastmap/#memory-leak-examples">leak memory</a> and supports various other types of keys.</p>
 <div class="sourceCode" id="cb8"><pre class="r"><span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/dict.html">dict</a></span>()
 <span class="no">e</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span>()
 <span class="no">d</span>$<span class="fu">set</span>(<span class="no">e</span>, <span class="fl">1</span>)$<span class="fu">set</span>(<span class="no">sum</span>, <span class="fl">2</span>)$<span class="fu">set</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1L</span>, <span class="fl">2L</span>), <span class="fl">3</span>)

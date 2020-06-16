@@ -421,7 +421,8 @@ bench_dict %>%
     ggtitle("(zoom in)") + ylab("time")
 ```
 
-Note that `base::new.env` suffers from [memory leak](https://r-lib.github.io/fastmap/#memory-leak-examples) issue.
+Note that `base::new.env` suffers from [memory leak](https://r-lib.github.io/fastmap/#memory-leak-examples) issue. The performance gap between R environments and `collections::dict` is mainly attributed to the overhead in accessing the `$get` and `$set` methods
+from the `dict` object.
 
 
 ## Ordered dict
