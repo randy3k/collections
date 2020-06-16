@@ -122,22 +122,12 @@ static int is_hashable(SEXP key) {
 
 
 tommy_hash_t digest(SEXP key) {
-    const char* s;
-    if (TYPEOF(key) == STRSXP && Rf_length(key) == 1) {
-        SEXP c = Rf_asChar(key);
-        s = Rf_translateCharUTF8(c);
-        return XXH3_64bits(s, strlen(s));
-    }
-
     if (is_hashable(key)) {
         return xxh_digest(key);
     }
 
     if (Rf_isEnvironment(key)) {
-        s = R_alloc(sizeof(char), 30);
-        sprintf((char*) s, "env<%p>", key);
-        return XXH3_64bits(s, strlen(s));
-
+        return XXH3_64bits(FRAME(key), sizeof(void*));
     }
 
     if (Rf_isFunction(key)) {
@@ -145,10 +135,9 @@ tommy_hash_t digest(SEXP key) {
         // the digest function will also hash the closure environment and attributes
         SET_CLOENV(key2, R_NilValue);
         SET_ATTRIB(key2, R_NilValue);
-        tommy_hash_t h = xxh_digest(key2);
+        tommy_hash_t h = xxh_serialized_digest(key2);
         UNPROTECT(1);
         return h;
-
     }
 
     Rf_error("key is not hashable");

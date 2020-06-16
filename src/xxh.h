@@ -21,6 +21,8 @@
 
 #include "xxhash/xxh3.h"
 
+XXH64_hash_t xxh_serialized_digest(SEXP x);
+
 XXH64_hash_t xxh_digest(SEXP x);
 
 
