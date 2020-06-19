@@ -70,7 +70,9 @@ tommy_hash_t key_to_u64(SEXP key) {
     }
 
     if (Rf_isEnvironment(key)) {
-        return XXH3_64bits(key, sizeof(void*));
+        static char ch[50];
+        snprintf(ch, 50, "<environment: %p>", (void*) key);
+        return XXH3_64bits(ch, strlen(ch));
     }
 
     if (Rf_isFunction(key)) {
