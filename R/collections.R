@@ -2,5 +2,4 @@
 #' @useDynLib collections, .registration = TRUE, .fixes = "C_"
 "_PACKAGE"
 
-# helper to identify if default is missing
-missing_arg <- function(default) if (missing(default)) .Call(C_missing_arg) else default
+dict_hash <- function(key) .Call(C_dict_hash, key)

@@ -63,14 +63,14 @@ static_inline void holes_clear(SEXP self) {
 }
 
 
-tommy_hash_t dict_hash(SEXP key) {
+tommy_hash_t key_to_u64(SEXP key) {
 
     if (is_hashable(key)) {
         return xxh_digest(key);
     }
 
     if (Rf_isEnvironment(key)) {
-        return XXH3_64bits(FRAME(key), sizeof(void*));
+        return XXH3_64bits(key, sizeof(void*));
     }
 
     if (Rf_isFunction(key)) {
@@ -84,6 +84,18 @@ tommy_hash_t dict_hash(SEXP key) {
     }
 
     Rf_error("key is not hashable");
+}
+
+
+SEXP dict_hash(SEXP key) {
+    tommy_hash_t h = key_to_u64(key);
+    char* p = R_alloc(17, sizeof(char));
+    char* c = (char*) &h;
+    for(int j = 0; j < 8; j++) {
+        sprintf(p + 2*j, "%02x", c[j]);
+    }
+    p[16] = 0;
+    return Rf_mkString(p);
 }
 
 
@@ -106,7 +118,7 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
         for (i = 0; i < nks; i++) {
             c = VECTOR_ELT(ks, i);
             if (Rf_isNull(c)) continue;
-            h = dict_hash(c);
+            h = key_to_u64(c);
             s = (item*) malloc(sizeof(item));
             s->key = c;
             s->value = i + 1;
@@ -147,7 +159,7 @@ static int _dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t h) {
 
 SEXP dict_get(SEXP self, SEXP _key) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
-    tommy_hash_t h = dict_hash(_key);
+    tommy_hash_t h = key_to_u64(_key);
     int index = _dict_index_get(self, ht_xptr, _key, h);
     UNPROTECT(1);
     if (index <= 0) {
@@ -233,7 +245,7 @@ void _dict_index_set(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t h, int ind
 
 SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
-    tommy_hash_t h = dict_hash(_key);
+    tommy_hash_t h = key_to_u64(_key);
     int idx = _dict_index_get(self, ht_xptr, _key, h);
     int index;
 
@@ -279,7 +291,7 @@ SEXP dict_remove(SEXP self, SEXP _key, SEXP _silent) {
         ht = init_hashlin(self, ht_xptr);
     }
     UNPROTECT(1);
-    tommy_hash_t h = dict_hash(_key);
+    tommy_hash_t h = key_to_u64(_key);
     s = tommy_hashlin_remove(ht, compare, _key, h);
     if (s == NULL) {
         if (silent) {
@@ -315,7 +327,7 @@ SEXP dict_remove(SEXP self, SEXP _key, SEXP _silent) {
 
 SEXP dict_has(SEXP self, SEXP _key) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
-    tommy_hash_t h = dict_hash(_key);
+    tommy_hash_t h = key_to_u64(_key);
     int index = _dict_index_get(self, ht_xptr, _key, h);
     UNPROTECT(1);
     return Rf_ScalarLogical(index >= 1);
