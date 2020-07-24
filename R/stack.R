@@ -27,6 +27,8 @@
 #' @export
 stack <- function(items = NULL) {
     self <- environment()
+    .__class__ <- "stack"
+
     q <- NULL
 
     initialize <- function(items = NULL) {

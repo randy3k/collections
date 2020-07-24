@@ -35,6 +35,7 @@
 #' @export
 deque <- function(items = NULL) {
     self <- environment()
+    .__class__ <- "deque"
     q <- NULL
     last <- NULL
 

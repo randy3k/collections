@@ -29,6 +29,8 @@
 #' @export
 priority_queue <- function(items = NULL, priorities = rep(0, length(items))) {
     self <- environment()
+    .__class__ <- "priority_queue"
+
     h <- NULL
     n <- NULL
 

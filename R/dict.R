@@ -46,6 +46,7 @@
 #' @export
 dict <- function(items = NULL, keys = NULL) {
     self <- environment()
+    .__class__ <- "dict"
 
     n <- NULL
     m <- NULL

@@ -30,6 +30,8 @@
 #' @export
 queue <- function(items = NULL) {
     self <- environment()
+    .__class__ <- "queue"
+
     q <- NULL
     last <- NULL
     initialize <- function(items = NULL) {

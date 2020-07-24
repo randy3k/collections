@@ -36,6 +36,8 @@
 #' @export
 ordered_dict <- function(items = NULL, keys = NULL) {
     self <- environment()
+    .__class__ <- "ordered_dict"
+
     d <- NULL
     q <- NULL
     .keys <- keys
