@@ -41,10 +41,12 @@ int is_hashable(SEXP key) {
 
 // much of the following is derived from the fastdigest package but adapt to xxh
 
+static char* buf1;
+
 static void OutChar(R_outpstream_t stream, int c) {
     XXH3_state_t* const xxh_state = (XXH3_state_t* const) stream->data;
-    char x = (char) c;
-    XXH3_64bits_update(xxh_state, &x, 1);
+    buf1[0] = (char) c;
+    XXH3_64bits_update(xxh_state, buf1, 1);
 }
 
 static void OutBytes(R_outpstream_t stream, void *buf, int length) {
@@ -55,11 +57,12 @@ static void OutBytes(R_outpstream_t stream, void *buf, int length) {
 
 XXH64_hash_t xxh_serialized_digest(SEXP x) {
     XXH3_state_t* const xxh_state = XXH3_createState();
-    XXH3_64bits_reset_withSeed(xxh_state, 0);
+    XXH3_64bits_reset(xxh_state);
     struct R_outpstream_st stream;
     R_pstream_format_t type = R_pstream_binary_format;
     int version = 0;
 
+    buf1 = malloc(1);
     R_InitOutPStream(&stream, (R_pstream_data_t) xxh_state, type, version,
                  OutChar, OutBytes, NULL, R_NilValue);
 
@@ -67,6 +70,7 @@ XXH64_hash_t xxh_serialized_digest(SEXP x) {
 
     XXH64_hash_t res = XXH3_64bits_digest(xxh_state);
     XXH3_freeState(xxh_state);
+    free(buf1);
     return res;
 }
 
@@ -80,7 +84,7 @@ XXH64_hash_t xxh_digest(SEXP x) {
                 return XXH3_64bits(p, strlen(p));
             } else {
                 XXH3_state_t* const xxh_state = XXH3_createState();
-                XXH3_64bits_reset_withSeed(xxh_state, 0);
+                XXH3_64bits_reset(xxh_state);
                 R_xlen_t n = Rf_length(x);
                 for (R_xlen_t i = 0; i < n; i++) {
                     p = (char *) Rf_translateCharUTF8(STRING_ELT(x, i));
