@@ -5,7 +5,7 @@
 
 #if (R_VERSION < R_Version(3, 5, 0))
 
-# define ALTREP(x) false
+# define ALTREP(x) 0
 
 #endif
 
