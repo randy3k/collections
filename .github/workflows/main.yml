@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NOT_CRAN: true
+      _R_CHECK_CRAN_INCOMING_: false
     steps:
       - uses: actions/checkout@v1
       # - uses: r-lib/actions/run-rchk@master
@@ -19,6 +20,7 @@ jobs:
     container: rocker/r-devel-ubsan-clang
     env:
       NOT_CRAN: true
+      _R_CHECK_CRAN_INCOMING_: false
     steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
@@ -39,6 +41,7 @@ jobs:
     container: rocker/tidyverse:${{ matrix.r }}
     env:
       NOT_CRAN: true
+      _R_CHECK_CRAN_INCOMING_: false
     steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
@@ -62,6 +65,7 @@ jobs:
     runs-on: macOS-latest
     env:
       NOT_CRAN: true
+      _R_CHECK_CRAN_INCOMING_: false
     steps:
       - uses: actions/checkout@v1
       - uses: r-lib/actions/setup-r@v1
@@ -88,6 +92,7 @@ jobs:
     runs-on: windows-latest
     env:
       NOT_CRAN: true
+      _R_CHECK_CRAN_INCOMING_: false
     steps:
       - uses: actions/checkout@v1
       - uses: r-lib/actions/setup-r@v1
