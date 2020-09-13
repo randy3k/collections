@@ -22,7 +22,7 @@ Description: Provides high performance container data types such
     shown that these containers are asymptotically more efficient than
     those offered by other packages.
 License: MIT + file LICENSE
-URL: https://github.com/randy3k/collections
+URL: https://github.com/randy3k/collections/
 Suggests:
     covr (>= 3.4.0),
     testthat (>= 2.3.1)
