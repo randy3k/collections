@@ -73,8 +73,8 @@ jobs:
           r-version: ${{ matrix.r }}
       - name: Install dependencies
         run: |
-          Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'mac.binary')"
-          Rscript -e "remotes::install_deps(dependencies = TRUE, type = 'mac.binary')"
+          Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
+          Rscript -e "remotes::install_deps(dependencies = TRUE)"
       - name: Running Tests
         run: |
           Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
@@ -100,8 +100,8 @@ jobs:
           r-version: ${{ matrix.r }}
       - name: Install dependencies
         run: |
-          Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org', type = 'win.binary')"
-          Rscript -e "remotes::install_deps(dependencies = TRUE, type = 'win.binary')"
+          Rscript -e "install.packages(c('remotes', 'rcmdcheck'), repos = 'https://cloud.r-project.org')"
+          Rscript -e "remotes::install_deps(dependencies = TRUE)"
       - name: Running Tests
         run: |
           Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual', '--timings'), error_on = 'warning')"
