@@ -24,7 +24,6 @@ Description: Provides high performance container data types such
 License: MIT + file LICENSE
 URL: https://github.com/randy3k/collections/
 Suggests:
-    covr (>= 3.4.0),
     testthat (>= 2.3.1)
 ByteCompile: yes
 Encoding: UTF-8
