@@ -1,0 +1,66 @@
+name: Check
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  cancel-workflow-action:
+    name: Cancel Previous Runs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macOS-latest,   r: 'release'}
+          - {os: windows-latest, r: 'release'}
+          - {os: ubuntu-latest,   r: 'devel'}
+          - {os: ubuntu-latest,   r: 'release'}
+          - {os: ubuntu-latest,   r: 'oldrel-1'}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    steps:
+      - uses: actions/checkout@v2
+      - uses: randy3k/gh-actions/r-check@main
+        with:
+          r-version: ${{ matrix.config.r }}
+
+  rchk:
+    runs-on: ubuntu-latest
+    container:
+      image: rhub/ubuntu-rchk
+      options: --user=root
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: randy3k/gh-actions/r-rchk@main
+
+  ubsan:
+    runs-on: ubuntu-latest
+    container:
+      image: rocker/r-devel-ubsan-clang
+      options: --cap-add=SYS_PTRACE
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: randy3k/gh-actions/r-ubsan@main
+
+  coverage:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: randy3k/gh-actions/r-coverage@main
