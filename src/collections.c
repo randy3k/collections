@@ -8,7 +8,7 @@
 #include "utils.h"
 
 
-SEXP missing_arg() {
+SEXP missing_arg(void) {
     return R_MissingArg;
 }
 

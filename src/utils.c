@@ -2,7 +2,7 @@
 
 
 
-static SEXP make_current_frame_call() {
+static SEXP make_current_frame_call(void) {
     SEXP sys_frame_fun = PROTECT(Rf_findFun(Rf_install("sys.frame"), R_BaseEnv));
     SEXP function_sym = PROTECT(Rf_findFun(Rf_install("function"), R_BaseEnv));
     SEXP current_frame_body = PROTECT(Rf_lang2(sys_frame_fun, PROTECT(Rf_ScalarInteger(-1))));
@@ -15,7 +15,7 @@ static SEXP make_current_frame_call() {
 
 static SEXP current_frame_call = NULL;
 
-SEXP r_current_frame() {
+SEXP r_current_frame(void) {
     if (current_frame_call == NULL) {
         current_frame_call = make_current_frame_call();
         R_PreserveObject(current_frame_call);

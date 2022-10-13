@@ -5,7 +5,7 @@
 #include <R.h>
 #include <Rinternals.h>
 
-SEXP r_current_frame();
+SEXP r_current_frame(void);
 
 int r_is_missing(SEXP env, const char* name);
 
