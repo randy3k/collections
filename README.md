@@ -4,13 +4,13 @@
 # High Performance Container Data Types
 
 [![check](https://github.com/randy3k/collections/actions/workflows/check.yaml/badge.svg)](https://github.com/randy3k/collections/actions/workflows/check.yaml)
-[![codecov](https://codecov.io/gh/randy3k/collections/branch/master/graph/badge.svg)](https://codecov.io/gh/randy3k/collections)
+[![codecov](https://app.codecov.io/gh/randy3k/collections/branch/master/graph/badge.svg)](https://app.codecov.io/gh/randy3k/collections)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/collections)](https://cran.r-project.org/package=collections)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/collections)](https://cran.r-project.org/package=collections)
 
 Github: <https://github.com/randy3k/collections>
 
-Documentation: <https://randy3k.github.io/collections>
+Documentation: <https://randy3k.github.io/collections/>
 
 Provides high performance container data types such as queues, stacks,
 deques, dicts and ordered dicts. Benchmarks

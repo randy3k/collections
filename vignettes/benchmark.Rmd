@@ -28,6 +28,7 @@ The goal of this document is to compare the performances of some of the existing
     is actually inspired by it. However, a more
     efficient hash table library [tommy](https://github.com/amadvance/tommyds/)
     is used.
+- [hashtab](https://stat.ethz.ch/R-manual/R-devel/library/utils/html/hashtab.html) of R 4.2.
 - We also compare to serveral base R implementations based on lists or environments, see [here](https://github.com/randy3k/collections/blob/master/vignettes/benchmark.Rmd) for details.
 
 
@@ -393,6 +394,13 @@ bench_dict <- bench::press(
             for (i in 1:n) h[[k[i]]] <- x[i]
             for (i in sample(1:n)) get0(k[i], envir = x, inherits = FALSE)
         },
+        `utils::hashtab` = {
+            h <- hashtab()
+            x <- rnorm(n)
+            k <- as.character(seq_len(n))
+            for (i in 1:n) h[[k[i]]] <- x[i]
+            for (i in sample(1:n)) h[[k[i]]]
+        },    
         `collections::dict` = {
             h <- collections::dict()
             x <- rnorm(n)
@@ -413,8 +421,9 @@ bench_dict %>%
     scale_colour_brewer(palette = "Set2", direction = -1) +
     ggtitle("push and pop n times") + ylab("time")
 bench_dict %>%
-    filter(expression %in% c(
-        "hash::hash", "fastmap::fastmap", "collections::dict", "base::new.env")) %>%
+    filter(expression %in% 
+           c("hash::hash", "fastmap::fastmap", "collections::dict", 
+             "utils::hashtab", "base::new.env")) %>%
     ggplot(aes(x = n, y = median)) +
     geom_line(aes(color = expression)) +
     scale_colour_brewer(palette = "Set2", direction = -1) +
