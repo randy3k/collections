@@ -165,15 +165,16 @@ SEXP dict_get(SEXP self, SEXP _key) {
     int index = _dict_index_get(self, ht_xptr, _key, h);
     UNPROTECT(1);
     if (index <= 0) {
-        SEXP fn = r_current_frame();
+        SEXP fn = PROTECT(r_current_frame());
         if (r_is_missing(fn, "default")) {
             Rf_error("key not found");
         } else {
             SEXP _default = PROTECT(Rf_findVar(Rf_install("default"), fn));
             _default = Rf_eval(_default, PRENV(_default));
-            UNPROTECT(1);
+            UNPROTECT(2);
             return _default;
         }
+        UNPROTECT(1);
     }
     SEXP vs = get_sexp_value(self, "vs");
     return VECTOR_ELT(vs, index - 1);
