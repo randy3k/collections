@@ -89,16 +89,16 @@ tommy_hash_t key_to_u64(SEXP key) {
 }
 
 
-SEXP dict_hash(SEXP key) {
-    tommy_hash_t h = key_to_u64(key);
-    char* p = R_alloc(17, sizeof(char));
-    char* c = (char*) &h;
-    for(int j = 0; j < 8; j++) {
-        sprintf(p + 2*j, "%02x", c[j]);
-    }
-    p[16] = 0;
-    return Rf_mkString(p);
-}
+// SEXP dict_hash(SEXP key) {
+//     tommy_hash_t h = key_to_u64(key);
+//     char* p = R_alloc(17, sizeof(char));
+//     char* c = (char*) &h;
+//     for(int j = 0; j < 8; j++) {
+//         sprintf(p + 2*j, "%02x", c[j]);
+//     }
+//     p[16] = 0;
+//     return Rf_mkString(p);
+// }
 
 
 static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
