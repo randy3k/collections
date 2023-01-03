@@ -184,3 +184,12 @@ test_that("attributes must be hashable", {
     attr(a, "e") <- e
     expect_error(d$set(a, 2), "not hashable")
 })
+
+test_that("test altrep", {
+    # see #22
+    d <- dict()
+    a <- sort(c(1L, 2L, 4L, 3L))
+    b <- c(1L, 2L, 3L, 4L)
+    d$set(a, TRUE)
+    expect_true(d$has(b))
+})

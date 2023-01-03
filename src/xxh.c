@@ -60,7 +60,7 @@ XXH64_hash_t xxh_serialized_digest(SEXP x) {
     XXH3_64bits_reset(xxh_state);
     struct R_outpstream_st stream;
     R_pstream_format_t type = R_pstream_binary_format;
-    int version = 0;
+    int version = 2;
 
     buf1 = malloc(1);
     R_InitOutPStream(&stream, (R_pstream_data_t) xxh_state, type, version,
@@ -76,7 +76,8 @@ XXH64_hash_t xxh_serialized_digest(SEXP x) {
 
 
 XXH64_hash_t xxh_digest(SEXP x) {
-    if (Rf_length(x) >= 0 && Rf_isVectorAtomic(x) && (Rf_length(x) == 1 || !ALTREP(x))) {
+    if (Rf_length(x) >= 0 && Rf_isVectorAtomic(x)) {
+        // note: always materialize ALTREP
         char *p;
         if (TYPEOF(x) == STRSXP) {
             if (Rf_length(x) == 1) {
