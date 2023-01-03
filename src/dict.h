@@ -6,7 +6,7 @@
 #include <Rinternals.h>
 
 
-SEXP dict_hash(SEXP key);
+// SEXP dict_hash(SEXP key);
 
 SEXP dict_get(SEXP self, SEXP _key);
 

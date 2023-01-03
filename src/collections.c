@@ -27,7 +27,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"deque_peek", (DL_FUNC) &deque_peek, 1},
     {"deque_remove", (DL_FUNC) &deque_remove, 2},
     {"deque_clear", (DL_FUNC) &deque_clear, 1},
-    {"dict_hash", (DL_FUNC) &dict_hash, 1},
+    // {"dict_hash", (DL_FUNC) &dict_hash, 1},
     {"dict_get", (DL_FUNC) &dict_get, 2},
     {"dict_set", (DL_FUNC) &dict_set, 3},
     {"dict_remove", (DL_FUNC) &dict_remove, 3},
