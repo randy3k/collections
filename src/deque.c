@@ -135,12 +135,13 @@ SEXP deque_remove(SEXP self, SEXP value) {
     SEXP last_ptr = PROTECT(get_sexp_value(self, "last"));
     // make sure the pointers are resolved after serialization/unserialization
     get_last_cons(q, last_ptr);
-    SEXP v, nextq, prev_ptr;
+    SEXP v, v1, nextq, prev_ptr;
     while (q != R_NilValue) {
         v = CAR(q);
+        v1 = PROTECT(VECTOR_ELT(v, 1));
         nextq = CDR(q);
-        if (R_compute_identical(VECTOR_ELT(v, 1), value, 16)) {
-            prev_ptr = VECTOR_ELT(v, 0);
+        if (R_compute_identical(v1, value, 16)) {
+            prev_ptr = PROTECT(VECTOR_ELT(v, 0));
             if (nextq == R_NilValue && prev_ptr == R_NilValue) {
                 set_sexp_value(self, "q", R_NilValue);
                 R_SetExternalPtrAddr(last_ptr, NULL);
@@ -158,9 +159,10 @@ SEXP deque_remove(SEXP self, SEXP value) {
                 SETCDR(prev, nextq);
                 SET_VECTOR_ELT(CAR(nextq), 0, prev_ptr);
             }
-            UNPROTECT(2);
+            UNPROTECT(4);
             return R_NilValue;
         }
+        UNPROTECT(1);
         q = nextq;
     }
     UNPROTECT(2);
