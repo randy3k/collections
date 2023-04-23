@@ -1,13 +1,13 @@
 name: TagBot
 
 on:
-  pull_request:
-    branches: [main, master]
+  push:
+    branches: [test-tagbot]
 
 jobs:
   publish-github-release:
     runs-on: ubuntu-latest
-    container: rtagbot/tagbot:latest
+    container: rtagbot/tagbot:master
     steps:
       - uses: actions/checkout@v2
         with:
