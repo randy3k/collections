@@ -1,9 +1,8 @@
 name: TagBot
 
 on:
-  schedule:
-    # every six hour
-    - cron: 0 */6 * * *
+  pull_request:
+    branches: [main, master]
 
 jobs:
   publish-github-release:
