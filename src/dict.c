@@ -176,8 +176,10 @@ SEXP dict_get(SEXP self, SEXP _key) {
         }
         UNPROTECT(1);
     }
-    SEXP vs = get_sexp_value(self, "vs");
-    return VECTOR_ELT(vs, index - 1);
+    SEXP vs = PROTECT(get_sexp_value(self, "vs"));
+    SEXP res = VECTOR_ELT(vs, index - 1);
+    UNPROTECT(1);
+    return res;
 }
 
 

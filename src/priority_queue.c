@@ -7,17 +7,20 @@
 
 
 static void swap(SEXP h, int a, int b) {
-    SEXP temp = PROTECT(VECTOR_ELT(h, a));
-    SET_VECTOR_ELT(h, a, VECTOR_ELT(h, b));
-    SET_VECTOR_ELT(h, b, temp);
-    UNPROTECT(1);
+    SEXP ha = PROTECT(VECTOR_ELT(h, a));
+    SEXP hb = PROTECT(VECTOR_ELT(h, b));
+    SET_VECTOR_ELT(h, a, hb);
+    SET_VECTOR_ELT(h, b, ha);
+    UNPROTECT(2);
 }
 
 static int cmp(SEXP h, int a, int b) {
-    SEXP _x = VECTOR_ELT(h, a);
-    SEXP _y = VECTOR_ELT(h, b);
+    PROTECT(h);
+    SEXP _x = PROTECT(VECTOR_ELT(h, a));
+    SEXP _y = PROTECT(VECTOR_ELT(h, b));
     double x = Rf_asReal(VECTOR_ELT(_x, 0));
     double y = Rf_asReal(VECTOR_ELT(_y, 0));
+    UNPROTECT(3);
     return x < y;
 }
 
@@ -33,7 +36,9 @@ static void grow(SEXP self, int n) {
     } else if (m < n + 1) {
         h2 = PROTECT(Rf_allocVector(VECSXP, (int) ceil(GROW_FACTOR * m)));
         for (i = 0; i < n; i++) {
-            SET_VECTOR_ELT(h2, i, VECTOR_ELT(h, i));
+            SEXP h2i = PROTECT(VECTOR_ELT(h, i));
+            SET_VECTOR_ELT(h2, i, h2i);
+            UNPROTECT(1);
         }
         set_sexp_value(self, "h", h2);
         UNPROTECT(1);
@@ -50,7 +55,9 @@ static void shrink(SEXP self, int n) {
     if (n < m1 && m1 > INITIAL_SIZE) {
         h2 = PROTECT(Rf_allocVector(VECSXP, m1));
         for (i = 0; i < n; i++) {
-            SET_VECTOR_ELT(h2, i, VECTOR_ELT(h, i));
+            SEXP h2i = PROTECT(VECTOR_ELT(h, i));
+            SET_VECTOR_ELT(h2, i, h2i);
+            UNPROTECT(1);
         }
         set_sexp_value(self, "h", h2);
         UNPROTECT(1);
@@ -120,11 +127,13 @@ SEXP heap_pop(SEXP self) {
     int n = Rf_asInteger(_n);
     if (n == 0) Rf_error("queue is empty");
     SEXP x = PROTECT(VECTOR_ELT(h, 0));
-    SET_VECTOR_ELT(h, 0, VECTOR_ELT(h, n - 1));
+    SEXP h0 = PROTECT(VECTOR_ELT(h, n - 1));
+    SET_VECTOR_ELT(h, 0, h0);
     sift_down(h, 0, n - 2);
     _n = PROTECT(Rf_ScalarInteger(n - 1));
     set_sexp_value(self, "n", _n);
     shrink(self, n);
-    UNPROTECT(4);
-    return VECTOR_ELT(x, 1);
+    SEXP res = PROTECT(VECTOR_ELT(x, 1));
+    UNPROTECT(6);
+    return res;
 }

@@ -12,10 +12,14 @@ int is_hashable(SEXP key) {
     } else if (TYPEOF(key) == VECSXP) {
         R_xlen_t i;
         R_xlen_t n = Rf_length(key);
+        SEXP keyi;
         for (i = 0; i < n; i++) {
-            if (!is_hashable(VECTOR_ELT(key, i))) {
+            keyi = PROTECT(VECTOR_ELT(key, i));
+            if (!is_hashable(keyi)) {
+                UNPROTECT(1);
                 return 0;
             }
+            UNPROTECT(1);
         }
         if (!is_hashable(ATTRIB(key))) {
             return 0;
