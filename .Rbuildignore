@@ -15,3 +15,4 @@ vignettes
 ^codecov.yml$
 ^compile_flags.txt$
 ^\.github$
+^CRAN-SUBMISSION$

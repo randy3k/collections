@@ -2,5 +2,6 @@
 .Rproj.user
 *.o
 *.so
-CRAN-RELEASE
+CRAN-SUBMISSION
+cran-comments.md
 /vignettes/benchmark_cache/
