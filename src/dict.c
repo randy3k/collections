@@ -1,7 +1,8 @@
-#include "tommyds/tommyhashlin.h"
 #include "dict.h"
-#include "xxh.h"
+
+#include "tommyds/tommyhashlin.h"
 #include "utils.h"
+#include "xxh.h"
 
 #define INITIAL_SIZE 16
 #define GROW_FACTOR 1.5
@@ -15,13 +16,11 @@
 #endif
 #endif
 
-
 typedef struct item {
     SEXP key;
     int value;
     tommy_node node;
 } item;
-
 
 static void free_ht(SEXP ht_xptr) {
     tommy_hashlin* ht = R_ExternalPtrAddr(ht_xptr);
@@ -33,7 +32,6 @@ static void free_ht(SEXP ht_xptr) {
     }
 }
 
-
 static_inline int holes_pop(SEXP self) {
     SEXP holes = PROTECT(get_sexp_value(self, "holes"));
     SEXP pop = PROTECT(get_sexp_value(holes, "pop"));
@@ -42,7 +40,6 @@ static_inline int holes_pop(SEXP self) {
     UNPROTECT(3);
     return n;
 }
-
 
 static_inline void holes_push(SEXP self, int index) {
     SEXP holes = PROTECT(get_sexp_value(self, "holes"));
@@ -53,7 +50,6 @@ static_inline void holes_push(SEXP self, int index) {
     UNPROTECT(4);
 }
 
-
 static_inline void holes_clear(SEXP self) {
     SEXP holes = PROTECT(get_sexp_value(self, "holes"));
     SEXP clear = PROTECT(get_sexp_value(holes, "clear"));
@@ -62,16 +58,14 @@ static_inline void holes_clear(SEXP self) {
     UNPROTECT(3);
 }
 
-
 tommy_hash_t key_to_u64(SEXP key) {
-
     if (is_hashable(key)) {
         return xxh_digest(key);
     }
 
     if (Rf_isEnvironment(key)) {
-        static char ch[50];
-        snprintf(ch, 50, "<environment: %p>", (void*) key);
+        char ch[128];
+        snprintf(ch, sizeof(ch), "<environment: %p>", (void*)key);
         return XXH3_64bits(ch, strlen(ch));
     }
 
@@ -88,7 +82,6 @@ tommy_hash_t key_to_u64(SEXP key) {
     Rf_error("key is not hashable");
 }
 
-
 // SEXP dict_hash(SEXP key) {
 //     tommy_hash_t h = key_to_u64(key);
 //     char* p = R_alloc(17, sizeof(char));
@@ -99,7 +92,6 @@ tommy_hash_t key_to_u64(SEXP key) {
 //     p[16] = 0;
 //     return Rf_mkString(p);
 // }
-
 
 static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
     tommy_hashlin* ht;
@@ -121,7 +113,7 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
             c = VECTOR_ELT(ks, i);
             if (Rf_isNull(c)) continue;
             h = key_to_u64(c);
-            s = (item*) malloc(sizeof(item));
+            s = (item*)malloc(sizeof(item));
             s->key = c;
             s->value = i + 1;
             tommy_hashlin_insert(ht, &s->node, s, h);
@@ -131,16 +123,14 @@ static tommy_hashlin* init_hashlin(SEXP self, SEXP ht_xptr) {
     return ht;
 }
 
-
 static int compare(const void* arg, const void* obj) {
     // return 0 if match
-    return !R_compute_identical((SEXP) arg, (SEXP) ((item*) obj)->key, 16);
+    return !R_compute_identical((SEXP)arg, (SEXP)((item*)obj)->key, 16);
 }
 
-
 static int _dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t h) {
-    tommy_hashlin *ht;
-    item *s;
+    tommy_hashlin* ht;
+    item* s;
     int index;
 
     PROTECT(ht_xptr);
@@ -157,7 +147,6 @@ static int _dict_index_get(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t h) {
     UNPROTECT(1);
     return index;
 }
-
 
 SEXP dict_get(SEXP self, SEXP _key) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
@@ -182,7 +171,6 @@ SEXP dict_get(SEXP self, SEXP _key) {
     return res;
 }
 
-
 static void grow(SEXP self, int m) {
     SEXP ks = PROTECT(get_sexp_value(self, "ks"));
     SEXP vs = PROTECT(get_sexp_value(self, "vs"));
@@ -197,7 +185,7 @@ static void grow(SEXP self, int m) {
         SET_VECTOR_ELT(ks2, i, VECTOR_ELT(ks, i));
         SET_VECTOR_ELT(vs2, i, VECTOR_ELT(vs, i));
     }
-    for(i = nks; i < m; i++) {
+    for (i = nks; i < m; i++) {
         SET_VECTOR_ELT(ks2, i, R_NilValue);
         SET_VECTOR_ELT(vs2, i, R_NilValue);
     }
@@ -205,7 +193,6 @@ static void grow(SEXP self, int m) {
     set_sexp_value(self, "vs", vs2);
     UNPROTECT(4);
 }
-
 
 static void shrink(SEXP self, int m) {
     SEXP ks = PROTECT(get_sexp_value(self, "ks"));
@@ -223,7 +210,7 @@ static void shrink(SEXP self, int m) {
         SET_VECTOR_ELT(vs2, j, VECTOR_ELT(vs, i));
         j++;
     }
-    for(i = j; i < m; i++) {
+    for (i = j; i < m; i++) {
         SET_VECTOR_ELT(ks2, i, R_NilValue);
         SET_VECTOR_ELT(vs2, i, R_NilValue);
     }
@@ -232,21 +219,19 @@ static void shrink(SEXP self, int m) {
     UNPROTECT(4);
 }
 
-
 void _dict_index_set(SEXP self, SEXP ht_xptr, SEXP _key, tommy_hash_t h, int index) {
     tommy_hashlin* ht;
-    item *s;
+    item* s;
 
     ht = R_ExternalPtrAddr(ht_xptr);
     if (ht == NULL) {
         ht = init_hashlin(self, ht_xptr);
     }
-    s = (item*) malloc(sizeof(item));
+    s = (item*)malloc(sizeof(item));
     s->key = _key;
     s->value = index;
     tommy_hashlin_insert(ht, &s->node, s, h);
 }
-
 
 SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
@@ -265,7 +250,7 @@ SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
         }
         int m = get_int_value(self, "m");
         if (index > m) {
-            int m2 = (int) ceil(GROW_FACTOR * m);
+            int m2 = (int)ceil(GROW_FACTOR * m);
             grow(self, m2);
             set_int_value(self, "m", m2);
         }
@@ -283,10 +268,9 @@ SEXP dict_set(SEXP self, SEXP _key, SEXP value) {
     return Rf_ScalarInteger(idx);
 }
 
-
 SEXP dict_remove(SEXP self, SEXP _key, SEXP _silent) {
-    tommy_hashlin *ht;
-    item *s;
+    tommy_hashlin* ht;
+    item* s;
     int index;
     int silent = Rf_asInteger(_silent);
 
@@ -329,7 +313,6 @@ SEXP dict_remove(SEXP self, SEXP _key, SEXP _silent) {
     return R_NilValue;
 }
 
-
 SEXP dict_has(SEXP self, SEXP _key) {
     SEXP ht_xptr = PROTECT(get_sexp_value(self, "ht_xptr"));
     tommy_hash_t h = key_to_u64(_key);
@@ -337,7 +320,6 @@ SEXP dict_has(SEXP self, SEXP _key) {
     UNPROTECT(1);
     return Rf_ScalarLogical(index >= 1);
 }
-
 
 SEXP dict_keys(SEXP self) {
     SEXP ks = PROTECT(get_sexp_value(self, "ks"));
@@ -357,7 +339,6 @@ SEXP dict_keys(SEXP self) {
     return keys;
 }
 
-
 SEXP dict_values(SEXP self) {
     SEXP ks = PROTECT(get_sexp_value(self, "ks"));
     SEXP vs = PROTECT(get_sexp_value(self, "vs"));
@@ -376,7 +357,6 @@ SEXP dict_values(SEXP self) {
     UNPROTECT(3);
     return values;
 }
-
 
 SEXP dict_clear(SEXP self) {
     set_int_value(self, "n", 0);
