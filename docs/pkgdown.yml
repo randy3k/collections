@@ -1,7 +1,6 @@
-pandoc: '2.12'
-pkgdown: 2.0.6
+pandoc: 3.6.4
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   benchmark: benchmark.html
-last_built: 2023-04-22T18:34Z
-
+last_built: 2025-05-07T15:26Z

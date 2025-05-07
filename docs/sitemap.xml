@@ -1,57 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/articles/benchmark.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/OrderedDict.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PriorityQueue.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cls.html</loc>
-  </url>
-  <url>
-    <loc>/reference/collections-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/deprecated.html</loc>
-  </url>
-  <url>
-    <loc>/reference/deque.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dict.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ordered_dict.html</loc>
-  </url>
-  <url>
-    <loc>/reference/priority_queue.html</loc>
-  </url>
-  <url>
-    <loc>/reference/queue.html</loc>
-  </url>
-  <url>
-    <loc>/reference/stack.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/benchmark.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/cls.html</loc></url>
+<url><loc>/reference/collections-package.html</loc></url>
+<url><loc>/reference/deprecated.html</loc></url>
+<url><loc>/reference/deque.html</loc></url>
+<url><loc>/reference/dict.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/ordered_dict.html</loc></url>
+<url><loc>/reference/priority_queue.html</loc></url>
+<url><loc>/reference/queue.html</loc></url>
+<url><loc>/reference/stack.html</loc></url>
 </urlset>
+

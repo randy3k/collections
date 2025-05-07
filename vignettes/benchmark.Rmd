@@ -9,14 +9,6 @@ vignette: >
 
 The goal of this document is to compare the performances of some of the existing packages.
 
-- [dequer](https://CRAN.R-project.org/package=dequer) `r packageDescription("dequer")$Version`implements double
-    ended queues and it supports arbitrary R objects. However, it uses
-    `R_PreserveObject` and `R_ReleaseObject` heavily which could be an issue
-    for long queues.    
-- [datastructures](https://CRAN.R-project.org/package=datastructures )
-    `r packageDescription("datastructures")$Version` uses
-    ‘Boost’ and ‘STL’ data types to implement queues and hashmaps. For some
-    reasons, it is often slow as shown in the benchmark.
 - [liqueueR](https://CRAN.R-project.org/package=liqueueR)
     `r packageDescription("liqueueR")$Version` implements
     queues in pure R code which explains its slowness.
@@ -81,22 +73,6 @@ queue <- function() {
 bench_queue <- bench::press(
     n = c(10, 50, 100, 200, 500),
     bench::mark(
-        `dequer::queue` = {
-            q <- dequer::queue()
-            pushback <- dequer::pushback
-            pop <- dequer::pop
-            x <- rnorm(n)
-            for (i in 1:n) pushback(q, x[i])
-            for (i in 1:n) pop(q)
-        },
-        `datastructures::queue` = {
-            q <- datastructures::queue()
-            insert <- datastructures::insert
-            pop <- datastructures::pop
-            x <- rnorm(n)
-            for (i in 1:n) insert(q, x[i])
-            for (i in 1:n) pop(q)
-        },
         `liqueueR::Queue` = {
             q <- liqueueR::Queue$new()
             x <- rnorm(n)
@@ -173,22 +149,6 @@ stack <- function() {
 bench_stack <- bench::press(
     n = c(10, 50, 100, 200, 500),
     bench::mark(
-        `dequer::stack` = {
-            q <- dequer::stack()
-            push <- dequer::push
-            pop <- dequer::pop
-            x <- rnorm(n)
-            for (i in 1:n) push(q, x[i])
-            for (i in 1:n) pop(q)
-        },
-        `datastructures::stack` = {
-            q <- datastructures::stack()
-            insert <- datastructures::insert
-            pop <- datastructures::pop
-            x <- rnorm(n)
-            for (i in 1:n) insert(q, x[i])
-            for (i in 1:n) pop(q)
-        },
         `liqueueR::Stack` = {
             q <- liqueueR::Stack$new()
             x <- rnorm(n)
@@ -278,18 +238,6 @@ deque <- function() {
 bench::press(
     n = c(10, 50, 100, 200, 500),
     bench::mark(
-        `dequer::deque` = {
-            q <- dequer::deque()
-            push <- dequer::push
-            pop <- dequer::pop
-            popback <- dequer::popback
-            x <- rnorm(n)
-            for (i in 1:n) push(q, x[i])
-            for (i in 1:floor(n / 2)) {
-                pop(q)
-                popback(q)
-            }
-        },
         `base::list` = {
             q <- deque()
             x <- rnorm(n)
@@ -332,15 +280,6 @@ bench::press(
             for (i in 1:n) q$push(x[i], p[i])
             for (i in 1:n) q$pop()
         },
-        `datastructures::binomial_heap` = {
-            q <- datastructures::binomial_heap(key.class = "integer")
-            insert <- datastructures::insert
-            pop <- datastructures::pop
-            x <- rnorm(n)
-            p <- sample.int(n, n, replace = TRUE)
-            for (i in 1:n) insert(q, p[i], x[i])
-            for (i in 1:n) pop(q)
-        },
         `collections::priority_queue` = {
             q <- collections::priority_queue()
             x <- rnorm(n)
@@ -365,14 +304,6 @@ bench::press(
 bench_dict <- bench::press(
     n = c(10, 50, 100, 200, 500),
     bench::mark(
-        `datastructures::hashmap` = {
-            h <- datastructures::hashmap()
-            insert <- datastructures::insert
-            x <- rnorm(n)
-            k <- as.character(seq_len(n))
-            for (i in 1:n) insert(h, k[i], x[i])
-            for (i in sample(1:n)) h[k[i]]
-        },
         `hash::hash` = {
             h <- hash::hash()
             x <- rnorm(n)
