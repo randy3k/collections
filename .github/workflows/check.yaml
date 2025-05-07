@@ -6,12 +6,11 @@ on:
   pull_request:
     branches: [main, master]
 
-jobs:
-  cancel-previous-runs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: randy3k/gh-actions/cancel-previous-runs@main
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
+jobs:
   check:
     strategy:
       fail-fast: false
