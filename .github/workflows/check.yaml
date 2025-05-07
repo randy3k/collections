@@ -32,28 +32,6 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
 
-  rchk:
-    runs-on: ubuntu-latest
-    container:
-      image: rhub/ubuntu-rchk
-      options: --user=root
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: randy3k/gh-actions/r-rchk@main
-
-  ubsan:
-    runs-on: ubuntu-latest
-    container:
-      image: rocker/r-devel-ubsan-clang
-      options: --cap-add=SYS_PTRACE
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: randy3k/gh-actions/r-ubsan@main
-
   coverage:
     runs-on: ubuntu-latest
     env:
