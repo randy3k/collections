@@ -86,13 +86,17 @@ tommy_hash_t key_to_u64(SEXP key) {
     }
 
     if (Rf_isFunction(key)) {
-        // avoid R_Serialize serilizing the closure environment and attributes
-        SEXP key2 = PROTECT(R_mkClosure(R_ClosureFormals(key), R_ClosureBody(key), R_GlobalEnv));
-        tommy_hash_t h = xxh_serialized_digest(key2);
+        tommy_hash_t h;
+        if (TYPEOF(key) == BUILTINSXP) {
+            h = xxh_serialized_digest(key);
+        } else {
+            // avoid R_Serialize serilizing the closure environment and attributes
+            SEXP key2 = PROTECT(R_mkClosure(R_ClosureFormals(key), R_ClosureBody(key), R_GlobalEnv));
+            h = xxh_serialized_digest(key2);
+        }
         UNPROTECT(1);
         return h;
     }
-
     Rf_error("key is not hashable");
 }
 
