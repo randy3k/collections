@@ -58,6 +58,22 @@ static_inline void holes_clear(SEXP self) {
     UNPROTECT(3);
 }
 
+#if R_VERSION < R_Version(4, 5, 0)
+# define R_ClosureFormals(x) FORMALS(x)
+# define R_ClosureBody(x) BODY(x)
+
+SEXP R_mkClosure(SEXP formals, SEXP body, SEXP env)
+{
+    SEXP fun = Rf_allocSExp(CLOSXP);
+    SET_FORMALS(fun, formals);
+    SET_BODY(fun, body);
+    SET_CLOENV(fun, env);
+    return fun;
+}
+
+#endif
+
+
 tommy_hash_t key_to_u64(SEXP key) {
     if (is_hashable(key)) {
         return xxh_digest(key);
@@ -70,10 +86,8 @@ tommy_hash_t key_to_u64(SEXP key) {
     }
 
     if (Rf_isFunction(key)) {
-        SEXP key2 = PROTECT(Rf_shallow_duplicate(key));
         // avoid R_Serialize serilizing the closure environment and attributes
-        SET_CLOENV(key2, R_NilValue);
-        SET_ATTRIB(key2, R_NilValue);
+        SEXP key2 = PROTECT(R_mkClosure(R_ClosureFormals(key), R_ClosureBody(key), R_GlobalEnv));
         tommy_hash_t h = xxh_serialized_digest(key2);
         UNPROTECT(1);
         return h;
@@ -159,7 +173,7 @@ SEXP dict_get(SEXP self, SEXP _key) {
             Rf_error("key not found");
         } else {
             SEXP _default = PROTECT(Rf_findVar(Rf_install("default"), fn));
-            _default = Rf_eval(_default, PRENV(_default));
+            _default = Rf_eval(_default, fn);
             UNPROTECT(2);
             return _default;
         }
