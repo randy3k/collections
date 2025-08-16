@@ -34,6 +34,7 @@ queue <- function(items = NULL) {
 
     q <- NULL
     last <- NULL
+    n <- 0
     initialize <- function(items = NULL) {
         clear()
         for (i in seq_along(items)) {
@@ -55,7 +56,7 @@ queue <- function(items = NULL) {
         .Call(C_queue_clear, self)
         invisible(self)
     }
-    size <- function() length(q)
+    size <- function() n
     as_list <- function() as.list(q)
     print <- function() {
         n <- size()

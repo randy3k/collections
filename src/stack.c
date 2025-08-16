@@ -14,6 +14,7 @@ SEXP stack_push(SEXP self, SEXP value) {
         set_sexp_value(self, "q", v);
     }
     UNPROTECT(2);
+    add_int_value(self, "n", 1);
     return value;
 }
 
@@ -22,5 +23,6 @@ SEXP stack_pop(SEXP self) {
     if (q == R_NilValue) Rf_error("stack is empty");
     set_sexp_value(self, "q", CDR(q));
     UNPROTECT(1);
+    add_int_value(self, "n", -1);
     return CAR(q);
 }
