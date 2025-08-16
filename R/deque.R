@@ -38,6 +38,7 @@ deque <- function(items = NULL) {
     .__class__ <- "deque"
     q <- NULL
     last <- NULL
+    n <- 0
 
     initialize <- function(items = NULL) {
         clear()
@@ -93,7 +94,7 @@ deque <- function(items = NULL) {
         .Call(C_deque_remove, self, item)
         invisible(self)
     }
-    size <- function() length(q)
+    size <- function() n
     as_list <- function() {
         n <- size()
         ret <- vector("list", n)

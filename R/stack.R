@@ -30,6 +30,7 @@ stack <- function(items = NULL) {
     .__class__ <- "stack"
 
     q <- NULL
+    n <- 0
 
     initialize <- function(items = NULL) {
         clear()
@@ -50,9 +51,10 @@ stack <- function(items = NULL) {
     }
     clear <- function() {
         q <<- NULL
+        n <<- 0
         invisible(self)
     }
-    size <- function() length(q)
+    size <- function() n
     as_list <- function() as.list(q)
     print <- function() {
         n <- size()

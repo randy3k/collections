@@ -39,6 +39,7 @@ SEXP queue_push(SEXP self, SEXP value) {
         R_SetExternalPtrAddr(last_ptr, v);
         UNPROTECT(2);
     }
+    add_int_value(self, "n", 1);
     UNPROTECT(3);
     return value;
 }
@@ -47,6 +48,7 @@ SEXP queue_pop(SEXP self) {
     SEXP q = PROTECT(get_sexp_value(self, "q"));
     if (q == R_NilValue) Rf_error("queue is empty");
     set_sexp_value(self, "q", CDR(q));
+    add_int_value(self, "n", -1);
     UNPROTECT(1);
     return CAR(q);
 }
@@ -57,5 +59,6 @@ SEXP queue_clear(SEXP self) {
     SEXP last = PROTECT(R_MakeExternalPtr(NULL, R_NilValue, R_NilValue));
     set_sexp_value(self, "last", last);
     UNPROTECT(1);
+    set_int_value(self, "n", 0);
     return R_NilValue;
 }
