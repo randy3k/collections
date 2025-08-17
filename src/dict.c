@@ -93,8 +93,8 @@ tommy_hash_t key_to_u64(SEXP key) {
             // avoid R_Serialize serilizing the closure environment and attributes
             SEXP key2 = PROTECT(R_mkClosure(R_ClosureFormals(key), R_ClosureBody(key), R_GlobalEnv));
             h = xxh_serialized_digest(key2);
+            UNPROTECT(1); 
         }
-        UNPROTECT(1);
         return h;
     }
     Rf_error("key is not hashable");

@@ -58,7 +58,7 @@ SEXP queue_clear(SEXP self) {
     set_sexp_value(self, "q", R_NilValue);
     SEXP last = PROTECT(R_MakeExternalPtr(NULL, R_NilValue, R_NilValue));
     set_sexp_value(self, "last", last);
-    UNPROTECT(1);
     set_int_value(self, "n", 0);
+    UNPROTECT(1);
     return R_NilValue;
 }

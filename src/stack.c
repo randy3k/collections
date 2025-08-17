@@ -13,8 +13,8 @@ SEXP stack_push(SEXP self, SEXP value) {
         v = PROTECT(Rf_cons(value, q));
         set_sexp_value(self, "q", v);
     }
-    UNPROTECT(2);
     add_int_value(self, "n", 1);
+    UNPROTECT(2);
     return value;
 }
 
@@ -22,7 +22,7 @@ SEXP stack_pop(SEXP self) {
     SEXP q = PROTECT(get_sexp_value(self, "q"));
     if (q == R_NilValue) Rf_error("stack is empty");
     set_sexp_value(self, "q", CDR(q));
-    UNPROTECT(1);
     add_int_value(self, "n", -1);
+    UNPROTECT(1);
     return CAR(q);
 }
