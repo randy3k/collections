@@ -50,8 +50,8 @@ SEXP deque_push(SEXP self, SEXP value) {
         R_SetExternalPtrAddr(last_ptr, v);
         UNPROTECT(2);
     }
-    UNPROTECT(5);
     add_int_value(self, "n", 1);
+    UNPROTECT(5);
     return value;
 }
 
@@ -77,8 +77,8 @@ SEXP deque_pushleft(SEXP self, SEXP value) {
         set_sexp_value(self, "q", v);
         UNPROTECT(2);
     }
-    UNPROTECT(4);
     add_int_value(self, "n", 1);
+    UNPROTECT(4);
     return value;
 }
 
@@ -97,8 +97,8 @@ SEXP deque_pop(SEXP self) {
         R_SetExternalPtrAddr(last_ptr, prev);
         SETCDR(prev, R_NilValue);
     }
-    UNPROTECT(3);
     add_int_value(self, "n", -1);
+    UNPROTECT(3);
     return VECTOR_ELT(CAR(last), 1);
 }
 
@@ -115,8 +115,8 @@ SEXP deque_popleft(SEXP self) {
         set_sexp_value(self, "q", nextq);
         SET_VECTOR_ELT(CAR(nextq), 0, R_NilValue);
     }
-    UNPROTECT(1);
     add_int_value(self, "n", -1);
+    UNPROTECT(1);
     return VECTOR_ELT(CAR(q), 1);
 }
 
