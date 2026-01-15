@@ -1,10 +1,40 @@
 #include "xxh.h"
 
+#if R_VERSION >= R_Version(4, 6, 0)
+SEXP get_attrs(SEXP x) {
+    SEXP attrs = R_getAttributes(x);
+    if (Rf_isNull(attrs)) return R_NilValue;
+
+    SEXP names = Rf_getAttrib(attrs, R_NamesSymbol);
+    if (Rf_isNull(names)) return attrs;
+
+    R_xlen_t n = Rf_length(attrs);
+    for (R_xlen_t i = 0; i < n; i++) {
+        // Remove names attributes, otherwise it will create a dead loop.
+        if (strcmp(CHAR(STRING_ELT(names, i)), "names") == 0) {
+            SEXP new_attrs = PROTECT(Rf_allocVector(VECSXP, n - 1));
+            R_xlen_t k = 0;
+            for (R_xlen_t j = 0; j < n; j++) {
+                if (i == j) continue;
+                SET_VECTOR_ELT(new_attrs, k++, VECTOR_ELT(attrs, j));
+            }
+            UNPROTECT(1);
+            return new_attrs;
+        }
+    }
+    return attrs;
+}
+#else
+SEXP get_attrs(SEXP x) {
+    return ATTRIB(x);
+}
+#endif
+
 int is_hashable(SEXP key) {
     if (Rf_isNull(key)) {
         return 1;
     } else if (Rf_isVectorAtomic(key)) {
-        if (!is_hashable(ATTRIB(key))) {
+        if (!is_hashable(get_attrs(key))) {
             return 0;
         }
         return 1;
@@ -20,7 +50,7 @@ int is_hashable(SEXP key) {
             }
             UNPROTECT(1);
         }
-        if (!is_hashable(ATTRIB(key))) {
+        if (!is_hashable(get_attrs(key))) {
             return 0;
         }
         return 1;
@@ -33,7 +63,7 @@ int is_hashable(SEXP key) {
             }
             key = CDR(key);
         }
-        if (!is_hashable(ATTRIB(key))) {
+        if (!is_hashable(get_attrs(key))) {
             return 0;
         }
         return 1;
