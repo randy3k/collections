@@ -2,26 +2,38 @@
 
 #if R_VERSION >= R_Version(4, 6, 0)
 SEXP get_attrs(SEXP x) {
-    SEXP attrs = R_getAttributes(x);
-    if (Rf_isNull(attrs)) return R_NilValue;
+    int nprotect = 0;
+    PROTECT(x);
+    nprotect++;
+    SEXP attrs = PROTECT(R_getAttributes(x));
+    nprotect++;
+    if (Rf_isNull(attrs)) {
+        UNPROTECT(nprotect);
+        return R_NilValue;
+    }
 
     SEXP names = Rf_getAttrib(attrs, R_NamesSymbol);
-    if (Rf_isNull(names)) return attrs;
+    if (Rf_isNull(names)) {
+        UNPROTECT(nprotect);
+        return attrs;
+    }
 
     R_xlen_t n = Rf_length(attrs);
     for (R_xlen_t i = 0; i < n; i++) {
         // Remove names attributes, otherwise it will create a dead loop.
         if (strcmp(CHAR(STRING_ELT(names, i)), "names") == 0) {
             SEXP new_attrs = PROTECT(Rf_allocVector(VECSXP, n - 1));
+            nprotect++;
             R_xlen_t k = 0;
             for (R_xlen_t j = 0; j < n; j++) {
                 if (i == j) continue;
                 SET_VECTOR_ELT(new_attrs, k++, VECTOR_ELT(attrs, j));
             }
-            UNPROTECT(1);
+            UNPROTECT(nprotect);
             return new_attrs;
         }
     }
+    UNPROTECT(nprotect);
     return attrs;
 }
 #else
@@ -31,43 +43,60 @@ SEXP get_attrs(SEXP x) {
 #endif
 
 int is_hashable(SEXP key) {
+    int nprotect = 0;
+    PROTECT(key);
+    nprotect++;
     if (Rf_isNull(key)) {
+        UNPROTECT(nprotect);
         return 1;
     } else if (Rf_isVectorAtomic(key)) {
-        if (!is_hashable(get_attrs(key))) {
+        SEXP attrs = PROTECT(get_attrs(key));
+        nprotect++;
+        if (!is_hashable(attrs)) {
+            UNPROTECT(nprotect);
             return 0;
         }
+        UNPROTECT(nprotect);
         return 1;
     } else if (TYPEOF(key) == VECSXP) {
         R_xlen_t i;
         R_xlen_t n = Rf_length(key);
         SEXP keyi;
         for (i = 0; i < n; i++) {
-            keyi = PROTECT(VECTOR_ELT(key, i));
+            keyi = VECTOR_ELT(key, i);
             if (!is_hashable(keyi)) {
-                UNPROTECT(1);
+                UNPROTECT(nprotect);
                 return 0;
             }
-            UNPROTECT(1);
         }
-        if (!is_hashable(get_attrs(key))) {
+        SEXP attrs = PROTECT(get_attrs(key));
+        nprotect++;
+        if (!is_hashable(attrs)) {
+            UNPROTECT(nprotect);
             return 0;
         }
+        UNPROTECT(nprotect);
         return 1;
     } else if (TYPEOF(key) == LISTSXP) {
         SEXP v;
         while (key != R_NilValue) {
             v = CAR(key);
             if (!is_hashable(v)) {
+                UNPROTECT(nprotect);
                 return 0;
             }
             key = CDR(key);
         }
-        if (!is_hashable(get_attrs(key))) {
+        SEXP attrs = PROTECT(get_attrs(key));
+        nprotect++;
+        if (!is_hashable(attrs)) {
+            UNPROTECT(nprotect);
             return 0;
         }
+        UNPROTECT(nprotect);
         return 1;
     }
+    UNPROTECT(nprotect);
     return 0;
 }
 
