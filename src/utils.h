@@ -4,6 +4,15 @@
 
 #include <R.h>
 #include <Rinternals.h>
+#include <Rversion.h>
+
+/* Backfill for R < 4.5.0 */
+#if R_VERSION < R_Version(4, 5, 0)
+static inline SEXP R_getVarEx(SEXP symbol, SEXP rho, int inherits, SEXP deflt) {
+    SEXP ans = inherits ? Rf_findVar(symbol, rho) : Rf_findVarInFrame(rho, symbol);
+    return (ans == R_UnboundValue) ? deflt : ans;
+}
+#endif
 
 SEXP r_current_frame(void);
 

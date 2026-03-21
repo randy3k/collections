@@ -176,7 +176,7 @@ SEXP dict_get(SEXP self, SEXP _key) {
         if (r_is_missing(fn, "default")) {
             Rf_error("key not found");
         } else {
-            SEXP _default = PROTECT(Rf_findVar(Rf_install("default"), fn));
+            SEXP _default = PROTECT(R_getVarEx(Rf_install("default"), fn, 1, R_UnboundValue));
             _default = Rf_eval(_default, fn);
             UNPROTECT(2);
             return _default;

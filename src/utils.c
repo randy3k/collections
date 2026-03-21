@@ -63,7 +63,7 @@ SEXP pairlist_last(SEXP x) {
 
 
 SEXP get_sexp_value(SEXP env, const char* name) {
-    SEXP x = Rf_findVarInFrame(env, Rf_install(name));
+    SEXP x = R_getVarEx(Rf_install(name), env, 0, R_UnboundValue);
     if (x == R_UnboundValue) {
         Rf_error("variable %s not found", name);
     }
